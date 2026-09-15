@@ -30,7 +30,8 @@ Rediseño estático completo implementado y publicado en GitHub Pages. Es un moc
 
 - `layouts/BaseLayout.astro`: SEO (title, description, canonical, Open Graph, JSON-LD opcional), fuentes y skip link.
 - `layouts/LegalLayout.astro`: plantilla de páginas legales con índice.
-- `components/SiteHeader.astro`: navegación sticky, desplegable “Gama” y menú móvil accesible (Escape, `inert`, foco).
+- `components/SiteHeader.astro`: navegación sticky, desplegable “Gama”, menú móvil accesible (Escape, `inert`, foco) y marcado de sección visible (“Temporada” con `aria-current="location"`).
+- Navegación local: chips de filtro en fruta, barra de secciones sticky en verduras (con sección visible marcada), índice en profesionales e índice de contenido en las legales.
 - `components/SiteFooter.astro`, `PageIntro.astro` (con migas), `ProCta.astro`, `JuggleBalls.astro` (motivo gráfico SVG).
 - `components/ContactForm.astro`: variantes general/profesional, validación en cliente y envío simulado.
 - `components/Picture.astro`: `<picture>` con WebP + original, `width`/`height` y carga diferida.
@@ -64,6 +65,7 @@ No usados a propósito: `certificaciones-malabar`, `logotipos-certificaciones-ma
 - Sin rutas absolutas que ignoren el `base` en `dist/`.
 - Revisión visual de todas las páginas a 1440 px; comprobación a 375 px sin desplazamiento horizontal.
 - Pruebas de interacción: validación y envío simulado de formularios, selector de contacto por `?tipo=`, menú móvil y desplegable con teclado.
+- Feedback de ubicación comprobado en Chrome real: “Temporada” se marca al entrar en la sección y se desmarca al salir; la barra de verduras sigue la sección visible.
 
 ## Último cambio
 

@@ -43,6 +43,17 @@ const ideas = [
     </div>
   </PageIntro>
 
+  <nav class="local-nav" aria-label="Secciones de esta página">
+    <div class="container local-nav__inner">
+      <span class="local-nav__label" id="local-nav-label">En esta página</span>
+      <ul class="reset-list local-nav__list" aria-labelledby="local-nav-label" data-local-nav>
+        <li><a href="#colores">La huerta por colores</a></li>
+        <li><a href="#ideas">Ideas para el día a día</a></li>
+        <li><a href="#gama">Qué incluye la gama</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <section id="colores" class="section colors tone-paper" aria-labelledby="colors-title">
     <div class="container">
       <header class="section-head">
@@ -68,7 +79,7 @@ const ideas = [
     </div>
   </section>
 
-  <section class="section ideas" aria-labelledby="ideas-title">
+  <section id="ideas" class="section ideas" aria-labelledby="ideas-title">
     <div class="container ideas-grid">
       <header class="ideas-head">
         <p class="eyebrow">Ideas para el día a día</p>
@@ -88,7 +99,7 @@ const ideas = [
     </div>
   </section>
 
-  <section class="section--tight faq" aria-labelledby="faq-title">
+  <section id="gama" class="section--tight faq" aria-labelledby="faq-title">
     <div class="container">
       <div class="faq-card">
         <div>
@@ -111,7 +122,108 @@ const ideas = [
   />
 </BaseLayout>
 
+<script>
+  const list = document.querySelector<HTMLElement>('[data-local-nav]');
+
+  if (list && 'IntersectionObserver' in window) {
+    const items = Array.from(list.querySelectorAll<HTMLAnchorElement>('a'))
+      .map((link) => {
+        const target = document.getElementById(link.href.split('#')[1] ?? '');
+        return target ? { link, target } : null;
+      })
+      .filter((item): item is { link: HTMLAnchorElement; target: HTMLElement } => item !== null);
+
+    const visible = new Set<HTMLElement>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target as HTMLElement);
+          else visible.delete(entry.target as HTMLElement);
+        });
+        // Solo la primera sección visible queda marcada.
+        const current = items.find((item) => visible.has(item.target));
+        items.forEach((item) => {
+          if (item === current) item.link.setAttribute('aria-current', 'location');
+          else item.link.removeAttribute('aria-current');
+        });
+      },
+      { rootMargin: '-25% 0px -55% 0px' },
+    );
+
+    items.forEach((item) => observer.observe(item.target));
+  }
+</script>
+
 <style>
+  .local-nav {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 20;
+    border-block: 1px solid var(--line);
+    background: var(--cream-50);
+  }
+
+  .local-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-height: 3.75rem;
+  }
+
+  .local-nav__label {
+    flex: none;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--cocoa-600);
+  }
+
+  @media (max-width: 40rem) {
+    .local-nav__label {
+      display: none;
+    }
+  }
+
+  .local-nav__list {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding-block: 0.6rem;
+    scrollbar-width: thin;
+  }
+
+  .local-nav__list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+    padding: 0.45rem 1rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .local-nav__list a:hover {
+    border-color: var(--leaf-600);
+  }
+
+  .local-nav__list a[aria-current] {
+    border-color: var(--leaf-600);
+    background: var(--leaf-600);
+    color: var(--cream-50);
+  }
+
+  .local-nav__list a[aria-current]::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--lemon-300);
+  }
+
   .veg-visual {
     position: relative;
     width: min(100%, 22rem);

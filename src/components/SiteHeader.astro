@@ -129,6 +129,31 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
 
     nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
     mobile.addEventListener('change', () => setMenu(false));
+
+    // Enlaces a una sección (por ejemplo «Temporada»): marcan su ubicación
+    // mientras esa sección está en pantalla.
+    const sections = Array.from(header.querySelectorAll<HTMLAnchorElement>('.nav-link[href*="#"]'))
+      .map((link) => {
+        const id = link.href.split('#')[1] ?? '';
+        const target = id ? document.getElementById(id) : null;
+        return target ? { link, target } : null;
+      })
+      .filter((item): item is { link: HTMLAnchorElement; target: HTMLElement } => item !== null);
+
+    if (sections.length > 0 && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const item = sections.find((section) => section.target === entry.target);
+            if (!item) return;
+            if (entry.isIntersecting) item.link.setAttribute('aria-current', 'location');
+            else item.link.removeAttribute('aria-current');
+          });
+        },
+        { rootMargin: '-30% 0px -50% 0px' },
+      );
+      sections.forEach((section) => observer.observe(section.target));
+    }
   }
 </script>
 
@@ -196,12 +221,12 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
     background: var(--paper-100);
   }
 
-  .nav-link[aria-current='page'],
+  .nav-link[aria-current],
   .nav-link.is-current {
     color: var(--malabar-700);
   }
 
-  .nav-link[aria-current='page']::after,
+  .nav-link[aria-current]::after,
   .nav-link.is-current::after {
     content: '';
     position: absolute;
@@ -380,7 +405,7 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
       color: var(--malabar-700);
     }
 
-    .nav-link[aria-current='page']::after,
+    .nav-link[aria-current]::after,
     .nav-link.is-current::after {
       left: auto;
       right: 0.25rem;
