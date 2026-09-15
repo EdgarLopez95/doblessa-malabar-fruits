@@ -16,7 +16,7 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   <PageIntro
     crumb="Fruta fresca"
     eyebrow="La gama · Fruta"
-    title="Fruta fresca"
+    title="Fruta fresca de temporada"
     lead="De hueso, de pepita o para descubrir: una forma sencilla de recorrer la fruta que forma parte del universo Malabar. Sin prisas, sin carrito y con mucho color.">
     <div slot="actions" class="btn-row">
       <a class="btn btn--primary" href="#recorrido">Recorrer la fruta <span class="arrow" aria-hidden="true">↓</span></a>
@@ -60,19 +60,28 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
         {
           FRUITS.map((fruit, index) => (
             <li class="fruit-card" data-group={fruit.group} style={`--fruit: ${fruit.color}; --accent: ${fruit.accent}`}>
-              <span class="fruit-card__index" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
+              <div class="fruit-card__header">
+                <span class="fruit-card__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span class="fruit-card__group">{FRUIT_GROUPS[fruit.group]}</span>
+              </div>
               <span class="fruit-card__ball" aria-hidden="true">
                 <span />
               </span>
-              <p class="fruit-card__group">{FRUIT_GROUPS[fruit.group]}</p>
-              <h3>{fruit.name}</h3>
-              <p class="fruit-card__line">{fruit.line}</p>
+              <div class="fruit-card__body">
+                <h3>{fruit.name}</h3>
+                <p class="fruit-card__line">{fruit.line}</p>
+              </div>
             </li>
           ))
         }
       </ul>
+
+      <div class="range-footer">
+        <p class="range-footer__text">¿Quieres consultar disponibilidad o formatos para tu negocio?</p>
+        <a class="btn btn--lemon" href={url(PRO_CONTACT)}>Hablar con el equipo sobre la gama <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
@@ -93,6 +102,9 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
           <p>
             Cada fruta tiene su momento, y la selección cambia con él. Por eso aquí no fijamos fechas ni prometemos disponibilidad: preferimos
             contarlo bien, con información actualizada.
+          </p>
+          <p class="season-notice">
+            No publicamos un calendario mes a mes hasta que Limosin Fruits / Malabar lo confirme. Lo que ves es la gama, no la disponibilidad de esta semana.
           </p>
           <p>Si trabajas con fruta, el equipo puede hablarte de la gama del momento. Si eres curioso, también puedes escribirnos.</p>
         </div>
@@ -251,105 +263,156 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   /* Tarjetas */
   .fruit-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 1.25rem;
   }
 
   .fruit-card {
     position: relative;
-    display: grid;
-    align-content: end;
-    gap: 0.35rem;
-    min-height: 19rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 20rem;
     overflow: hidden;
-    padding: 1.5rem;
+    padding: 1.75rem;
+    border-top: 4px solid var(--fruit);
     border-radius: var(--radius-card);
     background: var(--cream-50);
+    box-shadow: 0 4px 12px -4px rgb(53 39 39 / 0.06);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
     animation: fade-up 0.25s var(--ease) both;
   }
 
-  .fruit-card:nth-child(4n + 2) {
-    background: #fbf1e4;
+  .fruit-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -8px rgb(53 39 39 / 0.12);
+  }
+
+  .fruit-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
   }
 
   .fruit-card__index {
-    position: absolute;
-    top: 1.25rem;
-    left: 1.5rem;
     font-size: 0.8125rem;
-    font-weight: 700;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
     color: var(--cocoa-600);
+    letter-spacing: 0.05em;
+  }
+
+  .fruit-card__group {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--paper-100);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--malabar-700);
   }
 
   .fruit-card__ball {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 3.5rem;
+    right: 1.25rem;
     width: 6.5rem;
     aspect-ratio: 1;
     border-radius: 50%;
     background: var(--fruit);
-    box-shadow: inset -12px -14px 0 rgb(53 39 39 / 0.12);
+    box-shadow: inset -10px -12px 0 rgb(53 39 39 / 0.12);
     transition: transform 0.35s var(--ease);
+    opacity: 0.85;
+    pointer-events: none;
   }
 
   .fruit-card__ball span {
     position: absolute;
-    left: -14%;
-    bottom: -4%;
-    width: 36%;
+    left: -12%;
+    bottom: -2%;
+    width: 38%;
     aspect-ratio: 1;
     border-radius: 50%;
     background: var(--accent);
-    border: 4px solid var(--cream-50);
-  }
-
-  .fruit-card:nth-child(4n + 2) .fruit-card__ball span {
-    border-color: #fbf1e4;
+    border: 3px solid var(--cream-50);
   }
 
   .fruit-card:hover .fruit-card__ball {
-    transform: translateY(-6px) rotate(-8deg);
+    transform: translateY(-6px) rotate(-6deg) scale(1.05);
+    opacity: 1;
   }
 
-  .fruit-card__group {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--malabar-600);
+  .fruit-card__body {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: 3rem;
   }
 
   .fruit-card h3 {
-    font-size: clamp(1.875rem, 1.6rem + 0.8vw, 2.25rem);
+    font-size: clamp(2.25rem, 1.8rem + 1.2vw, 2.85rem);
+    line-height: 1.02;
+    color: var(--cocoa-900);
   }
 
   .fruit-card__line {
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    line-height: 1.45;
     color: var(--cocoa-600);
   }
 
   @media (min-width: 64rem) {
     .fruit-card:first-child {
       grid-column: span 2;
-      min-height: 22rem;
-      background: var(--lemon-300);
+      background: var(--paper-100);
     }
 
     .fruit-card:first-child .fruit-card__ball {
-      width: 11rem;
+      width: 9.5rem;
     }
 
     .fruit-card:first-child .fruit-card__ball span {
-      border-color: var(--lemon-300);
-    }
-
-    .fruit-card:first-child .fruit-card__group,
-    .fruit-card:first-child .fruit-card__index,
-    .fruit-card:first-child .fruit-card__line {
-      color: var(--cocoa-900);
+      border-color: var(--paper-100);
     }
 
     .fruit-card:first-child h3 {
-      font-size: 3rem;
+      font-size: 3.25rem;
     }
+  }
+
+  /* Pie de gama */
+  .range-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    background: var(--cream-50);
+  }
+
+  .range-footer__text {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--cocoa-900);
+  }
+
+  .season-notice {
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--malabar-700);
+    border-radius: var(--radius-card);
+    background: var(--paper-100);
+    font-weight: 600;
+    color: var(--cocoa-900);
   }
 
   /* Temporada */

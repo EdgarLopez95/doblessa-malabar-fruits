@@ -62,6 +62,13 @@ const page = PAGES.contacto;
       </div>
 
       <aside class="contact-aside" aria-labelledby="aside-title">
+        <div class="aside-block no-store-box">
+          <h2>Esta web no es una tienda</h2>
+          <p>
+            Malabar Fruits es una marca de fruta y verdura fresca. Desde aquí no se compra ni se envía a domicilio. Si quieres encontrar la marca o trabajar con ella, escríbenos.
+          </p>
+        </div>
+
         <h2 id="aside-title">Qué pasa después</h2>
         <ol class="reset-list after-steps">
           <li><span aria-hidden="true">1</span> Envías tu consulta con el contexto que necesites.</li>
@@ -274,6 +281,24 @@ const page = PAGES.contacto;
 
   .contact-aside h2 {
     font-size: 1.75rem;
+  }
+
+  .no-store-box {
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .no-store-box h2 {
+    font-size: 1.5rem;
+    color: var(--lemon-300);
+  }
+
+  .no-store-box p {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: rgb(255 249 241 / 0.88);
   }
 
   .after-steps {
