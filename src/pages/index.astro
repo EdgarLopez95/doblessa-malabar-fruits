@@ -87,9 +87,12 @@ const sectors = [
           descubrirlas, compartirlas y volver a por más.
         </p>
         <div class="btn-row">
-          <a class="btn btn--primary" href="#gama">Descubre la gama <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn--primary" href={url(PAGES.fruta.path)}>Descubre la gama de fruta <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn--outline" href={url(PAGES.profesionales.path)}>Soy profesional</a>
         </div>
+        <p class="hero-sublink">
+          <a class="link-arrow" href={url(PAGES.verduras.path)}>Ver también las verduras <span class="arrow" aria-hidden="true">→</span></a>
+        </p>
       </div>
 
       <div class="hero-media">
@@ -261,7 +264,26 @@ const sectors = [
     </div>
   </section>
 
-  <!-- 7. Contacto -->
+  <!-- 7. Aviso no-tienda -->
+  <section class="section--tight no-store" aria-labelledby="no-store-title">
+    <div class="container">
+      <div class="no-store-card">
+        <div class="no-store-copy">
+          <p class="no-store-kicker">Aviso de compra y distribución</p>
+          <h2 id="no-store-title">Esta web no es una tienda</h2>
+          <p class="lead">
+            Malabar Fruits es una marca de fruta y verdura fresca. Desde aquí no se compra ni se envía a domicilio. Si quieres encontrar la marca o trabajar con ella, escríbenos.
+          </p>
+        </div>
+        <div class="no-store-actions">
+          <a class="btn btn--primary" href={url(GENERAL_CONTACT)}>Escribir consulta <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href={url(PRO_CONTACT)}>Contacto profesional</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Contacto -->
   <section class="section contact-cta" aria-labelledby="contact-title">
     <div class="container contact-grid">
       <div class="contact-copy">
@@ -928,5 +950,53 @@ const sectors = [
 
   .contact-option:hover .contact-option__arrow {
     transform: translateX(4px);
+  }
+
+  /* Subenlace del hero */
+  .hero-sublink {
+    margin-top: 1.25rem;
+  }
+
+  /* Aviso no tienda */
+  .no-store-card {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+    border: 2px dashed var(--line-strong);
+    border-radius: var(--radius-panel);
+    background: var(--paper-100);
+  }
+
+  @media (min-width: 56rem) {
+    .no-store-card {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      align-items: center;
+      gap: 3.5rem;
+    }
+  }
+
+  .no-store-kicker {
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--malabar-700);
+  }
+
+  .no-store-card h2 {
+    font-size: clamp(2rem, 1.5rem + 1.8vw, 2.75rem);
+  }
+
+  .no-store-card .lead {
+    margin-top: 0.75rem;
+    color: var(--cocoa-900);
+  }
+
+  .no-store-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    align-items: flex-start;
   }
 </style>

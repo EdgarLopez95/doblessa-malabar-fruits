@@ -21,7 +21,7 @@ export const PAGES = {
   },
   fruta: {
     path: '/fruta-fresca/',
-    title: 'Fruta fresca | Malabar Fruits',
+    title: 'Fruta fresca de temporada | Malabar Fruits',
     description:
       'Recorre la gama de fruta fresca de Malabar Fruits: melocotón, nectarina, paraguayo, pera, manzana, cereza, kiwi y más, contada con color y sin prisas.',
   },
@@ -33,7 +33,7 @@ export const PAGES = {
   },
   calidad: {
     path: '/calidad-y-trazabilidad/',
-    title: 'Calidad y trazabilidad | Malabar Fruits',
+    title: 'Calidad y selección de fruta fresca | Malabar Fruits',
     description:
       'Cómo entiende Malabar Fruits la calidad: selección, frescura, cuidado de la presentación y una relación profesional clara y directa.',
   },

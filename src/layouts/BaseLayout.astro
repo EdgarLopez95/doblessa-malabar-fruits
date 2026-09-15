@@ -23,7 +23,7 @@ const ogImageUrl = absoluteUrl(`/images/${ogImage}`);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#FFF9F1" />
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" type="application/xml" href={url('/sitemap.xml')} />
