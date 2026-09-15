@@ -34,9 +34,9 @@ const pillars = [
 
 <BaseLayout {...page}>
   <PageIntro
-    crumb="Calidad y trazabilidad"
+    crumb="Calidad y selección"
     eyebrow="Calidad"
-    title="Calidad y trazabilidad"
+    title="Selección y calidad de principio a fin"
     lead="La calidad no cabe en un sello decorativo. Para Malabar Fruits se construye con decisiones concretas: qué se elige, cómo se cuida y cómo se cuenta.">
     <div slot="visual" class="quality-visual" aria-hidden="true">
       <div class="quality-visual__seal">
@@ -51,17 +51,18 @@ const pillars = [
       <header class="section-head">
         <p class="eyebrow">Cuatro ideas de calidad</p>
         <h2 id="pillars-title">Lo que cuidamos, dicho con sencillez</h2>
-        <p>Sin porcentajes ni promesas grandilocuentes: una forma de trabajar que se entiende de un vistazo.</p>
+        <p>Sin porcentajes ni promesas grandilocuentes: un recorrido editorial que explica el criterio de la marca paso a paso.</p>
       </header>
 
-      <ol class="reset-list pillar-path">
+      <ol class="reset-list pillar-editorial">
         {
           pillars.map((pillar, index) => (
-            <li class="pillar" style={`--pillar: ${pillar.color}`}>
-              <span class="pillar__marker" aria-hidden="true">
-                {index + 1}
-              </span>
-              <div class="pillar__body">
+            <li class="pillar-row" style={`--pillar: ${pillar.color}`}>
+              <div class="pillar-marker">
+                <span class="pillar-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span class="pillar-dot" aria-hidden="true" />
+              </div>
+              <div class="pillar-content">
                 <h3>{pillar.title}</h3>
                 <p>{pillar.text}</p>
               </div>
@@ -75,34 +76,36 @@ const pillars = [
   <section class="section traceability" aria-labelledby="trace-title">
     <div class="container trace-grid">
       <div class="trace-copy">
-        <p class="eyebrow">Trazabilidad</p>
-        <h2 id="trace-title">Datos antes que adjetivos</h2>
+        <p class="eyebrow">Trazabilidad y certificaciones</p>
+        <h2 id="trace-title">Cuando el equipo aporte origen y controles, irán aquí</h2>
         <div class="prose trace-text">
           <p>
-            Origen, procesos y documentación son información seria. En esta web no los resumimos con sellos, iconos ni cifras sueltas.
+            Origen, procesos y controles sanitarios son información rigurosa. En esta web no los sustituimos con sellos decorativos, iconos genéricos ni certificaciones no validadas formalmente por el equipo de Limosin Fruits / Malabar Fruits.
           </p>
           <p>
-            Si tu empresa necesita conocer esos detalles, lo tratamos directamente con el equipo comercial, con la información que corresponda a
-            cada caso.
+            Hoy no se publican certificados, orígenes de fincas ni calendarios cerrados porque no están validados documentalmente. Cuando el equipo aporte datos verificados y documentación oficial, se publicarán de forma transparente en este espacio.
+          </p>
+          <p>
+            Si tu empresa o central de compras necesita especificaciones concretas de producto o requisitos técnicos, lo tratamos directamente en conversación con el equipo comercial.
           </p>
         </div>
       </div>
 
       <div class="trace-compare">
         <div class="trace-box">
-          <h3>Lo que encontrarás aquí</h3>
+          <h3>Lo que encontrarás hoy</h3>
           <ul>
-            <li>Cómo entiende la marca la calidad.</li>
-            <li>El tono y los valores de Malabar Fruits.</li>
-            <li>Una vía clara para contactar.</li>
+            <li>Criterios de selección y frescura de la marca.</li>
+            <li>Tono y propuesta visual de Malabar Fruits.</li>
+            <li>Vía directa de contacto con el equipo.</li>
           </ul>
         </div>
         <div class="trace-box trace-box--dark on-dark">
           <h3>Lo que hablamos en conversación</h3>
           <ul>
-            <li>Consultas sobre origen y procesos.</li>
-            <li>Requisitos específicos de tu empresa.</li>
-            <li>La gama concreta de cada momento.</li>
+            <li>Consultas técnicas sobre partidas y orígenes.</li>
+            <li>Requisitos y homologaciones de tu empresa.</li>
+            <li>La gama concreta y formatos de cada momento.</li>
           </ul>
         </div>
       </div>
@@ -164,73 +167,67 @@ const pillars = [
     color: var(--cocoa-600);
   }
 
-  /* Recorrido de pilares */
-  .pillar-path {
-    position: relative;
+  /* Recorrido editorial de pilares */
+  .pillar-editorial {
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
-  @media (min-width: 60rem) {
-    .pillar-path {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .pillar-path::before {
-      content: '';
-      position: absolute;
-      top: 2rem;
-      left: 2rem;
-      right: 2rem;
-      border-top: 2px dashed var(--line-strong);
-    }
-
-    .pillar:nth-child(even) {
-      margin-top: 3rem;
-    }
-  }
-
-  .pillar {
+  .pillar-row {
     position: relative;
     display: grid;
     gap: 1.25rem;
-    align-content: start;
+    padding: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+    border-radius: var(--radius-panel);
+    border-left: 6px solid var(--pillar);
+    background: var(--cream-50);
+    box-shadow: 0 4px 16px -6px rgb(53 39 39 / 0.08);
+    transition: transform 0.25s var(--ease);
   }
 
-  @media (max-width: 59.99rem) {
-    .pillar {
-      grid-template-columns: 4rem minmax(0, 1fr);
+  .pillar-row:hover {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 52rem) {
+    .pillar-row {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      align-items: start;
+      gap: 2.5rem;
     }
   }
 
-  .pillar__marker {
-    display: grid;
-    place-items: center;
-    width: 4rem;
-    height: 4rem;
+  .pillar-marker {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .pillar-num {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 2rem + 1vw, 3.25rem);
+    line-height: 1;
+    color: var(--pillar);
+  }
+
+  .pillar-dot {
+    width: 0.75rem;
+    height: 0.75rem;
     border-radius: 50%;
     background: var(--pillar);
-    font-family: var(--font-display);
-    font-size: 1.75rem;
+  }
+
+  .pillar-content h3 {
+    font-size: clamp(1.75rem, 1.4rem + 0.8vw, 2.25rem);
     color: var(--cocoa-900);
-    box-shadow: 0 0 0 6px var(--paper-100);
   }
 
-  .pillar:nth-child(2) .pillar__marker,
-  .pillar:nth-child(4) .pillar__marker {
-    color: var(--cream-50);
-  }
-
-  .pillar__body {
-    padding: 1.5rem;
-    border-radius: var(--radius-card);
-    background: var(--cream-50);
-  }
-
-  .pillar__body p {
+  .pillar-content p {
     margin-top: 0.6rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
     color: var(--cocoa-600);
+    max-width: 52rem;
   }
 
   /* Trazabilidad */
