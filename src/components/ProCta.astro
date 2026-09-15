@@ -1,0 +1,100 @@
+---
+import JuggleBalls from './JuggleBalls.astro';
+import { url } from '../lib/paths';
+
+interface Action {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+  primary?: Action;
+  secondary?: Action;
+}
+
+const {
+  eyebrow = 'Para profesionales',
+  title = '¿Trabajas con fruta y verdura fresca?',
+  text = 'Si tienes un comercio, un restaurante, una distribuidora o una idea de colaboración, empecemos por una conversación con el equipo.',
+  primary = { label: 'Hablar con el equipo', href: '/contacto/?tipo=profesional' },
+  secondary = { label: 'Ver la propuesta profesional', href: '/para-profesionales/' },
+} = Astro.props;
+---
+
+<section class="section--tight pro-cta-wrap" aria-labelledby="pro-cta-title">
+  <div class="container">
+    <div class="pro-cta tone-cocoa on-dark">
+      <div class="pro-cta__copy">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="pro-cta-title">{title}</h2>
+        <p class="lead">{text}</p>
+      </div>
+      <div class="pro-cta__actions">
+        <a class="btn btn--lemon" href={url(primary.href)}>{primary.label} <span class="arrow" aria-hidden="true">→</span></a>
+        {secondary && <a class="link-arrow" href={url(secondary.href)}>{secondary.label}</a>}
+      </div>
+      <JuggleBalls class="pro-cta__balls" palette="light" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .pro-cta {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+    overflow: hidden;
+    padding: clamp(2rem, 1.25rem + 4vw, 4.5rem);
+    border-radius: var(--radius-panel);
+  }
+
+  @media (min-width: 56rem) {
+    .pro-cta {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      align-items: end;
+    }
+  }
+
+  .pro-cta__copy {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pro-cta__copy h2 {
+    max-width: 18ch;
+  }
+
+  .pro-cta__copy .lead {
+    margin-top: 1rem;
+  }
+
+  .pro-cta__actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .pro-cta :global(.pro-cta__balls) {
+    position: absolute;
+    top: -1.5rem;
+    right: -1rem;
+    width: clamp(7rem, 5rem + 8vw, 11rem);
+    color: var(--cream-50);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 40rem) {
+    .pro-cta :global(.pro-cta__balls) {
+      width: 6rem;
+      top: -2rem;
+      right: -1.5rem;
+      opacity: 0.55;
+    }
+  }
+</style>

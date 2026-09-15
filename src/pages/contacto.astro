@@ -1,0 +1,320 @@
+---
+import ContactForm from '../components/ContactForm.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Picture from '../components/Picture.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+
+const page = PAGES.contacto;
+---
+
+<BaseLayout {...page}>
+  <PageIntro
+    crumb="Contacto"
+    eyebrow="Hablemos"
+    title="Contacto Malabar Fruits"
+    lead="Cuéntanos qué necesitas y te orientamos. Elige el tipo de consulta para ver el formulario adecuado.">
+    <div slot="visual" class="contact-visual" aria-hidden="true">
+      <span class="contact-visual__disc"></span>
+      <div class="contact-visual__ticket">
+        <Picture src="contacto/ilustracion-contacto-malabar.png" alt="" width={309} height={144} priority />
+      </div>
+      <span class="contact-visual__ball contact-visual__ball--a"></span>
+      <span class="contact-visual__ball contact-visual__ball--b"></span>
+    </div>
+  </PageIntro>
+
+  <section class="section tone-paper contact-section" aria-labelledby="contact-form-title">
+    <div class="container contact-layout">
+      <div class="contact-main">
+        <h2 id="contact-form-title" class="visually-hidden">Formulario de contacto</h2>
+
+        <fieldset class="choice js-only" data-choice>
+          <legend class="choice__legend">¿Qué tipo de consulta tienes?</legend>
+          <div class="choice__options">
+            <label class="choice-card">
+              <input type="radio" name="tipo-consulta" value="general" checked />
+              <span class="choice-card__body">
+                <span class="choice-card__title">Consulta general</span>
+                <span class="choice-card__text">Para personas y familias que quieren saber más de la marca.</span>
+              </span>
+            </label>
+            <label class="choice-card choice-card--pro">
+              <input type="radio" name="tipo-consulta" value="profesional" />
+              <span class="choice-card__body">
+                <span class="choice-card__title">Conversación profesional</span>
+                <span class="choice-card__text">Para comercio, restauración, distribución o colaboraciones.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="contact-panel" data-panel="general" id="panel-general">
+          <h3 class="contact-panel__title">Consulta general</h3>
+          <ContactForm variant="general" id="form-general" />
+        </div>
+
+        <div class="contact-panel" data-panel="profesional" id="panel-profesional">
+          <h3 class="contact-panel__title">Conversación profesional</h3>
+          <ContactForm variant="profesional" id="form-profesional" />
+        </div>
+      </div>
+
+      <aside class="contact-aside" aria-labelledby="aside-title">
+        <h2 id="aside-title">Qué pasa después</h2>
+        <ol class="reset-list after-steps">
+          <li><span aria-hidden="true">1</span> Envías tu consulta con el contexto que necesites.</li>
+          <li><span aria-hidden="true">2</span> El equipo la revisa y la dirige a quien corresponde.</li>
+          <li><span aria-hidden="true">3</span> Te respondemos por el medio que nos indiques.</li>
+        </ol>
+        <p class="contact-aside__note">
+          Esta web es una demostración: los formularios no envían datos. Los canales de contacto reales se publicarán cuando estén confirmados.
+        </p>
+        <a class="link-arrow" href={url(PAGES.profesionales.path)}>Ver la propuesta profesional <span class="arrow" aria-hidden="true">→</span></a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const choice = document.querySelector<HTMLFieldSetElement>('[data-choice]');
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+
+  if (choice && panels.length) {
+    const radios = Array.from(choice.querySelectorAll<HTMLInputElement>('input[type="radio"]'));
+
+    const show = (value: string) => {
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== value;
+      });
+      radios.forEach((radio) => {
+        radio.checked = radio.value === value;
+      });
+    };
+
+    const initial = new URLSearchParams(window.location.search).get('tipo');
+    show(initial === 'profesional' ? 'profesional' : 'general');
+
+    radios.forEach((radio) => radio.addEventListener('change', () => radio.checked && show(radio.value)));
+  }
+</script>
+
+<style>
+  .contact-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(100%, 22rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+  }
+
+  .contact-visual__disc {
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: var(--paper-100);
+  }
+
+  .contact-visual__ticket {
+    position: relative;
+    width: 86%;
+    rotate: -6deg;
+    filter: drop-shadow(0 18px 24px rgb(53 39 39 / 0.18));
+  }
+
+  .contact-visual__ball {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .contact-visual__ball--a {
+    top: 6%;
+    right: 10%;
+    width: 18%;
+    aspect-ratio: 1;
+    background: var(--apricot-400);
+  }
+
+  .contact-visual__ball--b {
+    bottom: 12%;
+    left: 8%;
+    width: 11%;
+    aspect-ratio: 1;
+    background: var(--leaf-600);
+  }
+
+  .contact-layout {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 3.5fr);
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .contact-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .contact-main {
+    display: grid;
+    gap: 2rem;
+  }
+
+  /* Selector */
+  .choice {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  .choice__legend {
+    margin-bottom: 1rem;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 1.3rem + 1vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .choice__options {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 40rem) {
+    .choice__options {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .choice-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.4rem 1.5rem;
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    background: var(--cream-50);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+
+  .choice-card:hover {
+    border-color: var(--malabar-600);
+  }
+
+  .choice-card input {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: 0.2rem 0 0;
+    accent-color: var(--malabar-700);
+  }
+
+  .choice-card:has(input:checked) {
+    border-color: var(--malabar-700);
+    box-shadow: inset 0 0 0 1px var(--malabar-700);
+  }
+
+  .choice-card:has(input:focus-visible) {
+    outline: 3px solid var(--malabar-600);
+    outline-offset: 3px;
+  }
+
+  .choice-card input:focus-visible {
+    outline: none;
+  }
+
+  .choice-card__body {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .choice-card__title {
+    font-weight: 800;
+    font-size: 1.0625rem;
+  }
+
+  .choice-card__text {
+    font-size: 0.9375rem;
+    color: var(--cocoa-600);
+  }
+
+  .contact-panel {
+    padding: clamp(1.5rem, 1rem + 3vw, 3rem);
+    border-radius: var(--radius-panel);
+    background: var(--cream-50);
+    animation: fade-up 0.25s var(--ease) both;
+  }
+
+  .contact-panel + .contact-panel {
+    margin-top: 0;
+  }
+
+  .contact-panel__title {
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+  }
+
+  /* Lateral */
+  .contact-aside {
+    padding: 1.75rem;
+    border-radius: var(--radius-panel);
+    background: var(--cocoa-900);
+    color: var(--cream-50);
+  }
+
+  .contact-aside h2 {
+    font-size: 1.75rem;
+  }
+
+  .after-steps {
+    display: grid;
+    gap: 0.9rem;
+    margin-block: 1.25rem 1.5rem;
+  }
+
+  .after-steps li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+    color: rgb(255 249 241 / 0.88);
+  }
+
+  .after-steps span {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--lemon-300);
+    color: var(--cocoa-900);
+    font-weight: 800;
+    font-size: 0.875rem;
+  }
+
+  .contact-aside__note {
+    margin-bottom: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-light);
+    font-size: 0.875rem;
+    color: rgb(255 249 241 / 0.76);
+  }
+
+  .contact-aside .link-arrow {
+    color: var(--lemon-300);
+  }
+
+  .contact-aside :focus-visible {
+    outline-color: var(--lemon-300);
+  }
+</style>

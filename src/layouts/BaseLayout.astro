@@ -1,18 +1,63 @@
 ---
 import '../styles/global.css';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { SITE, type PageMeta } from '../data/site';
+import { absoluteUrl, url } from '../lib/paths';
 
-interface Props { title?: string; description?: string; }
-const { title = 'Base técnica · Malabar Fruits', description = 'Esqueleto técnico del rediseño de Malabar Fruits.' } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+interface Props extends PageMeta {
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, path, noindex = false, ogImage = SITE.ogImage, jsonLd } = Astro.props;
+const canonical = absoluteUrl(path);
+const ogImageUrl = absoluteUrl(`/images/${ogImage}`);
 ---
+
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#FFF9F1" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" type="application/xml" href={url('/sitemap.xml')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dos personas se ríen mientras hacen malabares con naranjas en una cocina" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
+    />
+
+    <slot name="head" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body><slot /></body>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader currentPath={Astro.url.pathname} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
 </html>

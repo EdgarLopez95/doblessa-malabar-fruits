@@ -1,0 +1,97 @@
+---
+import { url } from '../lib/paths';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  crumb: string;
+  tone?: 'cream' | 'paper';
+}
+
+const { eyebrow, title, lead, crumb, tone = 'cream' } = Astro.props;
+const hasVisual = Astro.slots.has('visual');
+---
+
+<section class:list={['page-intro', `tone-${tone}`]} aria-labelledby="page-title">
+  <div class:list={['container', 'page-intro__grid', { 'has-visual': hasVisual }]}>
+    <div class="page-intro__copy">
+      <nav class="crumbs" aria-label="Ruta de navegación">
+        <ol class="reset-list">
+          <li><a href={url('/')}>Inicio</a></li>
+          <li aria-current="page">{crumb}</li>
+        </ol>
+      </nav>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 id="page-title">{title}</h1>
+      <p class="lead">{lead}</p>
+      <slot name="actions" />
+    </div>
+    {
+      hasVisual && (
+        <div class="page-intro__visual">
+          <slot name="visual" />
+        </div>
+      )
+    }
+  </div>
+  <slot name="after" />
+</section>
+
+<style>
+  .page-intro {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(2rem, 1.25rem + 3vw, 4rem) clamp(3.5rem, 2rem + 5vw, 6.5rem);
+  }
+
+  .page-intro__grid {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .page-intro__grid.has-visual {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+
+  .page-intro__copy h1 {
+    max-width: 16ch;
+  }
+
+  .page-intro__copy .lead {
+    margin-top: 1.5rem;
+  }
+
+  .page-intro__visual {
+    position: relative;
+  }
+
+  .crumbs {
+    margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    font-size: 0.875rem;
+    color: var(--cocoa-600);
+  }
+
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .crumbs a {
+    text-underline-offset: 0.25em;
+  }
+
+  .crumbs a:hover {
+    color: var(--malabar-700);
+  }
+</style>

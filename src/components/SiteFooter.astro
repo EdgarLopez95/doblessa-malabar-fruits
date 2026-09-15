@@ -1,0 +1,199 @@
+---
+import { PAGES, PRO_CONTACT } from '../data/site';
+import { asset, url } from '../lib/paths';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'La gama',
+    links: [
+      { label: 'Fruta fresca', href: PAGES.fruta.path },
+      { label: 'Verduras frescas', href: PAGES.verduras.path },
+      { label: 'Temporada', href: '/fruta-fresca/#temporada' },
+    ],
+  },
+  {
+    title: 'Malabar',
+    links: [
+      { label: 'Calidad y trazabilidad', href: PAGES.calidad.path },
+      { label: 'Para profesionales', href: PAGES.profesionales.path },
+      { label: 'Malabar Fruits y Limosin Fruits', href: PAGES.limosin.path },
+    ],
+  },
+  {
+    title: 'Hablemos',
+    links: [
+      { label: 'Contacto', href: PAGES.contacto.path },
+      { label: 'Soy profesional', href: PRO_CONTACT },
+    ],
+  },
+];
+---
+
+<footer class="site-footer on-dark" style={`--texture: url('${asset('marca/textura-pie-malabar.jpg')}')`}>
+  <div class="footer-stars" style={`background-image: url('${asset('marca/franja-estrellas-malabar.jpg')}')`} aria-hidden="true"></div>
+
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <a class="footer-logo" href={url('/')}>
+        <img src={asset('marca/logo-malabar-fruits.png')} alt="Malabar Fruits, ir al inicio" width="300" height="108" loading="lazy" />
+      </a>
+      <p class="footer-claim">Comer bien también es jugar.</p>
+      <p class="footer-text">
+        Una marca de fruta y verdura fresca vinculada a <a href={url(PAGES.limosin.path)}>Limosin Fruits</a>.
+      </p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Pie de página">
+      {
+        columns.map((column) => (
+          <div class="footer-col">
+            <h2 class="footer-title">{column.title}</h2>
+            <ul class="reset-list">
+              {column.links.map((link) => (
+                <li>
+                  <a href={url(link.href)}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} Malabar Fruits. Propuesta de rediseño estático; datos corporativos pendientes de validación.</p>
+    <ul class="reset-list footer-legal">
+      <li><a href={url(PAGES.avisoLegal.path)}>Aviso legal</a></li>
+      <li><a href={url(PAGES.privacidad.path)}>Política de privacidad</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--cocoa-900);
+    color: var(--cream-50);
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--texture) center bottom / cover no-repeat;
+    mix-blend-mode: screen;
+    opacity: 0.18;
+  }
+
+  .footer-stars {
+    height: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+    background-color: var(--malabar-700);
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: auto 100%;
+  }
+
+  .footer-main {
+    display: grid;
+    gap: 3rem;
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem) 3rem;
+  }
+
+  @media (min-width: 56rem) {
+    .footer-main {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 4rem;
+    }
+  }
+
+  .footer-logo {
+    display: inline-block;
+    padding: 0.9rem 1.25rem;
+    border-radius: var(--radius-panel);
+    background: var(--cream-50);
+  }
+
+  .footer-logo img {
+    width: 9.5rem;
+  }
+
+  .footer-claim {
+    margin-top: 1.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+    line-height: 1.15;
+  }
+
+  .footer-text {
+    max-width: 24rem;
+    margin-top: 0.75rem;
+    color: rgb(255 249 241 / 0.78);
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-title {
+    margin-bottom: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--lemon-300);
+  }
+
+  .footer-col ul {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .site-footer a {
+    text-decoration-color: rgb(255 249 241 / 0.35);
+    text-underline-offset: 0.25em;
+    transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
+  }
+
+  .footer-col a,
+  .footer-legal a {
+    display: inline-block;
+    padding-block: 0.3rem;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--lemon-300);
+    text-decoration-color: currentColor;
+  }
+
+  .footer-col a:hover,
+  .footer-legal a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-block: 1.5rem 2rem;
+    border-top: 1px solid var(--line-light);
+    font-size: 0.875rem;
+    color: rgb(255 249 241 / 0.72);
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+  }
+</style>

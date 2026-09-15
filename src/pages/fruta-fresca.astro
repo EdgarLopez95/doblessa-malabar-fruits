@@ -1,0 +1,413 @@
+---
+import JuggleBalls from '../components/JuggleBalls.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Picture from '../components/Picture.astro';
+import ProCta from '../components/ProCta.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { FRUIT_GROUPS, FRUITS, type FruitGroup } from '../data/fruits';
+import { GENERAL_CONTACT, PAGES, PRO_CONTACT } from '../data/site';
+import { url } from '../lib/paths';
+
+const page = PAGES.fruta;
+const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
+---
+
+<BaseLayout {...page}>
+  <PageIntro
+    crumb="Fruta fresca"
+    eyebrow="La gama · Fruta"
+    title="Fruta fresca"
+    lead="De hueso, de pepita o para descubrir: una forma sencilla de recorrer la fruta que forma parte del universo Malabar. Sin prisas, sin carrito y con mucho color.">
+    <div slot="actions" class="btn-row">
+      <a class="btn btn--primary" href="#recorrido">Recorrer la fruta <span class="arrow" aria-hidden="true">↓</span></a>
+      <a class="link-arrow intro-link" href="#temporada">¿Y la temporada?</a>
+    </div>
+    <div slot="visual" class="fruit-visual" aria-hidden="true">
+      <span class="fruit-visual__disc"></span>
+      <div class="fruit-visual__art">
+        <Picture src="gama/fruta-divertida.png" alt="" width={368} height={558} priority />
+      </div>
+      <JuggleBalls class="fruit-visual__balls" />
+    </div>
+  </PageIntro>
+
+  <section id="recorrido" class="section tone-paper range" aria-labelledby="range-title">
+    <div class="container">
+      <div class="range-head">
+        <header class="section-head">
+          <p class="eyebrow">Recorrido por la gama</p>
+          <h2 id="range-title">Trece frutas, trece maneras de jugar</h2>
+          <p>Un vistazo editorial a la fruta que puede formar parte de la gama Malabar. No es un catálogo de compra: es una invitación a conocerla.</p>
+        </header>
+
+        <div class="filters js-only">
+          <p class="filters__label" id="filters-label">Filtrar por tipo</p>
+          <div class="filters__chips" role="group" aria-labelledby="filters-label" data-filter>
+            <button class="chip" type="button" aria-pressed="true" data-filter-value="todas">Todas</button>
+            {
+              groups.map(([value, label]) => (
+                <button class="chip" type="button" aria-pressed="false" data-filter-value={value}>
+                  {label}
+                </button>
+              ))
+            }
+          </div>
+          <p class="filters__status" aria-live="polite" data-filter-status>Mostrando las 13 frutas</p>
+        </div>
+      </div>
+
+      <ul class="reset-list fruit-grid" data-filter-list>
+        {
+          FRUITS.map((fruit, index) => (
+            <li class="fruit-card" data-group={fruit.group} style={`--fruit: ${fruit.color}; --accent: ${fruit.accent}`}>
+              <span class="fruit-card__index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span class="fruit-card__ball" aria-hidden="true">
+                <span />
+              </span>
+              <p class="fruit-card__group">{FRUIT_GROUPS[fruit.group]}</p>
+              <h3>{fruit.name}</h3>
+              <p class="fruit-card__line">{fruit.line}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="temporada" class="section season" aria-labelledby="season-title">
+    <div class="container season-grid">
+      <div class="season-wheel" aria-hidden="true">
+        <span class="season-wheel__ring"></span>
+        <span class="season-wheel__ball season-wheel__ball--1"></span>
+        <span class="season-wheel__ball season-wheel__ball--2"></span>
+        <span class="season-wheel__ball season-wheel__ball--3"></span>
+        <span class="season-wheel__ball season-wheel__ball--4"></span>
+        <span class="season-wheel__center">Cada fruta,<br />a su tiempo</span>
+      </div>
+      <div class="season-copy">
+        <p class="eyebrow">Temporada</p>
+        <h2 id="season-title">La gama gira con el calendario</h2>
+        <div class="prose season-text">
+          <p>
+            Cada fruta tiene su momento, y la selección cambia con él. Por eso aquí no fijamos fechas ni prometemos disponibilidad: preferimos
+            contarlo bien, con información actualizada.
+          </p>
+          <p>Si trabajas con fruta, el equipo puede hablarte de la gama del momento. Si eres curioso, también puedes escribirnos.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--primary" href={url(PRO_CONTACT)}>Consultar como profesional</a>
+          <a class="btn btn--outline" href={url(GENERAL_CONTACT)}>Hacer una consulta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ProCta
+    title="¿Buscas fruta fresca para tu negocio?"
+    text="Retail, restauración o distribución: cuéntanos qué necesitas y conversemos sobre cómo encaja la gama Malabar en tu propuesta."
+  />
+</BaseLayout>
+
+<script>
+  const group = document.querySelector<HTMLElement>('[data-filter]');
+  const list = document.querySelector<HTMLElement>('[data-filter-list]');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+
+  if (group && list && status) {
+    const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>('[data-filter-value]'));
+    const cards = Array.from(list.querySelectorAll<HTMLElement>('[data-group]'));
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const value = button.dataset.filterValue ?? 'todas';
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+
+        let visible = 0;
+        cards.forEach((card) => {
+          const show = value === 'todas' || card.dataset.group === value;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+
+        const label = button.textContent?.trim().toLowerCase() ?? '';
+        status.textContent =
+          value === 'todas' ? `Mostrando las ${visible} frutas` : `Mostrando ${visible} ${visible === 1 ? 'fruta' : 'frutas'}: ${label}`;
+      });
+    });
+  }
+</script>
+
+<style>
+  .intro-link {
+    align-self: center;
+  }
+
+  /* Visual de cabecera */
+  .fruit-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    max-width: 26rem;
+    margin-inline: auto;
+    padding-top: 2rem;
+  }
+
+  .fruit-visual__disc {
+    position: absolute;
+    inset: 18% 0 4%;
+    border-radius: 50%;
+    background: var(--apricot-400);
+  }
+
+  .fruit-visual__art {
+    position: relative;
+    width: min(70%, 17rem);
+    rotate: 3deg;
+    mix-blend-mode: multiply;
+  }
+
+  .fruit-visual :global(.fruit-visual__balls) {
+    position: absolute;
+    top: 0;
+    left: -4%;
+    width: 38%;
+    color: var(--cocoa-600);
+  }
+
+  /* Filtros */
+  .range-head {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+
+  @media (min-width: 64rem) {
+    .range-head {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+  }
+
+  .range-head .section-head {
+    margin-bottom: 0;
+  }
+
+  .filters {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .filters__label {
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .filters__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.15rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--cream-50);
+    font-size: 0.9688rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .chip:hover {
+    border-color: var(--malabar-700);
+  }
+
+  .chip[aria-pressed='true'] {
+    border-color: var(--malabar-700);
+    background: var(--malabar-700);
+    color: var(--cream-50);
+  }
+
+  .chip[aria-pressed='true']::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--lemon-300);
+  }
+
+  .filters__status {
+    font-size: 0.875rem;
+    color: var(--cocoa-600);
+  }
+
+  /* Tarjetas */
+  .fruit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+  }
+
+  .fruit-card {
+    position: relative;
+    display: grid;
+    align-content: end;
+    gap: 0.35rem;
+    min-height: 19rem;
+    overflow: hidden;
+    padding: 1.5rem;
+    border-radius: var(--radius-card);
+    background: var(--cream-50);
+    animation: fade-up 0.25s var(--ease) both;
+  }
+
+  .fruit-card:nth-child(4n + 2) {
+    background: #fbf1e4;
+  }
+
+  .fruit-card__index {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.5rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--cocoa-600);
+  }
+
+  .fruit-card__ball {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 6.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--fruit);
+    box-shadow: inset -12px -14px 0 rgb(53 39 39 / 0.12);
+    transition: transform 0.35s var(--ease);
+  }
+
+  .fruit-card__ball span {
+    position: absolute;
+    left: -14%;
+    bottom: -4%;
+    width: 36%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 4px solid var(--cream-50);
+  }
+
+  .fruit-card:nth-child(4n + 2) .fruit-card__ball span {
+    border-color: #fbf1e4;
+  }
+
+  .fruit-card:hover .fruit-card__ball {
+    transform: translateY(-6px) rotate(-8deg);
+  }
+
+  .fruit-card__group {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--malabar-600);
+  }
+
+  .fruit-card h3 {
+    font-size: clamp(1.875rem, 1.6rem + 0.8vw, 2.25rem);
+  }
+
+  .fruit-card__line {
+    color: var(--cocoa-600);
+  }
+
+  @media (min-width: 64rem) {
+    .fruit-card:first-child {
+      grid-column: span 2;
+      min-height: 22rem;
+      background: var(--lemon-300);
+    }
+
+    .fruit-card:first-child .fruit-card__ball {
+      width: 11rem;
+    }
+
+    .fruit-card:first-child .fruit-card__ball span {
+      border-color: var(--lemon-300);
+    }
+
+    .fruit-card:first-child .fruit-card__group,
+    .fruit-card:first-child .fruit-card__index,
+    .fruit-card:first-child .fruit-card__line {
+      color: var(--cocoa-900);
+    }
+
+    .fruit-card:first-child h3 {
+      font-size: 3rem;
+    }
+  }
+
+  /* Temporada */
+  .season-grid {
+    display: grid;
+    gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .season-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+  }
+
+  .season-wheel {
+    position: relative;
+    width: min(100%, 24rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+  }
+
+  .season-wheel__ring {
+    position: absolute;
+    inset: 8%;
+    border: 2px dashed var(--line-strong);
+    border-radius: 50%;
+  }
+
+  .season-wheel__ball {
+    position: absolute;
+    width: 16%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  .season-wheel__ball--1 { top: 0; left: 42%; background: var(--lemon-300); }
+  .season-wheel__ball--2 { top: 42%; right: 0; background: var(--apricot-400); width: 20%; }
+  .season-wheel__ball--3 { bottom: 0; left: 42%; background: var(--malabar-600); }
+  .season-wheel__ball--4 { top: 42%; left: 0; background: var(--leaf-600); width: 12%; }
+
+  .season-wheel__center {
+    position: absolute;
+    inset: 24%;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    background: var(--paper-100);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .season-text {
+    max-width: 38rem;
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    color: var(--cocoa-600);
+  }
+</style>

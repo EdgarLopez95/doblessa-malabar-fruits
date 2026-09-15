@@ -1,0 +1,371 @@
+---
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+
+interface Props {
+  variant: 'general' | 'profesional';
+  id: string;
+}
+
+const { variant, id } = Astro.props;
+const isPro = variant === 'profesional';
+const f = (name: string) => `${id}-${name}`;
+---
+
+<div class="demo-form" data-demo-form>
+  <form id={id} class="form" novalidate aria-describedby={f('note')}>
+    <p class="form-intro">Todos los campos son obligatorios salvo los marcados como opcionales.</p>
+
+    <div class="form-summary" data-form-summary role="alert" hidden></div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label for={f('nombre')}>Nombre</label>
+        <input class="input" id={f('nombre')} name="nombre" type="text" autocomplete="name" required aria-describedby={f('nombre-error')} />
+        <p class="field-error" id={f('nombre-error')} hidden></p>
+      </div>
+
+      {
+        isPro && (
+          <>
+            <div class="field">
+              <label for={f('empresa')}>Empresa</label>
+              <input class="input" id={f('empresa')} name="empresa" type="text" autocomplete="organization" required aria-describedby={f('empresa-error')} />
+              <p class="field-error" id={f('empresa-error')} hidden />
+            </div>
+            <div class="field">
+              <label for={f('cargo')}>
+                Cargo <span class="optional">(opcional)</span>
+              </label>
+              <input class="input" id={f('cargo')} name="cargo" type="text" autocomplete="organization-title" aria-describedby={f('cargo-error')} />
+              <p class="field-error" id={f('cargo-error')} hidden />
+            </div>
+          </>
+        )
+      }
+
+      <div class="field">
+        <label for={f('correo')}>Correo electrónico</label>
+        <input
+          class="input"
+          id={f('correo')}
+          name="correo"
+          type="email"
+          autocomplete="email"
+          inputmode="email"
+          required
+          aria-describedby={f('correo-error')}
+        />
+        <p class="field-error" id={f('correo-error')} hidden></p>
+      </div>
+
+      {
+        isPro ? (
+          <>
+            <div class="field">
+              <label for={f('telefono')}>
+                Teléfono <span class="optional">(opcional)</span>
+              </label>
+              <input
+                class="input"
+                id={f('telefono')}
+                name="telefono"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                pattern="\+?[0-9 ]{6,20}"
+                aria-describedby={f('telefono-error')}
+              />
+              <p class="field-error" id={f('telefono-error')} hidden />
+            </div>
+            <div class="field">
+              <label for={f('sector')}>Tipo de negocio</label>
+              <select class="input" id={f('sector')} name="sector" required aria-describedby={f('sector-error')}>
+                <option value="">Elige una opción</option>
+                <option>Retail o comercio</option>
+                <option>Restauración</option>
+                <option>Distribución</option>
+                <option>Colaboración de marca</option>
+                <option>Otro</option>
+              </select>
+              <p class="field-error" id={f('sector-error')} hidden />
+            </div>
+          </>
+        ) : (
+          <div class="field">
+            <label for={f('motivo')}>Motivo de la consulta</label>
+            <select class="input" id={f('motivo')} name="motivo" required aria-describedby={f('motivo-error')}>
+              <option value="">Elige una opción</option>
+              <option>Quiero conocer mejor la marca</option>
+              <option>Tengo una sugerencia o comentario</option>
+              <option>Otra consulta</option>
+            </select>
+            <p class="field-error" id={f('motivo-error')} hidden />
+          </div>
+        )
+      }
+
+      <div class="field field--full">
+        <label for={f('mensaje')}>{isPro ? 'Cuéntanos qué necesitas' : 'Mensaje'}</label>
+        <textarea
+          class="input"
+          id={f('mensaje')}
+          name="mensaje"
+          rows="5"
+          required
+          data-minlength="10"
+          aria-describedby={`${f('mensaje-hint')} ${f('mensaje-error')}`}></textarea>
+        <p class="field-hint" id={f('mensaje-hint')}>
+          {isPro ? 'Por ejemplo: tipo de establecimiento y qué te gustaría explorar con Malabar Fruits.' : 'Escribe al menos 10 caracteres.'}
+        </p>
+        <p class="field-error" id={f('mensaje-error')} hidden></p>
+      </div>
+
+      <div class="field field--full">
+        <div class="check">
+          <input id={f('consentimiento')} name="consentimiento" type="checkbox" required aria-describedby={f('consentimiento-error')} />
+          <label for={f('consentimiento')}>
+            He leído y acepto la <a href={url(PAGES.privacidad.path)}>política de privacidad</a>.
+          </label>
+        </div>
+        <p class="field-error" id={f('consentimiento-error')} hidden></p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn--primary" type="submit" data-form-submit>
+        <span data-submit-label>{isPro ? 'Solicitar información' : 'Enviar consulta'}</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <p class="form-note" id={f('note')}>
+        <strong>Formulario de demostración.</strong> Al enviarlo no se transmite ni se guarda ninguna información.
+      </p>
+    </div>
+  </form>
+
+  <div class="form-success" data-form-success hidden>
+    <span class="form-success__balls" aria-hidden="true"><span></span><span></span><span></span></span>
+    <h3 class="form-success__title" tabindex="-1" data-form-success-title>¡Gracias! Consulta recibida</h3>
+    <p>
+      Esto es una demostración estática: tus datos <strong>no se han enviado ni guardado</strong>. En la versión final, {
+        isPro ? 'la consulta llegaría al equipo comercial.' : 'la consulta llegaría al equipo de Malabar Fruits.'
+      }
+    </p>
+    <button class="btn btn--outline btn--small" type="button" data-form-reset>Escribir otra consulta</button>
+  </div>
+</div>
+
+<script>
+  type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+  const messageFor = (field: Field): string => {
+    if (field instanceof HTMLInputElement && field.type === 'checkbox') {
+      return field.required && !field.checked ? 'Necesitamos tu consentimiento para continuar.' : '';
+    }
+    const value = field.value.trim();
+    if (field.required && value === '') {
+      return field instanceof HTMLSelectElement ? 'Elige una opción de la lista.' : 'Este campo es obligatorio.';
+    }
+    if (value === '') return '';
+    if (field instanceof HTMLInputElement && field.type === 'email' && field.validity.typeMismatch) {
+      return 'Escribe un correo válido, por ejemplo nombre@dominio.com.';
+    }
+    if (field.validity.patternMismatch) return 'Usa solo números, espacios y, si quieres, el prefijo +.';
+    const min = Number(field.dataset.minlength ?? 0);
+    if (min && value.length < min) return `Escribe al menos ${min} caracteres.`;
+    return '';
+  };
+
+  const render = (field: Field, message: string) => {
+    const error = document.getElementById(`${field.id}-error`);
+    if (message) field.setAttribute('aria-invalid', 'true');
+    else field.removeAttribute('aria-invalid');
+    if (error) {
+      error.textContent = message;
+      error.hidden = !message;
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-demo-form]').forEach((wrapper) => {
+    const form = wrapper.querySelector('form');
+    const success = wrapper.querySelector<HTMLElement>('[data-form-success]');
+    const successTitle = wrapper.querySelector<HTMLElement>('[data-form-success-title]');
+    const summary = wrapper.querySelector<HTMLElement>('[data-form-summary]');
+    const submit = wrapper.querySelector<HTMLButtonElement>('[data-form-submit]');
+    const submitLabel = wrapper.querySelector<HTMLElement>('[data-submit-label]');
+    if (!form || !success || !submit || !submitLabel) return;
+
+    const fields = Array.from(form.querySelectorAll<Field>('input, select, textarea'));
+    const originalLabel = submitLabel.textContent ?? '';
+    let sending = false;
+
+    fields.forEach((field) => {
+      const isCheckbox = field instanceof HTMLInputElement && field.type === 'checkbox';
+      field.addEventListener('blur', () => {
+        if (isCheckbox) return;
+        if (field.value.trim() !== '' || field.dataset.touched) {
+          field.dataset.touched = 'true';
+          render(field, messageFor(field));
+        }
+      });
+      const revalidate = () => {
+        if (field.dataset.touched || field.getAttribute('aria-invalid') === 'true') render(field, messageFor(field));
+      };
+      field.addEventListener('input', revalidate);
+      field.addEventListener('change', revalidate);
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (sending) return;
+
+      const invalid = fields.filter((field) => {
+        field.dataset.touched = 'true';
+        const message = messageFor(field);
+        render(field, message);
+        return message !== '';
+      });
+
+      if (invalid.length > 0) {
+        if (summary) {
+          summary.hidden = false;
+          summary.textContent =
+            invalid.length === 1
+              ? 'Revisa el campo marcado para poder continuar.'
+              : `Revisa los ${invalid.length} campos marcados para poder continuar.`;
+        }
+        invalid[0]?.focus();
+        return;
+      }
+
+      if (summary) summary.hidden = true;
+      sending = true;
+      submit.setAttribute('aria-disabled', 'true');
+      submitLabel.textContent = 'Enviando…';
+
+      window.setTimeout(() => {
+        sending = false;
+        submit.removeAttribute('aria-disabled');
+        submitLabel.textContent = originalLabel;
+        form.hidden = true;
+        success.hidden = false;
+        successTitle?.focus();
+      }, 650);
+    });
+
+    wrapper.querySelector('[data-form-reset]')?.addEventListener('click', () => {
+      form.reset();
+      fields.forEach((field) => {
+        delete field.dataset.touched;
+        render(field, '');
+      });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0]?.focus();
+    });
+  });
+</script>
+
+<style>
+  .form {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .form-intro {
+    font-size: 0.9375rem;
+    color: var(--cocoa-600);
+  }
+
+  .form-summary {
+    padding: 0.9rem 1.1rem;
+    border-left: 4px solid var(--error);
+    border-radius: var(--radius-card);
+    background: #fbeceb;
+    color: var(--error);
+    font-weight: 700;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 40rem) {
+    .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem 1.25rem;
+    }
+
+    .field--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field-hint {
+    font-size: 0.875rem;
+    color: var(--cocoa-600);
+  }
+
+  .check a {
+    color: var(--malabar-700);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .form-actions {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding-top: 0.5rem;
+  }
+
+  .form-note {
+    max-width: 34rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-card);
+    background: rgb(248 216 91 / 0.35);
+    font-size: 0.875rem;
+  }
+
+  .form-success {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    border: 1.5px solid var(--leaf-600);
+    border-radius: var(--radius-panel);
+    background: #eef4ef;
+    animation: fade-up 0.3s var(--ease) both;
+  }
+
+  .form-success__title {
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+    color: var(--leaf-600);
+  }
+
+  .form-success__title:focus {
+    outline: none;
+  }
+
+  .form-success__balls {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .form-success__balls span {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--apricot-400);
+  }
+
+  .form-success__balls span:nth-child(2) {
+    background: var(--lemon-300);
+    transform: translateY(-0.4rem);
+  }
+
+  .form-success__balls span:nth-child(3) {
+    background: var(--leaf-600);
+  }
+</style>

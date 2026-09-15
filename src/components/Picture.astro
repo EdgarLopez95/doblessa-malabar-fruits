@@ -1,0 +1,45 @@
+---
+import { asset } from '../lib/paths';
+
+interface Source {
+  media: string;
+  src: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  priority?: boolean;
+  sources?: Source[];
+}
+
+const { src, alt, width, height, priority = false, sources = [] } = Astro.props;
+
+const toWebp = (file: string) => file.replace(/\.(?:png|jpe?g)$/i, '.webp');
+const mime = (file: string) => (file.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg');
+---
+
+<picture>
+  {
+    sources.map((source) => (
+      <>
+        <source media={source.media} srcset={asset(toWebp(source.src))} type="image/webp" width={source.width} height={source.height} />
+        <source media={source.media} srcset={asset(source.src)} type={mime(source.src)} width={source.width} height={source.height} />
+      </>
+    ))
+  }
+  <source srcset={asset(toWebp(src))} type="image/webp" />
+  <img
+    src={asset(src)}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : undefined}
+  />
+</picture>

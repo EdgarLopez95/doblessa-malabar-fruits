@@ -1,0 +1,67 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+
+const sections = [
+  { id: 'titular', title: 'Titular del sitio web' },
+  { id: 'objeto', title: 'Objeto' },
+  { id: 'condiciones', title: 'Condiciones de uso' },
+  { id: 'propiedad', title: 'Propiedad intelectual e industrial' },
+  { id: 'enlaces', title: 'Enlaces' },
+  { id: 'responsabilidad', title: 'Responsabilidad' },
+  { id: 'legislacion', title: 'Legislación aplicable' },
+];
+---
+
+<LegalLayout
+  meta={PAGES.avisoLegal}
+  heading="Aviso legal"
+  intro="Condiciones que regularían el acceso y el uso de este sitio web, organizadas para su revisión."
+  sections={sections}>
+  <h2 id="titular">Titular del sitio web</h2>
+  <p>En cumplimiento de la normativa aplicable, se informaría de los siguientes datos del titular:</p>
+  <ul>
+    <li>Razón social: <span class="placeholder">[Pendiente de confirmar]</span></li>
+    <li>Número de identificación fiscal: <span class="placeholder">[Pendiente de confirmar]</span></li>
+    <li>Domicilio social: <span class="placeholder">[Pendiente de confirmar]</span></li>
+    <li>Datos registrales: <span class="placeholder">[Pendiente de confirmar]</span></li>
+    <li>Correo electrónico de contacto: <span class="placeholder">[Pendiente de confirmar]</span></li>
+  </ul>
+
+  <h2 id="objeto">Objeto</h2>
+  <p>
+    Este sitio web presenta la marca Malabar Fruits y su propuesta en torno a la fruta y la verdura fresca. No es una tienda online: no permite
+    realizar compras, reservas ni pedidos.
+  </p>
+
+  <h2 id="condiciones">Condiciones de uso</h2>
+  <p>
+    El acceso al sitio web atribuiría la condición de persona usuaria e implicaría la aceptación de estas condiciones. La persona usuaria se
+    compromete a hacer un uso adecuado de los contenidos, de acuerdo con la ley y la buena fe.
+  </p>
+
+  <h2 id="propiedad">Propiedad intelectual e industrial</h2>
+  <p>
+    Los textos, imágenes, logotipos y demás elementos del sitio estarían protegidos por derechos de propiedad intelectual e industrial. La
+    titularidad de la marca y de las imágenes debe confirmarse: <span class="placeholder">[Pendiente de confirmar]</span>.
+  </p>
+
+  <h2 id="enlaces">Enlaces</h2>
+  <p>
+    El sitio podría incluir enlaces a páginas de terceros. Su inclusión sería meramente informativa y no implicaría aprobación ni
+    responsabilidad sobre sus contenidos.
+  </p>
+
+  <h2 id="responsabilidad">Responsabilidad</h2>
+  <p>
+    El titular trabajaría para mantener la información actualizada y el sitio disponible, sin poder garantizar la ausencia total de errores o
+    interrupciones. El alcance de esta cláusula debe revisarse legalmente.
+  </p>
+
+  <h2 id="legislacion">Legislación aplicable</h2>
+  <p>
+    Estas condiciones se regirían por la legislación <span class="placeholder">[Pendiente de confirmar]</span>. Para cualquier cuestión sobre el
+    tratamiento de datos, consulta la <a href={url(PAGES.privacidad.path)}>política de privacidad</a>.
+  </p>
+</LegalLayout>

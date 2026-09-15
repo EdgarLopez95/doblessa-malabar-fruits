@@ -1,4 +1,932 @@
 ---
+import JuggleBalls from '../components/JuggleBalls.astro';
+import Picture from '../components/Picture.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { GENERAL_CONTACT, PAGES, PRO_CONTACT, SITE } from '../data/site';
+import { absoluteUrl, asset, url } from '../lib/paths';
+
+const page = PAGES.home;
+const home = absoluteUrl('/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${home}#website`,
+      name: SITE.name,
+      url: home,
+      inLanguage: 'es',
+    },
+    {
+      '@type': 'Brand',
+      '@id': `${home}#brand`,
+      name: SITE.name,
+      url: home,
+      logo: absoluteUrl('/images/marca/logo-malabar-fruits.png'),
+      description: 'Marca de fruta y verdura fresca.',
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${home}#limosin-fruits`,
+      name: 'Limosin Fruits',
+      brand: { '@id': `${home}#brand` },
+    },
+  ],
+};
+
+const principles = ['Producto antes que decoración', 'La temporada como relato', 'Cabe en la cocina y en el lineal'];
+
+const plays = [
+  {
+    image: 'gama/fruta-energia-diaria.png',
+    title: 'Una vuelta más a lo fresco.',
+    text: 'Cambiar la merienda de siempre por una pieza de fruta ya es darle otra vuelta al día.',
+  },
+  {
+    image: 'gama/fruta-dieta-equilibrada.png',
+    title: 'Hoy toca color.',
+    text: 'Rojo, naranja, verde: la mesa también se elige con los ojos.',
+  },
+  {
+    image: 'gama/fruta-energia-natural.png',
+    title: 'Sabor que hace equipo.',
+    text: 'La fruta sabe mejor cuando se reparte y pasa de mano en mano.',
+  },
+];
+
+const quality = [
+  { title: 'Selección', text: 'Elegir bien es el primer gesto de la marca.' },
+  { title: 'Frescura', text: 'Respetar el ritmo de cada producto.' },
+  { title: 'Presentación', text: 'Que la marca acompañe al producto, sin taparlo.' },
+  { title: 'Relación profesional', text: 'Hablar claro antes de prometer.' },
+];
+
+const sectors = [
+  { title: 'Retail', text: 'Una marca con color para la sección de fresco.' },
+  { title: 'Restauración', text: 'Producto con buena presencia en la mesa.' },
+  { title: 'Distribución', text: 'Una conversación directa sobre la gama.' },
+  { title: 'Colaboraciones', text: 'Proyectos que quieran sumar el tono Malabar.' },
+];
 ---
-<BaseLayout><main><p>Base técnica preparada para el rediseño de Malabar Fruits.</p></main></BaseLayout>
+
+<BaseLayout {...page} jsonLd={jsonLd}>
+  <Fragment slot="head">
+    <link rel="preload" as="image" type="image/webp" href={asset('inicio/hero-campana-malabar-movil.webp')} media="(max-width: 44.99em)" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href={asset('inicio/hero-campana-malabar.webp')} media="(min-width: 45em)" fetchpriority="high" />
+  </Fragment>
+
+  <!-- 1. Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <img class="hero-logo" src={asset('marca/logo-malabar-fruits.png')} alt="Malabar Fruits" width="300" height="108" />
+        <h1 id="hero-title">Fruta y verdura <em>fresca</em> para disfrutar cada día</h1>
+        <p class="lead">
+          Comer bien también es jugar. Malabar Fruits pone color, ritmo y buen humor a la fruta y la verdura de todos los días, para
+          descubrirlas, compartirlas y volver a por más.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="#gama">Descubre la gama <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn--outline" href={url(PAGES.profesionales.path)}>Soy profesional</a>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <div class="hero-frame">
+          <Picture
+            src="inicio/hero-campana-malabar.jpg"
+            alt="Dos personas se ríen en una cocina mientras una de ellas hace malabares con dos naranjas"
+            width={1920}
+            height={717}
+            priority
+            sources={[{ media: '(max-width: 44.99em)', src: 'inicio/hero-campana-malabar-movil.jpg', width: 1085, height: 1077 }]}
+          />
+        </div>
+        <JuggleBalls class="hero-balls" />
+        <p class="hero-sticker"><span>Hoy toca</span> color</p>
+      </div>
+    </div>
+
+    <div class="hero-strip" aria-hidden="true">
+      <Picture src="inicio/hero-fruta-malabar.jpg" alt="" width={1920} height={249} priority />
+    </div>
+  </section>
+
+  <!-- 2. Introducción de marca -->
+  <section class="section intro" aria-labelledby="intro-title">
+    <div class="container intro-grid">
+      <div class="intro-art" aria-hidden="true">
+        <div class="intro-crop">
+          <Picture src="inicio/detalle-campana-malabar.png" alt="" width={774} height={585} />
+        </div>
+      </div>
+      <div class="intro-copy">
+        <p class="eyebrow">Qué es Malabar Fruits</p>
+        <h2 id="intro-title" class="intro-title">Todos hemos hecho un malabar. Con la fruta, es más divertido.</h2>
+        <div class="prose intro-text">
+          <p>
+            Con las prisas, con la compra, con lo que apetece a cada uno en casa. Malabar Fruits parte de esa idea tan cotidiana para
+            reunir fruta y verdura fresca bajo un mismo gesto: elegir lo que tiene color, sabor y ganas de compartirse.
+          </p>
+          <p>Sin fórmulas ni sermones. Con producto real en el centro y un guiño que se entiende a la primera.</p>
+        </div>
+        <ul class="reset-list principles">
+          {principles.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Categorías -->
+  <section id="gama" class="section gama tone-paper" aria-labelledby="gama-title">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">La gama</p>
+        <h2 id="gama-title">Elige por dónde empezar</h2>
+        <p>Fruta y verdura fresca contadas con calma y sin carrito: aquí se viene a descubrir.</p>
+      </header>
+
+      <div class="gama-grid">
+        <article class="gama-panel gama-panel--fruit">
+          <div class="gama-panel__body">
+            <p class="gama-panel__kicker">De hueso, de pepita y para descubrir</p>
+            <h3 class="gama-panel__title">
+              <a class="stretched-link" href={url(PAGES.fruta.path)}>Fruta fresca</a>
+            </h3>
+            <p class="gama-panel__text">Melocotón, nectarina, paraguayo, cereza, kiwi y muchas más formas de poner color a la mesa.</p>
+            <span class="gama-panel__cta" aria-hidden="true">Explorar la fruta <span class="arrow">→</span></span>
+          </div>
+          <div class="gama-panel__art" aria-hidden="true">
+            <span class="orb orb--a"></span><span class="orb orb--b"></span><span class="orb orb--c"></span><span class="orbit"></span>
+          </div>
+        </article>
+
+        <article class="gama-panel gama-panel--veg on-dark">
+          <div class="gama-panel__body">
+            <p class="gama-panel__kicker">La huerta, por colores</p>
+            <h3 class="gama-panel__title">
+              <a class="stretched-link" href={url(PAGES.verduras.path)}>Verduras frescas</a>
+            </h3>
+            <p class="gama-panel__text">Verdes, rojas, amarillas y moradas: la otra mitad del juego.</p>
+            <span class="gama-panel__cta" aria-hidden="true">Explorar las verduras <span class="arrow">→</span></span>
+          </div>
+          <div class="gama-panel__art" aria-hidden="true">
+            <span class="orb orb--a"></span><span class="orb orb--b"></span><span class="orb orb--c"></span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. El juego de lo fresco -->
+  <section class="play tone-malabar on-dark" aria-labelledby="play-title">
+    <div class="play-stars" style={`background-image: url('${asset('marca/franja-estrellas-malabar.jpg')}')`} aria-hidden="true"></div>
+    <div class="container section">
+      <header class="section-head play-head">
+        <p class="eyebrow">El juego de lo fresco</p>
+        <h2 id="play-title">Tres gestos para mirar la fruta con otros ojos</h2>
+      </header>
+      <ul class="reset-list play-grid">
+        {
+          plays.map((item) => (
+            <li class="play-card">
+              <div class="play-art" aria-hidden="true">
+                <Picture src={item.image} alt="" width={474} height={744} />
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. Calidad -->
+  <section class="section quality" aria-labelledby="quality-title">
+    <div class="container quality-grid">
+      <div class="quality-copy">
+        <p class="eyebrow">Calidad</p>
+        <h2 id="quality-title">Calidad que se explica, no que se presume</h2>
+        <p class="lead">
+          Para Malabar Fruits, la calidad es una suma de detalles: elegir con criterio, cuidar lo fresco, presentar bien el producto y
+          hablar claro con quien trabaja con él.
+        </p>
+        <a class="link-arrow" href={url(PAGES.calidad.path)}>Cómo entendemos la calidad <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <ol class="reset-list quality-list">
+        {
+          quality.map((item, index) => (
+            <li>
+              <span class="quality-num" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. Profesionales -->
+  <section class="section pro tone-cocoa on-dark" aria-labelledby="pro-title">
+    <div class="container pro-grid">
+      <div class="pro-copy">
+        <p class="eyebrow">Para profesionales</p>
+        <h2 id="pro-title">¿Trabajas con fruta y verdura?</h2>
+        <p class="lead">
+          Si Malabar Fruits puede encajar en tu comercio, tu cocina, tu catálogo o tu próxima campaña, el primer paso es sencillo: una
+          conversación con el equipo.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--lemon" href={url(PRO_CONTACT)}>Hablar con el equipo <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href={url(PAGES.profesionales.path)}>Ver la propuesta</a>
+        </div>
+      </div>
+      <ul class="reset-list pro-list">
+        {
+          sectors.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. Contacto -->
+  <section class="section contact-cta" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div class="contact-copy">
+        <img
+          class="contact-ticket"
+          src={asset('contacto/ilustracion-contacto-malabar.png')}
+          alt=""
+          width="309"
+          height="144"
+          loading="lazy"
+          decoding="async"
+        />
+        <h2 id="contact-title">¿Hablamos?</h2>
+        <p class="lead">Elige el camino que mejor encaja contigo y te llevamos al formulario adecuado.</p>
+      </div>
+      <ul class="reset-list contact-options">
+        <li class="contact-option">
+          <span class="contact-option__dot" aria-hidden="true"></span>
+          <h3><a class="stretched-link" href={url(GENERAL_CONTACT)}>Tengo una consulta</a></h3>
+          <p>Para personas y familias que quieren saber más de la marca.</p>
+          <span class="arrow contact-option__arrow" aria-hidden="true">→</span>
+        </li>
+        <li class="contact-option contact-option--pro">
+          <span class="contact-option__dot" aria-hidden="true"></span>
+          <h3><a class="stretched-link" href={url(PRO_CONTACT)}>Soy profesional</a></h3>
+          <p>Para comercio, restauración, distribución o colaboraciones.</p>
+          <span class="arrow contact-option__arrow" aria-hidden="true">→</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero ------------------------------------------------------------------ */
+  .hero {
+    position: relative;
+    padding-top: clamp(1.75rem, 1rem + 3vw, 4rem);
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+  }
+
+  .hero-logo {
+    width: clamp(8.5rem, 6.5rem + 6vw, 12rem);
+  }
+
+  .hero h1 {
+    max-width: 13ch;
+    margin-top: clamp(1.25rem, 1rem + 1vw, 2rem);
+    font-size: clamp(2.625rem, 1.7rem + 3.7vw, 4.25rem);
+    line-height: 1.03;
+  }
+
+  .hero h1 em {
+    color: var(--malabar-600);
+  }
+
+  .hero .lead {
+    margin-top: 1.5rem;
+  }
+
+  .hero-media {
+    position: relative;
+    padding: 1.5rem 0 0 1.5rem;
+  }
+
+  .hero-frame {
+    position: relative;
+    aspect-ratio: 11 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-panel) var(--radius-panel) var(--radius-panel) clamp(6rem, 3rem + 10vw, 13rem);
+    background: #d9d7d2;
+  }
+
+  .hero-frame :global(picture) {
+    height: 100%;
+  }
+
+  .hero-frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 80% 30%;
+  }
+
+  @media (max-width: 44.99em) {
+    .hero-frame {
+      aspect-ratio: 1085 / 700;
+      border-radius: var(--radius-panel) var(--radius-panel) var(--radius-panel) 5.5rem;
+    }
+
+    .hero-frame :global(img) {
+      object-position: 50% 0;
+    }
+  }
+
+  .hero-media :global(.hero-balls) {
+    position: absolute;
+    top: -0.75rem;
+    left: -0.5rem;
+    width: clamp(6.5rem, 4rem + 8vw, 10.5rem);
+    color: var(--cocoa-600);
+  }
+
+  .hero-sticker {
+    position: absolute;
+    right: clamp(0.75rem, 2vw, 1.75rem);
+    bottom: clamp(-1.5rem, -2vw, -0.75rem);
+    display: grid;
+    place-content: center;
+    width: clamp(6rem, 5rem + 3vw, 8rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--lemon-300);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.625rem);
+    line-height: 1;
+    text-align: center;
+    rotate: -10deg;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hero-sticker span {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.2rem;
+  }
+
+  .hero-strip {
+    margin-top: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+    mix-blend-mode: multiply;
+  }
+
+  .hero-strip :global(img) {
+    width: 100%;
+    min-height: 7.5rem;
+    object-fit: cover;
+  }
+
+  /* Intro ----------------------------------------------------------------- */
+  .intro-grid {
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .intro-grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    }
+  }
+
+  .intro-art {
+    position: relative;
+    max-width: 22rem;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .intro-art::before {
+    content: '';
+    position: absolute;
+    inset: 8% 4% 0;
+    border-radius: 50%;
+    background: var(--paper-100);
+  }
+
+  /* Recorte del grabado para mostrar solo al malabarista, sin el texto incrustado */
+  .intro-crop {
+    position: relative;
+    aspect-ratio: 350 / 347;
+    overflow: hidden;
+  }
+
+  .intro-crop :global(img) {
+    position: absolute;
+    top: -68.6%;
+    left: -65.7%;
+    width: 221.1%;
+    max-width: none;
+    mix-blend-mode: multiply;
+  }
+
+  .intro-title {
+    max-width: 20ch;
+    font-size: clamp(2.125rem, 1.5rem + 2.4vw, 3.25rem);
+  }
+
+  .intro-title::first-line {
+    color: var(--malabar-700);
+  }
+
+  .intro-text {
+    max-width: 40rem;
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    color: var(--cocoa-600);
+  }
+
+  .principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .principles li {
+    padding: 0.5rem 1rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  /* Gama ------------------------------------------------------------------ */
+  .gama-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 56rem) {
+    .gama-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: start;
+    }
+
+    .gama-panel--veg {
+      margin-top: 5rem;
+    }
+  }
+
+  .gama-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: clamp(24rem, 18rem + 16vw, 34rem);
+    overflow: hidden;
+    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    border-radius: var(--radius-panel);
+    transition: transform 0.3s var(--ease);
+  }
+
+  .gama-panel:hover {
+    transform: translateY(-4px);
+  }
+
+  .gama-panel--fruit {
+    background: var(--apricot-400);
+    color: var(--cocoa-900);
+  }
+
+  .gama-panel--veg {
+    background: var(--leaf-600);
+    color: var(--cream-50);
+  }
+
+  .gama-panel__body {
+    position: relative;
+    z-index: 1;
+    max-width: 26rem;
+  }
+
+  .gama-panel__kicker {
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .gama-panel__title {
+    margin-top: 0.5rem;
+    font-size: clamp(2.5rem, 1.8rem + 3vw, 4rem);
+    line-height: 1;
+  }
+
+  .gama-panel__text {
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+  }
+
+  .gama-panel__cta {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+  }
+
+  .gama-panel:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  .gama-panel__art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .gama-panel--fruit .orb--a {
+    top: -12%;
+    right: -10%;
+    width: 58%;
+    aspect-ratio: 1;
+    background: var(--malabar-600);
+  }
+
+  .gama-panel--fruit .orb--b {
+    top: 24%;
+    right: 34%;
+    width: 17%;
+    aspect-ratio: 1;
+    background: var(--lemon-300);
+  }
+
+  .gama-panel--fruit .orb--c {
+    top: 8%;
+    right: 50%;
+    width: 7%;
+    aspect-ratio: 1;
+    background: var(--leaf-600);
+  }
+
+  .gama-panel--fruit .orbit {
+    position: absolute;
+    top: -20%;
+    right: -18%;
+    width: 74%;
+    aspect-ratio: 1;
+    border: 2px dashed rgb(53 39 39 / 0.35);
+    border-radius: 50%;
+  }
+
+  .gama-panel--veg .orb--a {
+    top: -8%;
+    right: -14%;
+    width: 62%;
+    aspect-ratio: 1;
+    background: #2c5c49;
+  }
+
+  .gama-panel--veg .orb--b {
+    top: 10%;
+    right: 12%;
+    width: 22%;
+    aspect-ratio: 1;
+    background: var(--lemon-300);
+  }
+
+  .gama-panel--veg .orb--c {
+    top: 32%;
+    right: 38%;
+    width: 10%;
+    aspect-ratio: 1;
+    background: var(--apricot-400);
+  }
+
+  .gama-panel:hover .orb--b {
+    transform: translateY(-8px);
+  }
+
+  .gama-panel:hover .orb--c {
+    transform: translateY(6px);
+  }
+
+  /* Juego ----------------------------------------------------------------- */
+  .play-stars {
+    height: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: auto 100%;
+  }
+
+  .play-head {
+    margin-inline: auto;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .play-grid {
+    display: grid;
+    gap: 3rem 2rem;
+  }
+
+  @media (min-width: 48rem) {
+    .play-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .play-card {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  /* Recorte superior: muestra la ilustración y oculta el texto incrustado */
+  .play-art {
+    width: min(100%, 17rem);
+    aspect-ratio: 474 / 568;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    rotate: -2deg;
+    transition: rotate 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+
+  .play-card:nth-child(2) .play-art {
+    rotate: 2deg;
+    transform: translateY(1.5rem);
+  }
+
+  .play-card:nth-child(2) h3 {
+    margin-top: 1.5rem;
+  }
+
+  .play-card:hover .play-art {
+    rotate: 0deg;
+  }
+
+  .play-art :global(img) {
+    width: 100%;
+  }
+
+  .play-card h3 {
+    font-size: clamp(1.625rem, 1.3rem + 1vw, 2rem);
+  }
+
+  .play-card p {
+    max-width: 22rem;
+    color: rgb(255 249 241 / 0.84);
+  }
+
+  @media (max-width: 47.99rem) {
+    .play-card {
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      justify-items: start;
+      align-items: center;
+      column-gap: 1.25rem;
+      text-align: left;
+    }
+
+    .play-art {
+      grid-row: span 2;
+      margin: 0;
+    }
+
+    .play-card:nth-child(2) .play-art {
+      transform: none;
+    }
+
+    .play-card:nth-child(2) h3 {
+      margin-top: 0;
+    }
+
+    .play-card h3 {
+      align-self: end;
+    }
+
+    .play-card p {
+      align-self: start;
+    }
+  }
+
+  /* Calidad --------------------------------------------------------------- */
+  .quality-grid {
+    display: grid;
+    gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  }
+
+  @media (min-width: 56rem) {
+    .quality-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: start;
+    }
+
+    .quality-copy {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .quality-copy .lead {
+    margin-block: 1.25rem 2rem;
+  }
+
+  .quality-list {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .quality-list li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: clamp(1.4rem, 1rem + 1.5vw, 2.25rem);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .quality-num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+    line-height: 1;
+    color: var(--apricot-400);
+    -webkit-text-stroke: 1px var(--malabar-700);
+  }
+
+  .quality-list h3 {
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  }
+
+  .quality-list p {
+    margin-top: 0.25rem;
+    color: var(--cocoa-600);
+  }
+
+  /* Profesionales --------------------------------------------------------- */
+  .pro-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 56rem) {
+    .pro-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 5rem;
+      align-items: center;
+    }
+  }
+
+  .pro-copy .lead {
+    margin-top: 1.25rem;
+  }
+
+  .pro-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    border-top: 1px solid var(--line-light);
+    border-left: 1px solid var(--line-light);
+  }
+
+  .pro-list li {
+    padding: 1.75rem 1.5rem;
+    border-right: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .pro-list h3 {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 800;
+    color: var(--lemon-300);
+  }
+
+  .pro-list p {
+    margin-top: 0.4rem;
+    color: rgb(255 249 241 / 0.84);
+  }
+
+  /* Contacto -------------------------------------------------------------- */
+  .contact-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 5rem;
+    }
+  }
+
+  .contact-ticket {
+    width: clamp(10rem, 8rem + 6vw, 14rem);
+    margin-bottom: 1.25rem;
+    rotate: -4deg;
+  }
+
+  .contact-copy h2 {
+    font-size: clamp(2.5rem, 1.8rem + 3vw, 4rem);
+  }
+
+  .contact-copy .lead {
+    margin-top: 1rem;
+  }
+
+  .contact-options {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-option {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.25rem 1.25rem;
+    align-items: center;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    background: var(--cream-50);
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+
+  .contact-option:hover {
+    border-color: var(--malabar-700);
+    transform: translateY(-2px);
+  }
+
+  .contact-option--pro {
+    background: var(--paper-100);
+  }
+
+  .contact-option__dot {
+    grid-row: span 2;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--apricot-400);
+    box-shadow: inset -8px -8px 0 rgb(53 39 39 / 0.1);
+  }
+
+  .contact-option--pro .contact-option__dot {
+    background: var(--malabar-700);
+  }
+
+  .contact-option h3 a {
+    color: inherit;
+  }
+
+  .contact-option p {
+    grid-column: 2;
+    color: var(--cocoa-600);
+  }
+
+  .contact-option__arrow {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    font-size: 1.5rem;
+    color: var(--malabar-700);
+  }
+
+  .contact-option:hover .contact-option__arrow {
+    transform: translateX(4px);
+  }
+</style>

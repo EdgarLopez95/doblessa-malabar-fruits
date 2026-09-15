@@ -1,0 +1,360 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import Picture from '../components/Picture.astro';
+import ProCta from '../components/ProCta.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES, PRO_CONTACT } from '../data/site';
+import { url } from '../lib/paths';
+
+const page = PAGES.verduras;
+
+const colors = [
+  { name: 'Verde', text: 'Hojas, tallos y brotes que solo piden un aliño sencillo.', bg: '#38735B', fg: '#FFF9F1', ball: '#B9C35C' },
+  { name: 'Rojo', text: 'El color que convierte cualquier plato en un plan.', bg: '#A33646', fg: '#FFF9F1', ball: '#F29B62' },
+  { name: 'Amarillo y naranja', text: 'Tonos cálidos para el horno, la plancha y la sobremesa.', bg: '#F8D85B', fg: '#352727', ball: '#F29B62' },
+  { name: 'Morado', text: 'Un punto inesperado para cambiar la rutina de la semana.', bg: '#5A3A55', fg: '#FFF9F1', ball: '#A33646' },
+];
+
+const ideas = [
+  { title: 'En crudo', text: 'Corta, aliña y deja la fuente en el centro para que cada uno se sirva.' },
+  { title: 'Al horno', text: 'Una bandeja, un poco de aceite y tiempo. El resto lo pone el color.' },
+  { title: 'A la plancha', text: 'Fuego vivo y vuelta y vuelta: el gesto más rápido de la cocina.' },
+];
+---
+
+<BaseLayout {...page}>
+  <PageIntro
+    crumb="Verduras frescas"
+    eyebrow="La gama · Verdura"
+    title="Verduras frescas"
+    lead="La otra mitad del juego. Verduras frescas para llenar de color la mesa de cada día, con el mismo tono cercano de Malabar Fruits.">
+    <div slot="actions" class="btn-row">
+      <a class="btn btn--primary" href="#colores">Mirar la huerta <span class="arrow" aria-hidden="true">↓</span></a>
+    </div>
+    <div slot="visual" class="veg-visual" aria-hidden="true">
+      <span class="veg-visual__orbit"></span>
+      <span class="veg-visual__ball veg-visual__ball--green"></span>
+      <span class="veg-visual__ball veg-visual__ball--red"></span>
+      <span class="veg-visual__ball veg-visual__ball--yellow"></span>
+      <span class="veg-visual__ball veg-visual__ball--purple"></span>
+    </div>
+    <div slot="after" class="veg-strip">
+      <Picture src="inicio/hero-fruta-malabar.jpg" alt="Surtido de verduras y frutas frescas: brócoli, pimientos, tomates, coliflor y hojas verdes" width={1920} height={249} priority />
+    </div>
+  </PageIntro>
+
+  <section id="colores" class="section colors tone-paper" aria-labelledby="colors-title">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">La huerta por colores</p>
+        <h2 id="colors-title">Una forma distinta de mirar la verdura</h2>
+        <p>En lugar de una lista, una paleta. Porque a la hora de pensar el plato, el color suele llegar antes que el nombre.</p>
+      </header>
+
+      <ol class="reset-list color-bands">
+        {
+          colors.map((color, index) => (
+            <li class="color-band" style={`--band-bg: ${color.bg}; --band-fg: ${color.fg}; --band-ball: ${color.ball}`}>
+              <span class="color-band__num" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 class="color-band__name">{color.name}</h3>
+              <p class="color-band__text">{color.text}</p>
+              <span class="color-band__ball" aria-hidden="true" />
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section ideas" aria-labelledby="ideas-title">
+    <div class="container ideas-grid">
+      <header class="ideas-head">
+        <p class="eyebrow">Ideas para el día a día</p>
+        <h2 id="ideas-title">Tres maneras de ponerla en juego</h2>
+        <p class="lead">Nada de recetas complicadas: gestos sencillos que caben en cualquier cocina.</p>
+      </header>
+      <ul class="reset-list ideas-list">
+        {
+          ideas.map((idea) => (
+            <li>
+              <h3>{idea.title}</h3>
+              <p>{idea.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--tight faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="faq-card">
+        <div>
+          <h2 id="faq-title">¿Qué verduras forman parte de la gama?</h2>
+        </div>
+        <div class="prose">
+          <p>
+            La selección concreta cambia y preferimos contarla con datos, no con suposiciones. Si eres profesional, el equipo puede explicarte
+            qué incluye la gama en cada momento.
+          </p>
+          <a class="link-arrow" href={url(PRO_CONTACT)}>Preguntar al equipo <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ProCta
+    title="Verdura fresca para tu propuesta"
+    text="Si trabajas en retail, restauración o distribución y quieres explorar la gama de verduras Malabar, hablemos."
+  />
+</BaseLayout>
+
+<style>
+  .veg-visual {
+    position: relative;
+    width: min(100%, 22rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+  }
+
+  .veg-visual__orbit {
+    position: absolute;
+    inset: 6%;
+    border: 2px dashed var(--line-strong);
+    border-radius: 50%;
+  }
+
+  .veg-visual__ball {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: inset -14px -16px 0 rgb(53 39 39 / 0.12);
+    animation: fade-up 0.3s var(--ease) both;
+  }
+
+  .veg-visual__ball--green {
+    top: 24%;
+    left: 18%;
+    width: 52%;
+    aspect-ratio: 1;
+    background: var(--leaf-600);
+  }
+
+  .veg-visual__ball--green::after {
+    content: '';
+    position: absolute;
+    top: -12%;
+    left: 44%;
+    width: 26%;
+    height: 13%;
+    border-radius: 50%;
+    background: #b9c35c;
+    rotate: -30deg;
+  }
+
+  .veg-visual__ball--red {
+    top: 2%;
+    right: 6%;
+    width: 26%;
+    aspect-ratio: 1;
+    background: var(--malabar-600);
+    animation-delay: 0.08s;
+  }
+
+  .veg-visual__ball--yellow {
+    right: 4%;
+    bottom: 12%;
+    width: 21%;
+    aspect-ratio: 1;
+    background: var(--lemon-300);
+    animation-delay: 0.16s;
+  }
+
+  .veg-visual__ball--purple {
+    bottom: 4%;
+    left: 10%;
+    width: 14%;
+    aspect-ratio: 1;
+    background: #5a3a55;
+    animation-delay: 0.24s;
+  }
+
+  @media (max-width: 55.99rem) {
+    .veg-visual {
+      display: none;
+    }
+  }
+
+  .veg-strip {
+    margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+    mix-blend-mode: multiply;
+  }
+
+  .veg-strip :global(img) {
+    width: 100%;
+    min-height: 8rem;
+    object-fit: cover;
+    object-position: 60% 50%;
+  }
+
+  /* Bandas de color */
+  .color-bands {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .color-band {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem) clamp(1.5rem, 1rem + 3vw, 3rem);
+    border-radius: var(--radius-panel);
+    background: var(--band-bg);
+    color: var(--band-fg);
+  }
+
+  @media (min-width: 48rem) {
+    .color-band {
+      grid-template-columns: 4rem minmax(0, 5fr) minmax(0, 5fr) 8rem;
+      min-height: 9rem;
+      gap: 2rem;
+    }
+
+    .color-band:nth-child(even) {
+      margin-left: clamp(0rem, -4rem + 8vw, 6rem);
+    }
+
+    .color-band:nth-child(odd) {
+      margin-right: clamp(0rem, -4rem + 8vw, 6rem);
+    }
+  }
+
+  .color-band__num {
+    font-size: 0.875rem;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+
+  .color-band__name {
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .color-band__text {
+    grid-column: 2;
+    max-width: 28rem;
+    font-size: 1.0625rem;
+  }
+
+  .color-band__ball {
+    position: absolute;
+    right: -2rem;
+    bottom: -2.5rem;
+    width: 7rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--band-ball);
+    opacity: 0.9;
+    transition: transform 0.35s var(--ease);
+  }
+
+  @media (min-width: 48rem) {
+    .color-band__text {
+      grid-column: 3;
+    }
+
+    .color-band__ball {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      justify-self: end;
+      width: 5.5rem;
+    }
+  }
+
+  .color-band:hover .color-band__ball {
+    transform: translateY(-6px);
+  }
+
+  /* Ideas */
+  .ideas-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 56rem) {
+    .ideas-grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  .ideas-head .lead {
+    margin-top: 1.25rem;
+  }
+
+  .ideas-list {
+    display: grid;
+    gap: 1rem;
+    counter-reset: idea;
+  }
+
+  @media (min-width: 40rem) {
+    .ideas-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ideas-list li:nth-child(2) {
+      transform: translateY(2.5rem);
+    }
+  }
+
+  .ideas-list li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: 1.75rem 1.5rem 2rem;
+    border-top: 4px solid var(--leaf-600);
+    background: var(--paper-100);
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+  }
+
+  .ideas-list li:nth-child(2) {
+    border-top-color: var(--apricot-400);
+  }
+
+  .ideas-list li:nth-child(3) {
+    border-top-color: var(--malabar-600);
+  }
+
+  .ideas-list p {
+    color: var(--cocoa-600);
+  }
+
+  /* Pregunta */
+  .faq-card {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.75rem, 1rem + 3vw, 3.5rem);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-panel);
+  }
+
+  @media (min-width: 56rem) {
+    .faq-card {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+
+  .faq-card .prose {
+    color: var(--cocoa-600);
+    font-size: 1.0625rem;
+  }
+</style>

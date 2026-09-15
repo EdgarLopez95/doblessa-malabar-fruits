@@ -1,0 +1,47 @@
+---
+import JuggleBalls from '../components/JuggleBalls.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+---
+
+<BaseLayout
+  path="/404/"
+  title="Página no encontrada | Malabar Fruits"
+  description="La página que buscas no existe o ha cambiado de sitio."
+  noindex>
+  <section class="section not-found" aria-labelledby="page-title">
+    <div class="container not-found__inner">
+      <JuggleBalls class="not-found__balls" />
+      <p class="eyebrow">Error 404</p>
+      <h1 id="page-title">Esta pieza se nos ha caído</h1>
+      <p class="lead">La página que buscas no existe o ha cambiado de sitio. Volvamos a lo fresco.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={url('/')}>Ir al inicio</a>
+        <a class="btn btn--outline" href={url(PAGES.fruta.path)}>Ver la fruta</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .not-found__inner :global(.not-found__balls) {
+    width: 10rem;
+    margin-bottom: 1.5rem;
+    color: var(--cocoa-600);
+  }
+
+  .not-found__inner .lead {
+    margin-top: 1rem;
+  }
+
+  .not-found__inner .btn-row {
+    justify-content: center;
+  }
+</style>

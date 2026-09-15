@@ -1,0 +1,187 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { PageMeta } from '../data/site';
+import { url } from '../lib/paths';
+
+interface Section {
+  id: string;
+  title: string;
+}
+
+interface Props {
+  meta: PageMeta;
+  heading: string;
+  intro: string;
+  sections: Section[];
+}
+
+const { meta, heading, intro, sections } = Astro.props;
+---
+
+<BaseLayout {...meta}>
+  <section class="legal-head" aria-labelledby="page-title">
+    <div class="container">
+      <nav class="crumbs" aria-label="Ruta de navegación">
+        <ol class="reset-list">
+          <li><a href={url('/')}>Inicio</a></li>
+          <li aria-current="page">{heading}</li>
+        </ol>
+      </nav>
+      <p class="eyebrow">Información legal</p>
+      <h1 id="page-title">{heading}</h1>
+      <p class="lead">{intro}</p>
+      <p class="legal-notice" role="note">
+        <strong>Propuesta pendiente de validación.</strong> Este texto es una estructura de trabajo para el mockup. Los datos entre corchetes deben
+        completarse y revisarse por asesoría legal antes de publicar.
+      </p>
+    </div>
+  </section>
+
+  <div class="container legal-body">
+    <nav class="legal-toc" aria-label="Contenido del documento">
+      <p class="legal-toc__title">Contenido</p>
+      <ol class="reset-list">
+        {
+          sections.map((section) => (
+            <li>
+              <a href={`#${section.id}`}>{section.title}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <article class="legal-prose">
+      <slot />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-head {
+    padding-block: clamp(2rem, 1.25rem + 3vw, 4rem) clamp(2.5rem, 2rem + 3vw, 4rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .legal-head .lead {
+    margin-top: 1.25rem;
+  }
+
+  .crumbs {
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--cocoa-600);
+  }
+
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .legal-notice {
+    max-width: 44rem;
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--lemon-300);
+    border-radius: var(--radius-card);
+    background: var(--paper-100);
+    font-size: 0.9375rem;
+  }
+
+  .legal-body {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: clamp(2.5rem, 2rem + 3vw, 5rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  @media (min-width: 56rem) {
+    .legal-body {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .legal-toc {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .legal-toc {
+    padding: 1.5rem;
+    border-radius: var(--radius-panel);
+    background: var(--paper-100);
+  }
+
+  .legal-toc__title {
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 800;
+  }
+
+  .legal-toc ol {
+    display: grid;
+    gap: 0.15rem;
+    counter-reset: toc;
+  }
+
+  .legal-toc a {
+    display: block;
+    padding-block: 0.3rem;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .legal-toc a:hover {
+    color: var(--malabar-700);
+    text-decoration: underline;
+  }
+
+  .legal-prose {
+    max-width: 44rem;
+  }
+
+  .legal-prose :global(h2) {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: clamp(1.625rem, 1.4rem + 0.8vw, 2rem);
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  .legal-prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .legal-prose :global(p),
+  .legal-prose :global(ul) {
+    margin-top: 0.9rem;
+    color: var(--cocoa-600);
+  }
+
+  .legal-prose :global(ul) {
+    padding-left: 1.25rem;
+  }
+
+  .legal-prose :global(li + li) {
+    margin-top: 0.4rem;
+  }
+
+  .legal-prose :global(.placeholder) {
+    padding: 0.05rem 0.35rem;
+    border-radius: 6px;
+    background: rgb(248 216 91 / 0.45);
+    color: var(--cocoa-900);
+    font-weight: 600;
+  }
+
+  .legal-prose :global(a) {
+    color: var(--malabar-700);
+    font-weight: 700;
+  }
+</style>
