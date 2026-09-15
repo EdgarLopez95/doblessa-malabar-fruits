@@ -71,4 +71,13 @@ const [a, b, c] = COLORS[palette];
       transform: none;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .juggle__ball,
+    .juggle__shine {
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
 </style>
