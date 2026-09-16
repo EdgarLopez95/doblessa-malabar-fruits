@@ -78,6 +78,12 @@ for (const file of htmlFiles) {
       totalErrors++;
     }
   }
+
+  // 7. Check for third-party Google Fonts (must be 0, self-hosted)
+  if (/fonts\.googleapis\.com|fonts\.gstatic\.com/i.test(html)) {
+    console.error(`[ERROR] ${rel}: Found third-party Google Fonts link/preconnect.`);
+    totalErrors++;
+  }
 }
 
 if (totalErrors === 0) {
