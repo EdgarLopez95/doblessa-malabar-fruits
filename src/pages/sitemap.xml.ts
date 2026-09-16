@@ -3,7 +3,7 @@ import { PAGES, type PageMeta } from '../data/site';
 import { absoluteUrl } from '../lib/paths';
 
 export const GET: APIRoute = () => {
-  const pages: PageMeta[] = Object.values(PAGES).filter((page: PageMeta) => !page.noindex);
+  const pages: PageMeta[] = Object.values(PAGES).filter((page: PageMeta) => !page.excludeFromSitemap);
   const urls = pages.map((page) => `  <url><loc>${absoluteUrl(page.path)}</loc></url>`).join('\n');
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

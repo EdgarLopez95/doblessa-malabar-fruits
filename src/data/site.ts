@@ -9,7 +9,7 @@ export interface PageMeta {
   path: string;
   title: string;
   description: string;
-  noindex?: boolean;
+  excludeFromSitemap?: boolean;
 }
 
 export const PAGES = {
@@ -59,13 +59,13 @@ export const PAGES = {
     path: '/aviso-legal/',
     title: 'Aviso legal | Malabar Fruits',
     description: 'Estructura propuesta del aviso legal de Malabar Fruits, pendiente de validación con datos corporativos verificados.',
-    noindex: true,
+    excludeFromSitemap: true,
   },
   privacidad: {
     path: '/politica-de-privacidad/',
     title: 'Política de privacidad | Malabar Fruits',
     description: 'Estructura propuesta de la política de privacidad de Malabar Fruits, pendiente de validación legal.',
-    noindex: true,
+    excludeFromSitemap: true,
   },
 } satisfies Record<string, PageMeta>;
 
