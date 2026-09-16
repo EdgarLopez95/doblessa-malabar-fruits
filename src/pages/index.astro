@@ -264,8 +264,8 @@ const sectors = [
     </div>
   </section>
 
-  <!-- 7. Aviso no-tienda -->
-  <section class="section--tight no-store" aria-labelledby="no-store-title">
+  <!-- 7. Aviso no-tienda y dónde encontrar Malabar -->
+  <section class="section--tight no-store" id="donde-encontrar" aria-labelledby="no-store-title">
     <div class="container">
       <div class="no-store-card">
         <div class="no-store-copy">
@@ -274,9 +274,15 @@ const sectors = [
           <p class="lead">
             Malabar Fruits es una marca de fruta y verdura fresca. Desde aquí no se compra ni se envía a domicilio. Si quieres encontrar la marca o trabajar con ella, escríbenos.
           </p>
+          <div class="no-store-finder">
+            <h3 class="no-store-finder__title">Dónde encontrar Malabar</h3>
+            <p>
+              Aún no publicamos un listado de fruterías ni un localizador. Cuando el equipo confirme puntos de venta, irán aquí. Esta web no es una tienda y no envía a domicilio.
+            </p>
+          </div>
         </div>
         <div class="no-store-actions">
-          <a class="btn btn--primary" href={url(GENERAL_CONTACT)}>Escribir consulta <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Escríbenos para hablar de la marca <span class="arrow" aria-hidden="true">→</span></a>
           <a class="btn btn--outline" href={url(PRO_CONTACT)}>Contacto profesional</a>
         </div>
       </div>
@@ -998,5 +1004,25 @@ const sectors = [
     flex-direction: column;
     gap: 0.85rem;
     align-items: flex-start;
+  }
+
+  .no-store-finder {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-light);
+  }
+
+  .no-store-finder__title {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--cocoa-900);
+  }
+
+  .no-store-finder p {
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--cocoa-600);
   }
 </style>

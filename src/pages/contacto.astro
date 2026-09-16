@@ -29,35 +29,8 @@ const page = PAGES.contacto;
     <div class="container contact-layout">
       <div class="contact-main">
         <h2 id="contact-form-title" class="visually-hidden">Formulario de contacto</h2>
-
-        <fieldset class="choice js-only" data-choice>
-          <legend class="choice__legend">¿Qué tipo de consulta tienes?</legend>
-          <div class="choice__options">
-            <label class="choice-card">
-              <input type="radio" name="tipo-consulta" value="general" checked />
-              <span class="choice-card__body">
-                <span class="choice-card__title">Consulta general</span>
-                <span class="choice-card__text">Para personas y familias que quieren saber más de la marca.</span>
-              </span>
-            </label>
-            <label class="choice-card choice-card--pro">
-              <input type="radio" name="tipo-consulta" value="profesional" />
-              <span class="choice-card__body">
-                <span class="choice-card__title">Conversación profesional</span>
-                <span class="choice-card__text">Para comercio, restauración, distribución o colaboraciones.</span>
-              </span>
-            </label>
-          </div>
-        </fieldset>
-
-        <div class="contact-panel" data-panel="general" id="panel-general">
-          <h3 class="contact-panel__title">Consulta general</h3>
-          <ContactForm variant="general" id="form-general" />
-        </div>
-
-        <div class="contact-panel" data-panel="profesional" id="panel-profesional">
-          <h3 class="contact-panel__title">Conversación profesional</h3>
-          <ContactForm variant="profesional" id="form-profesional" />
+        <div class="contact-panel">
+          <ContactForm id="form-contacto" />
         </div>
       </div>
 
@@ -69,12 +42,23 @@ const page = PAGES.contacto;
           </p>
         </div>
 
+        <div class="aside-block donde-encontrar-box">
+          <h3>Dónde encontrar Malabar</h3>
+          <p>
+            Aún no publicamos un listado de fruterías ni un localizador. Cuando el equipo confirme puntos de venta, irán aquí. Esta web no es una tienda y no envía a domicilio.
+          </p>
+        </div>
+
         <h2 id="aside-title">Qué pasa después</h2>
         <ol class="reset-list after-steps">
           <li><span aria-hidden="true">1</span> Envías tu consulta con el contexto que necesites.</li>
           <li><span aria-hidden="true">2</span> El equipo la revisa y la dirige a quien corresponde.</li>
           <li><span aria-hidden="true">3</span> Te respondemos por el medio que nos indiques.</li>
         </ol>
+
+        <p class="contact-aside__nap">
+          Teléfono, correo y domicilio comercial: pendientes de validación.
+        </p>
         <p class="contact-aside__note">
           Esta web es una demostración: los formularios no envían datos. Los canales de contacto reales se publicarán cuando estén confirmados.
         </p>
@@ -85,25 +69,14 @@ const page = PAGES.contacto;
 </BaseLayout>
 
 <script>
-  const choice = document.querySelector<HTMLFieldSetElement>('[data-choice]');
-  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
-
-  if (choice && panels.length) {
-    const radios = Array.from(choice.querySelectorAll<HTMLInputElement>('input[type="radio"]'));
-
-    const show = (value: string) => {
-      panels.forEach((panel) => {
-        panel.hidden = panel.dataset.panel !== value;
-      });
-      radios.forEach((radio) => {
-        radio.checked = radio.value === value;
-      });
-    };
-
-    const initial = new URLSearchParams(window.location.search).get('tipo');
-    show(initial === 'profesional' ? 'profesional' : 'general');
-
-    radios.forEach((radio) => radio.addEventListener('change', () => radio.checked && show(radio.value)));
+  const select = document.querySelector<HTMLSelectElement>('#form-contacto-tipo');
+  if (select) {
+    const param = new URLSearchParams(window.location.search).get('tipo');
+    if (param === 'profesional') {
+      select.value = 'Profesional';
+    } else if (param === 'general' || param === 'consumidor') {
+      select.value = 'Consumidor';
+    }
   }
 </script>
 
@@ -299,6 +272,35 @@ const page = PAGES.contacto;
     font-size: 0.9375rem;
     line-height: 1.55;
     color: rgb(255 249 241 / 0.88);
+  }
+
+  .donde-encontrar-box {
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .donde-encontrar-box h3 {
+    font-size: 1.35rem;
+    color: var(--lemon-300);
+  }
+
+  .donde-encontrar-box p {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: rgb(255 249 241 / 0.88);
+  }
+
+  .contact-aside__nap {
+    margin-block: 1.25rem 0.5rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-card);
+    background: rgb(255 249 241 / 0.08);
+    border: 1px dashed var(--line-light);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--lemon-300);
   }
 
   .after-steps {

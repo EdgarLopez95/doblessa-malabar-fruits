@@ -3,18 +3,19 @@ import { PAGES } from '../data/site';
 import { url } from '../lib/paths';
 
 interface Props {
-  variant: 'general' | 'profesional';
   id: string;
+  defaultType?: 'Profesional' | 'Consumidor' | 'Prensa' | 'Otro';
+  variant?: 'general' | 'profesional';
 }
 
-const { variant, id } = Astro.props;
-const isPro = variant === 'profesional';
+const { id, defaultType, variant } = Astro.props;
+const selectedType = defaultType ?? (variant === 'profesional' ? 'Profesional' : '');
 const f = (name: string) => `${id}-${name}`;
 ---
 
 <div class="demo-form" data-demo-form>
   <form id={id} class="form" novalidate aria-describedby={f('note')}>
-    <p class="form-intro">Todos los campos son obligatorios salvo los marcados como opcionales.</p>
+    <p class="form-intro">Todos los campos son obligatorios salvo que se indique lo contrario.</p>
 
     <div class="form-summary" data-form-summary role="alert" hidden></div>
 
@@ -24,25 +25,6 @@ const f = (name: string) => `${id}-${name}`;
         <input class="input" id={f('nombre')} name="nombre" type="text" autocomplete="name" required aria-describedby={f('nombre-error')} />
         <p class="field-error" id={f('nombre-error')} hidden></p>
       </div>
-
-      {
-        isPro && (
-          <>
-            <div class="field">
-              <label for={f('empresa')}>Empresa</label>
-              <input class="input" id={f('empresa')} name="empresa" type="text" autocomplete="organization" required aria-describedby={f('empresa-error')} />
-              <p class="field-error" id={f('empresa-error')} hidden />
-            </div>
-            <div class="field">
-              <label for={f('cargo')}>
-                Cargo <span class="optional">(opcional)</span>
-              </label>
-              <input class="input" id={f('cargo')} name="cargo" type="text" autocomplete="organization-title" aria-describedby={f('cargo-error')} />
-              <p class="field-error" id={f('cargo-error')} hidden />
-            </div>
-          </>
-        )
-      }
 
       <div class="field">
         <label for={f('correo')}>Correo electrónico</label>
@@ -59,54 +41,20 @@ const f = (name: string) => `${id}-${name}`;
         <p class="field-error" id={f('correo-error')} hidden></p>
       </div>
 
-      {
-        isPro ? (
-          <>
-            <div class="field">
-              <label for={f('telefono')}>
-                Teléfono <span class="optional">(opcional)</span>
-              </label>
-              <input
-                class="input"
-                id={f('telefono')}
-                name="telefono"
-                type="tel"
-                autocomplete="tel"
-                inputmode="tel"
-                pattern="\+?[0-9 ]{6,20}"
-                aria-describedby={f('telefono-error')}
-              />
-              <p class="field-error" id={f('telefono-error')} hidden />
-            </div>
-            <div class="field">
-              <label for={f('sector')}>Tipo de negocio</label>
-              <select class="input" id={f('sector')} name="sector" required aria-describedby={f('sector-error')}>
-                <option value="">Elige una opción</option>
-                <option>Retail o comercio</option>
-                <option>Restauración</option>
-                <option>Distribución</option>
-                <option>Colaboración de marca</option>
-                <option>Otro</option>
-              </select>
-              <p class="field-error" id={f('sector-error')} hidden />
-            </div>
-          </>
-        ) : (
-          <div class="field">
-            <label for={f('motivo')}>Motivo de la consulta</label>
-            <select class="input" id={f('motivo')} name="motivo" required aria-describedby={f('motivo-error')}>
-              <option value="">Elige una opción</option>
-              <option>Quiero conocer mejor la marca</option>
-              <option>Tengo una sugerencia o comentario</option>
-              <option>Otra consulta</option>
-            </select>
-            <p class="field-error" id={f('motivo-error')} hidden />
-          </div>
-        )
-      }
+      <div class="field field--full">
+        <label for={f('tipo')}>Tipo de consulta</label>
+        <select class="input" id={f('tipo')} name="tipo" required aria-describedby={f('tipo-error')}>
+          <option value="">Elige una opción</option>
+          <option value="Profesional" selected={selectedType === 'Profesional'}>Profesional</option>
+          <option value="Consumidor" selected={selectedType === 'Consumidor'}>Consumidor</option>
+          <option value="Prensa" selected={selectedType === 'Prensa'}>Prensa</option>
+          <option value="Otro" selected={selectedType === 'Otro'}>Otro</option>
+        </select>
+        <p class="field-error" id={f('tipo-error')} hidden></p>
+      </div>
 
       <div class="field field--full">
-        <label for={f('mensaje')}>{isPro ? 'Cuéntanos qué necesitas' : 'Mensaje'}</label>
+        <label for={f('mensaje')}>Mensaje</label>
         <textarea
           class="input"
           id={f('mensaje')}
@@ -115,9 +63,7 @@ const f = (name: string) => `${id}-${name}`;
           required
           data-minlength="10"
           aria-describedby={`${f('mensaje-hint')} ${f('mensaje-error')}`}></textarea>
-        <p class="field-hint" id={f('mensaje-hint')}>
-          {isPro ? 'Por ejemplo: tipo de establecimiento y qué te gustaría explorar con Malabar Fruits.' : 'Escribe al menos 10 caracteres.'}
-        </p>
+        <p class="field-hint" id={f('mensaje-hint')}>Escribe al menos 10 caracteres.</p>
         <p class="field-error" id={f('mensaje-error')} hidden></p>
       </div>
 
@@ -134,11 +80,11 @@ const f = (name: string) => `${id}-${name}`;
 
     <div class="form-actions">
       <button class="btn btn--primary" type="submit" data-form-submit>
-        <span data-submit-label>{isPro ? 'Solicitar información' : 'Enviar consulta'}</span>
+        <span data-submit-label>Enviar consulta</span>
         <span class="arrow" aria-hidden="true">→</span>
       </button>
       <p class="form-note" id={f('note')}>
-        <strong>Formulario de demostración.</strong> Al enviarlo no se transmite ni se guarda ninguna información.
+        Formulario demostrativo para el mockup. No envía datos a ningún servidor.
       </p>
     </div>
   </form>
@@ -147,9 +93,7 @@ const f = (name: string) => `${id}-${name}`;
     <span class="form-success__balls" aria-hidden="true"><span></span><span></span><span></span></span>
     <h3 class="form-success__title" tabindex="-1" data-form-success-title>¡Gracias! Consulta recibida</h3>
     <p>
-      Esto es una demostración estática: tus datos <strong>no se han enviado ni guardado</strong>. En la versión final, {
-        isPro ? 'la consulta llegaría al equipo comercial.' : 'la consulta llegaría al equipo de Malabar Fruits.'
-      }
+      Esto es una demostración estática: tus datos <strong>no se han enviado ni guardado</strong>.
     </p>
     <button class="btn btn--outline btn--small" type="button" data-form-reset>Escribir otra consulta</button>
   </div>

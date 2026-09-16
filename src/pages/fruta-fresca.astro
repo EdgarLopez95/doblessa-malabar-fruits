@@ -79,7 +79,10 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
       </ul>
 
       <div class="range-footer">
-        <p class="range-footer__text">¿Quieres consultar disponibilidad o formatos para tu negocio?</p>
+        <div>
+          <p class="range-footer__text">¿Quieres consultar disponibilidad o formatos para tu negocio?</p>
+          <a class="range-footer__sublink" href={url('/#donde-encontrar')}>¿Buscas dónde encontrar Malabar?</a>
+        </div>
         <a class="btn btn--lemon" href={url(PRO_CONTACT)}>Hablar con el equipo sobre la gama <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -403,6 +406,20 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   .range-footer__text {
     font-size: 1.0625rem;
     font-weight: 700;
+    color: var(--cocoa-900);
+  }
+
+  .range-footer__sublink {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--malabar-700);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .range-footer__sublink:hover {
     color: var(--cocoa-900);
   }
 

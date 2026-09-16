@@ -64,7 +64,10 @@ const columns = [
   </div>
 
   <div class="container footer-bottom">
-    <p>© {year} Malabar Fruits. Propuesta de rediseño estático; datos corporativos pendientes de validación.</p>
+    <div class="footer-bottom__info">
+      <p>© {year} Malabar Fruits. Propuesta de rediseño estático.</p>
+      <p class="footer-nap">Teléfono, correo y domicilio comercial: pendientes de validación.</p>
+    </div>
     <ul class="reset-list footer-legal">
       <li><a href={url(PAGES.avisoLegal.path)}>Aviso legal</a></li>
       <li><a href={url(PAGES.privacidad.path)}>Política de privacidad</a></li>
@@ -195,5 +198,15 @@ const columns = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem 1.5rem;
+  }
+
+  .footer-bottom__info {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .footer-nap {
+    font-size: 0.8125rem;
+    color: rgb(255 249 241 / 0.6);
   }
 </style>
