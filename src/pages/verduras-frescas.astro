@@ -47,14 +47,12 @@ const page = PAGES.verduras;
   <section class="section--tight" aria-labelledby="pending-title">
     <div class="container">
       <div class="pending-card">
-        <span class="pending-card__badge">Pendiente de validación</span>
         <div class="pending-card__body">
-          <h2 id="pending-title">Qué verduras entran en la gama</h2>
+          <h2 id="pending-title">Elegida con el mismo criterio</h2>
           <p>
-            La web de la marca nombra la verdura, pero no publica variedades. Aquí no se inventa ninguna: el detalle de la selección se añadirá
-            cuando el cliente lo confirme.
+            La verdura entra en la gama por lo mismo que la fruta: sabor, aspecto y frescura. El resto del ruido sobra.
           </p>
-          <a class="link-arrow" href={url(PAGES.fruta.path)}>Mientras tanto, mira la fruta <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="link-arrow" href={url(PAGES.fruta.path)}>Ver también la fruta <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
@@ -63,7 +61,7 @@ const page = PAGES.verduras;
   <section class="section veg-cta" aria-labelledby="veg-cta-title">
     <div class="container veg-cta__inner">
       <h2 id="veg-cta-title">¿Quieres saber más de la marca?</h2>
-      <p class="lead">El canal de contacto definitivo está pendiente de validación.</p>
+      <p class="lead">Escríbenos cuando quieras.</p>
       <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Contactar <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
@@ -227,35 +225,20 @@ const page = PAGES.verduras;
   .statement-field span:nth-child(5) { width: 16%; background: var(--apricot-400); transform: translateY(-0.6rem); }
   .statement-field span:nth-child(6) { width: 11%; background: #5a3a55; transform: translateY(1.8rem); }
 
-  /* Aviso pendiente */
   .pending-card {
     display: grid;
-    gap: 1rem 2.5rem;
-    align-items: start;
+    justify-items: center;
     padding: clamp(1.75rem, 1rem + 3vw, 3rem);
-    border: 1.5px dashed var(--line-strong);
-    border-radius: var(--radius-panel);
-  }
-
-  @media (min-width: 48rem) {
-    .pending-card {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-  }
-
-  .pending-card__badge {
-    justify-self: start;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    background: var(--lemon-300);
-    font-size: 0.8125rem;
-    font-weight: 800;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    text-align: center;
   }
 
   .pending-card__body {
     display: grid;
     gap: 0.75rem;
-    justify-items: start;
+    justify-items: center;
+    max-width: 44rem;
   }
 
   .pending-card h2 {

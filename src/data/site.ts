@@ -38,18 +38,18 @@ export const PAGES = {
   contacto: {
     path: '/contacto/',
     title: 'Contacto | Malabar Fruits',
-    description: 'Contacto de Malabar Fruits. Propuesta de formulario pendiente de activación: el canal definitivo está por validar.',
+    description: 'Escríbenos para saber más de Malabar Fruits, marca de fruta y verdura fresca: la gama, la marca y todo lo que hay detrás.',
   },
   avisoLegal: {
     path: '/aviso-legal/',
     title: 'Aviso legal | Malabar Fruits',
-    description: 'Estructura propuesta del aviso legal de Malabar Fruits, pendiente de validación con datos corporativos verificados.',
+    description: 'Aviso legal de Malabar Fruits: titularidad del sitio, condiciones de uso y propiedad intelectual.',
     excludeFromSitemap: true,
   },
   privacidad: {
     path: '/politica-de-privacidad/',
     title: 'Política de privacidad | Malabar Fruits',
-    description: 'Estructura propuesta de la política de privacidad de Malabar Fruits, pendiente de validación legal.',
+    description: 'Política de privacidad de Malabar Fruits: qué datos se tratan, con qué finalidad y cómo ejercer tus derechos.',
     excludeFromSitemap: true,
   },
 } satisfies Record<string, PageMeta>;

@@ -13,7 +13,7 @@ const page = PAGES.contacto;
     crumb="Contacto"
     eyebrow="Hablemos"
     title="Contacto Malabar Fruits"
-    lead="Escríbenos para saber más de la marca.">
+    lead="Escríbenos para saber más de la marca: la gama, el color y todo lo que hay detrás.">
     <div slot="visual" class="contact-visual" aria-hidden="true">
       <span class="contact-visual__disc"></span>
       <div class="contact-visual__ticket">
@@ -34,14 +34,10 @@ const page = PAGES.contacto;
       </div>
 
       <aside class="contact-aside" aria-labelledby="aside-title">
-        <h2 id="aside-title">Sobre este contacto</h2>
+        <h2 id="aside-title">Hablemos de fruta</h2>
         <p>
-          Malabar Fruits es una marca de fruta y verdura fresca. Esta web forma parte de una propuesta de rediseño y sus formularios no están
-          conectados a ningún servicio.
-        </p>
-        <p class="contact-aside__pending">
-          <span class="contact-aside__badge">Pendiente de validación</span>
-          El canal de contacto definitivo se publicará cuando el cliente lo confirme.
+          Cuéntanos qué te gustaría saber: la gama, la marca o cualquier otra cosa que te ronde. Malabar Fruits es fruta y verdura fresca, y
+          de eso podemos hablar largo.
         </p>
         <p class="contact-aside__note">{LIMOSIN_NOTE}</p>
       </aside>
@@ -140,23 +136,6 @@ const page = PAGES.contacto;
     font-size: 0.9375rem;
     line-height: 1.6;
     color: rgb(255 249 241 / 0.86);
-  }
-
-  .contact-aside__pending {
-    display: grid;
-    gap: 0.6rem;
-    justify-items: start;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line-light);
-  }
-
-  .contact-aside__badge {
-    padding: 0.3rem 0.75rem;
-    border-radius: 999px;
-    background: var(--lemon-300);
-    color: var(--cocoa-900);
-    font-size: 0.75rem;
-    font-weight: 800;
   }
 
   .contact-aside__note {

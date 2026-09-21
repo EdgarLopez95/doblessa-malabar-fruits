@@ -11,12 +11,7 @@ const f = (name: string) => `${id}-${name}`;
 ---
 
 <div class="demo-form" data-demo-form>
-  <p class="form-pending">
-    <span class="form-pending__badge">Propuesta</span>
-    <span>Propuesta de formulario pendiente de activación. Se muestra para la presentación del diseño.</span>
-  </p>
-
-  <form id={id} class="form" novalidate aria-describedby={f('note')}>
+  <form id={id} class="form" novalidate>
     <p class="form-intro">Todos los campos son obligatorios salvo que se indique lo contrario.</p>
 
     <div class="form-summary" data-form-summary role="alert" hidden></div>
@@ -61,7 +56,8 @@ const f = (name: string) => `${id}-${name}`;
         <div class="check">
           <input id={f('consentimiento')} name="consentimiento" type="checkbox" required aria-describedby={f('consentimiento-error')} />
           <label for={f('consentimiento')}>
-            He leído y acepto la <a href={url(PAGES.privacidad.path)}>política de privacidad</a>.
+            He leído y acepto la <a
+              href={url(PAGES.privacidad.path)}>política de privacidad</a>.
           </label>
         </div>
         <p class="field-error" id={f('consentimiento-error')} hidden></p>
@@ -73,14 +69,13 @@ const f = (name: string) => `${id}-${name}`;
         <span data-submit-label>Enviar</span>
         <span class="arrow" aria-hidden="true">→</span>
       </button>
-      <p class="form-note" id={f('note')}>No envía datos.</p>
     </div>
   </form>
 
   <div class="form-success" data-form-success hidden>
     <span class="form-success__balls" aria-hidden="true"><span></span><span></span><span></span></span>
-    <h3 class="form-success__title" tabindex="-1" data-form-success-title>Demostración visual</h3>
-    <p>Esta es una demostración visual. El canal de contacto definitivo está pendiente de validación.</p>
+    <h3 class="form-success__title" tabindex="-1" data-form-success-title>¡Gracias por escribir!</h3>
+    <p>Nos alegra que quieras saber más de Malabar Fruits.</p>
     <button class="btn btn--outline btn--small" type="button" data-form-reset>Volver al formulario</button>
   </div>
 </div>
@@ -197,29 +192,6 @@ const f = (name: string) => `${id}-${name}`;
 </script>
 
 <style>
-  .form-pending {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-    padding: 0.9rem 1.1rem;
-    border: 1.5px dashed var(--line-strong);
-    border-radius: var(--radius-card);
-    background: rgb(248 216 91 / 0.28);
-    font-size: 0.9375rem;
-  }
-
-  .form-pending__badge {
-    flex: none;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    background: var(--cocoa-900);
-    color: var(--cream-50);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-  }
-
   .form {
     display: grid;
     gap: 1.5rem;

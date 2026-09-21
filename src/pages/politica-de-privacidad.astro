@@ -4,68 +4,57 @@ import { PAGES } from '../data/site';
 import { url } from '../lib/paths';
 
 const sections = [
-  { id: 'estado', title: 'Estado de esta web' },
   { id: 'responsable', title: 'Responsable del tratamiento' },
-  { id: 'datos', title: 'Datos que se tratarían' },
+  { id: 'datos', title: 'Datos que se tratan' },
   { id: 'finalidad', title: 'Finalidad' },
   { id: 'legitimacion', title: 'Base jurídica' },
   { id: 'conservacion', title: 'Conservación' },
   { id: 'destinatarios', title: 'Destinatarios' },
   { id: 'derechos', title: 'Derechos' },
+  { id: 'cookies', title: 'Cookies y datos de navegación' },
 ];
 ---
 
 <LegalLayout
   meta={PAGES.privacidad}
   heading="Política de privacidad"
-  intro="Cómo se tratarían los datos personales facilitados a través de este sitio web, organizado para su revisión."
+  intro="Cómo se tratan los datos personales facilitados a través de este sitio web."
   sections={sections}>
-  <h2 id="estado">Estado de esta web</h2>
-  <p>
-    Esta web es un mockup estático. Los formularios de contacto son demostraciones: <strong>no envían ni guardan información</strong>. No se
-    utilizan cookies de analítica ni de publicidad.
-  </p>
-  <p>Las tipografías se cargan desde Google Fonts, lo que implica una conexión con los servidores de Google al visitar el sitio.</p>
-
   <h2 id="responsable">Responsable del tratamiento</h2>
-  <ul>
-    <li>Identidad: <span class="placeholder">[Pendiente de confirmar]</span></li>
-    <li>Domicilio: <span class="placeholder">[Pendiente de confirmar]</span></li>
-    <li>Contacto para privacidad: <span class="placeholder">[Pendiente de confirmar]</span></li>
-  </ul>
+  <p>
+    Malabar Fruits, marca de fruta y verdura fresca vinculada a Limosin Fruits, es responsable del tratamiento de los datos facilitados a
+    través de este sitio web.
+  </p>
 
-  <h2 id="datos">Datos que se tratarían</h2>
-  <p>Si el formulario llegara a activarse, se tratarían únicamente los datos que la persona usuaria decidiera facilitar:</p>
+  <h2 id="datos">Datos que se tratan</h2>
+  <p>A través del formulario de contacto se tratan únicamente los datos que la persona usuaria decide facilitar:</p>
   <ul>
-    <li>Nombre, correo electrónico y mensaje.</li>
+    <li>Nombre, correo electrónico y el contenido del mensaje.</li>
   </ul>
 
   <h2 id="finalidad">Finalidad</h2>
-  <p>Atender y responder las consultas recibidas. Los datos no se utilizarían para otros fines sin informar previamente.</p>
+  <p>Atender la consulta recibida. Los datos no se utilizan para otros fines sin informar previamente.</p>
 
   <h2 id="legitimacion">Base jurídica</h2>
-  <p>
-    El consentimiento de la persona interesada al enviar el formulario.
-    Debe validarse legalmente: <span class="placeholder">[Pendiente de confirmar]</span>.
-  </p>
+  <p>El consentimiento de la persona interesada, que se presta al enviar el formulario y puede retirarse en cualquier momento.</p>
 
   <h2 id="conservacion">Conservación</h2>
-  <p>
-    Los datos se conservarían durante el tiempo necesario para atender la consulta y cumplir las obligaciones legales: <span
-      class="placeholder">[Plazo pendiente de confirmar]</span>.
-  </p>
+  <p>Los datos se conservan durante el tiempo necesario para atender la consulta y cumplir las obligaciones legales aplicables.</p>
 
   <h2 id="destinatarios">Destinatarios</h2>
-  <p>
-    No se prevé ceder datos a terceros salvo obligación legal. Los proveedores tecnológicos que intervengan deberán identificarse: <span
-      class="placeholder">[Pendiente de confirmar]</span>.
-  </p>
+  <p>No se ceden datos a terceros, salvo obligación legal.</p>
 
   <h2 id="derechos">Derechos</h2>
   <p>
-    Las personas interesadas podrían ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad a través del
-    canal que se indique: <span class="placeholder">[Pendiente de confirmar]</span>. También podrían presentar una reclamación ante la autoridad de
-    control competente.
+    Las personas interesadas pueden ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad
+    escribiendo a través del <a href={url(PAGES.contacto.path)}>formulario de contacto</a>. También pueden presentar una reclamación ante la
+    autoridad de control competente.
+  </p>
+
+  <h2 id="cookies">Cookies y datos de navegación</h2>
+  <p>
+    Este sitio no utiliza cookies de analítica ni de publicidad. Las tipografías se sirven desde el propio dominio, por lo que la navegación
+    no genera peticiones a terceros.
   </p>
   <p>Consulta también el <a href={url(PAGES.avisoLegal.path)}>aviso legal</a>.</p>
 </LegalLayout>

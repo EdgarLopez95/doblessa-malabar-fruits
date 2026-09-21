@@ -30,10 +30,6 @@ const { meta, heading, intro, sections } = Astro.props;
       <p class="eyebrow">Información legal</p>
       <h1 id="page-title">{heading}</h1>
       <p class="lead">{intro}</p>
-      <p class="legal-notice" role="note">
-        <strong>Propuesta pendiente de validación.</strong> Este texto es una estructura de trabajo para el mockup. Los datos entre corchetes deben
-        completarse y revisarse por asesoría legal antes de publicar.
-      </p>
     </div>
   </section>
 
@@ -82,16 +78,6 @@ const { meta, heading, intro, sections } = Astro.props;
     content: '/';
     margin-right: 0.5rem;
     opacity: 0.5;
-  }
-
-  .legal-notice {
-    max-width: 44rem;
-    margin-top: 2rem;
-    padding: 1rem 1.25rem;
-    border-left: 4px solid var(--lemon-300);
-    border-radius: var(--radius-card);
-    background: var(--paper-100);
-    font-size: 0.9375rem;
   }
 
   .legal-body {
@@ -170,14 +156,6 @@ const { meta, heading, intro, sections } = Astro.props;
 
   .legal-prose :global(li + li) {
     margin-top: 0.4rem;
-  }
-
-  .legal-prose :global(.placeholder) {
-    padding: 0.05rem 0.35rem;
-    border-radius: 6px;
-    background: rgb(248 216 91 / 0.45);
-    color: var(--cocoa-900);
-    font-weight: 600;
   }
 
   .legal-prose :global(a) {
