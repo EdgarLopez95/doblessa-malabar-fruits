@@ -1,21 +1,22 @@
 ---
 import JuggleBalls from '../components/JuggleBalls.astro';
 import PageIntro from '../components/PageIntro.astro';
+import Picture from '../components/Picture.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { PAGES } from '../data/site';
 import { url } from '../lib/paths';
 
 const page = PAGES.calidad;
 
-// Valores presentes en la comunicación original de la marca. Sin procesos,
-// responsables, certificaciones ni datos de origen: nada de eso está documentado.
+// Valores presentes en la comunicación original de la marca. Se describen como
+// tales, sin convertirlos en procesos internos ni en resultados comprobados.
 const values = [
-  { title: 'Selección', text: 'Elegir la fruta y la verdura que llevan el nombre de la marca.', color: 'var(--apricot-400)' },
-  { title: 'Sabor', text: 'El primer motivo para repetir con una pieza de fruta.', color: 'var(--malabar-600)' },
-  { title: 'Aspecto', text: 'Producto que entra por los ojos antes de llegar a la mesa.', color: 'var(--lemon-300)' },
-  { title: 'Frescura', text: 'Lo fresco se nota, y es lo que la marca pone por delante.', color: 'var(--leaf-600)' },
-  { title: 'Higiene', text: 'Un cuidado que la marca menciona como parte de su forma de trabajar.', color: 'var(--apricot-400)' },
-  { title: 'Controles', text: 'La marca habla de controles de calidad, sin detallar procedimientos.', color: 'var(--malabar-600)' },
+  { title: 'Selección', text: 'La marca habla de selección hortofrutícola.', color: 'var(--apricot-400)' },
+  { title: 'Sabor', text: 'Un valor presente en la comunicación de la marca.', color: 'var(--malabar-600)' },
+  { title: 'Aspecto', text: 'El aspecto del producto forma parte de ese mismo relato.', color: 'var(--lemon-300)' },
+  { title: 'Frescura', text: 'La frescura aparece como valor declarado.', color: 'var(--leaf-600)' },
+  { title: 'Higiene', text: 'La higiene se nombra junto a la calidad del producto.', color: 'var(--apricot-400)' },
+  { title: 'Controles', text: 'La marca menciona controles de calidad, sin detallar procedimientos.', color: 'var(--malabar-600)' },
 ];
 ---
 
@@ -25,7 +26,10 @@ const values = [
     eyebrow="Calidad"
     title="Calidad"
     lead="Selección, sabor, aspecto, frescura, higiene y controles: los valores que Malabar Fruits pone por delante cuando habla de su producto.">
-    <div slot="visual" class="quality-visual" aria-hidden="true">
+    <div slot="visual" class="quality-visual">
+      <div class="quality-visual__mark">
+        <Picture src="calidad/compromiso-calidad-malabar.png" alt="" width={576} height={185} priority />
+      </div>
       <JuggleBalls class="quality-visual__balls" palette="fresh" />
     </div>
   </PageIntro>
@@ -59,19 +63,30 @@ const values = [
     </div>
   </section>
 
-  <section class="section--tight" aria-labelledby="pending-title">
-    <div class="container">
-      <div class="pending-card">
-        <span class="pending-card__badge">Pendiente de validación</span>
-        <div class="pending-card__body">
-          <h2 id="pending-title">Certificados y datos de origen</h2>
-          <p>
-            Esta propuesta no publica certificados, sellos ni información de origen. Se incorporarán únicamente cuando el cliente aporte
-            documentación vigente y confirme su alcance.
-          </p>
-          <a class="link-arrow" href={url(PAGES.contacto.path)}>Contactar con Malabar Fruits <span class="arrow" aria-hidden="true">→</span></a>
-        </div>
+  <section class="section certs" aria-labelledby="certs-title">
+    <div class="container certs-inner">
+      <header class="certs-head">
+        <p class="eyebrow">Sellos de la marca</p>
+        <h2 id="certs-title">Certificaciones</h2>
+        <p class="lead">Certificaciones presentes en la comunicación original de Malabar Fruits.</p>
+      </header>
+
+      <div class="certs-panel">
+        <Picture
+          src="calidad/logotipos-certificaciones-malabar.png"
+          alt="Certificados mostrados en la web original de Malabar Fruits: GLOBALG.A.P., IFS Food y QS."
+          width={800}
+          height={176}
+        />
       </div>
+    </div>
+  </section>
+
+  <section class="section--tight quality-cta" aria-labelledby="quality-cta-title">
+    <div class="container quality-cta__inner">
+      <h2 id="quality-cta-title">¿Quieres saber más de la marca?</h2>
+      <p class="lead">El canal de contacto definitivo está pendiente de validación.</p>
+      <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Contactar <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 </BaseLayout>
@@ -81,22 +96,30 @@ const values = [
     position: relative;
     display: grid;
     place-items: center;
+    gap: 2rem;
     width: min(100%, 24rem);
-    aspect-ratio: 1;
     margin-inline: auto;
+    padding-block: 2rem;
   }
 
   .quality-visual::before {
     content: '';
     position: absolute;
-    inset: 10%;
+    inset: 0 -8% 0 -8%;
     border-radius: 50%;
     background: var(--paper-100);
   }
 
+  /* Rótulo heredado de la web original */
+  .quality-visual__mark {
+    position: relative;
+    width: 78%;
+    mix-blend-mode: multiply;
+  }
+
   .quality-visual :global(.quality-visual__balls) {
     position: relative;
-    width: 84%;
+    width: 58%;
     color: var(--cocoa-600);
   }
 
@@ -171,42 +194,50 @@ const values = [
     color: var(--cocoa-600);
   }
 
-  .pending-card {
+  /* Certificaciones */
+  .certs-inner {
     display: grid;
-    gap: 1rem 2.5rem;
-    align-items: start;
-    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
-    border: 1.5px dashed var(--line-strong);
-    border-radius: var(--radius-panel);
+    gap: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+    justify-items: center;
+    text-align: center;
   }
 
-  @media (min-width: 48rem) {
-    .pending-card {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-  }
-
-  .pending-card__badge {
-    justify-self: start;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    background: var(--lemon-300);
-    font-size: 0.8125rem;
-    font-weight: 800;
-  }
-
-  .pending-card__body {
+  .certs-head {
     display: grid;
-    gap: 0.75rem;
-    justify-items: start;
-  }
-
-  .pending-card h2 {
-    font-size: 1.75rem;
-  }
-
-  .pending-card p {
+    justify-items: center;
     max-width: 44rem;
-    color: var(--cocoa-600);
+  }
+
+  .certs-head h2 {
+    font-size: clamp(2.5rem, 1.8rem + 3vw, 3.75rem);
+  }
+
+  .certs-head .lead {
+    margin-top: 1rem;
+  }
+
+  .certs-panel {
+    display: grid;
+    place-items: center;
+    width: min(100%, 60rem);
+    padding: clamp(2rem, 1.25rem + 4vw, 4rem) clamp(1.5rem, 1rem + 4vw, 4.5rem);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-panel);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .certs-panel :global(img) {
+    width: min(100%, 44rem);
+  }
+
+  .quality-cta__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .quality-cta__inner .lead {
+    margin-block: 1rem 2rem;
   }
 </style>

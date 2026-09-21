@@ -17,11 +17,14 @@ const FILES = [
   'inicio/hero-campana-malabar-movil.jpg',
   'inicio/detalle-campana-malabar.png',
   'calidad/compromiso-calidad-malabar.png',
+  'calidad/certificaciones-malabar.png',
+  'calidad/logotipos-certificaciones-malabar.png',
   'contacto/ilustracion-contacto-malabar.png',
   'gama/fruta-divertida.png',
   'gama/fruta-energia-natural.png',
   'gama/fruta-dieta-equilibrada.png',
   'gama/fruta-energia-diaria.png',
+  'gama/fruta-saludablemente-divertida.png',
 ];
 
 for (const file of FILES) {

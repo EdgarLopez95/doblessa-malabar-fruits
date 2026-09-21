@@ -33,28 +33,19 @@ const jsonLd = {
 
 const principles = ['Producto antes que decoración', 'El juego como lenguaje', 'Color en la mesa de cada día'];
 
+// Carteles y mensajes de la comunicación original de Malabar Fruits.
+// Se recuperan tal cual, atribuidos a la marca; no se amplían ni se
+// convierten en afirmaciones nuevas.
 const plays = [
-  {
-    image: 'gama/fruta-energia-diaria.png',
-    title: 'Una vuelta más a lo fresco.',
-    text: 'La fruta también entra por el juego: mirarla, elegirla y compartirla.',
-  },
-  {
-    image: 'gama/fruta-dieta-equilibrada.png',
-    title: 'Hoy toca color.',
-    text: 'Rojo, naranja, verde: la mesa también se elige con los ojos.',
-  },
-  {
-    image: 'gama/fruta-energia-natural.png',
-    title: 'Sabor que hace equipo.',
-    text: 'Una pieza de fruta sabe mejor cuando pasa de mano en mano.',
-  },
+  { image: 'gama/fruta-energia-natural.png', title: 'Energía natural' },
+  { image: 'gama/fruta-dieta-equilibrada.png', title: 'Dieta equilibrada' },
+  { image: 'gama/fruta-energia-diaria.png', title: 'Vitaminas sin parar' },
 ];
 
 const quality = [
-  { title: 'Selección', text: 'Elegir bien lo que lleva el nombre de la marca.' },
-  { title: 'Sabor y aspecto', text: 'Las dos primeras razones para repetir.' },
-  { title: 'Frescura', text: 'El valor que la marca pone por delante.' },
+  { title: 'Selección', text: 'La marca habla de selección hortofrutícola.' },
+  { title: 'Sabor y aspecto', text: 'Dos valores presentes en su comunicación.' },
+  { title: 'Frescura', text: 'Un valor declarado por la marca.' },
   { title: 'Higiene y controles', text: 'Parte de su forma de hablar del producto.' },
 ];
 ---
@@ -122,6 +113,15 @@ const quality = [
         <ul class="reset-list principles">
           {principles.map((item) => <li>{item}</li>)}
         </ul>
+        <img
+          class="intro-mark"
+          src={asset('gama/fruta-saludablemente-divertida.png')}
+          alt="Saludablemente divertidas"
+          width="576"
+          height="185"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   </section>
@@ -172,8 +172,9 @@ const quality = [
     <div class="play-stars" style={`background-image: url('${asset('marca/franja-estrellas-malabar.jpg')}')`} aria-hidden="true"></div>
     <div class="container section">
       <header class="section-head play-head">
-        <p class="eyebrow">El juego de lo fresco</p>
-        <h2 id="play-title">Tres gestos para mirar la fruta con otros ojos</h2>
+        <p class="eyebrow">Del archivo de Malabar</p>
+        <h2 id="play-title">Los carteles originales</h2>
+        <p>Mensajes que la marca ya usaba en su web, recuperados tal cual.</p>
       </header>
       <ul class="reset-list play-grid">
         {
@@ -183,7 +184,6 @@ const quality = [
                 <Picture src={item.image} alt="" width={474} height={744} />
               </div>
               <h3>{item.title}</h3>
-              <p>{item.text}</p>
             </li>
           ))
         }
@@ -441,6 +441,13 @@ const quality = [
     flex-wrap: wrap;
     gap: 0.6rem;
     margin-top: 2rem;
+  }
+
+  /* Rótulo heredado de la web original */
+  .intro-mark {
+    width: clamp(11rem, 8rem + 10vw, 16rem);
+    margin-top: 2.5rem;
+    mix-blend-mode: multiply;
   }
 
   .principles li {
