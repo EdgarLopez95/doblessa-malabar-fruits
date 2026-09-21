@@ -94,6 +94,7 @@ imagen) y `sello-malabar-fruits` (duplica el logotipo).
 - Crítica de diseño independiente (ronda 1, 70/100). Correcciones aplicadas:
   - **Bloqueante:** los adornos de los paneles de gama solapaban el texto (kicker crema sobre orbe albaricoque, 2.08:1). Los paneles pasan a una rejilla de dos filas —adorno arriba, texto abajo— y el solape es imposible por construcción. Verificado a 360, 390, 768, 1024 y 1440 px.
   - **Fidelidad:** se retiró "Escríbenos y lo vemos" de fruta y verduras (era la promesa de revisión que bloquea la auditoría) y el sello circular "CALIDAD" con estrellas, que se leía como acreditación en la página que declara no publicar sellos.
+  - **Ronda 2 (71/100):** confirmó el bloqueante resuelto y cero recaídas de fidelidad. Se corrigió un bloqueante nuevo (los ordinales de Calidad en la home iban en albaricoque sobre crema, 2.08:1; ahora granate, 9.44:1) y la cicatriz del recorte: las bolas se dimensionan por la altura de su fila, así que ninguna queda partida. Además: hero de calidad con los seis valores, descargo de la cuadrícula de fruta antes de las fichas, menos avisos repetidos en contacto, banda del hero en carga diferida y áreas táctiles en enlaces de texto, casilla y logotipo.
   - **Oficio:** cierre de contacto sin columna vacía, aviso de canal pendiente en la home, composición de malabar en verduras, línea base y fila huérfana de la cuadrícula de fruta, áreas táctiles de 44 px y menú móvil con "Gama" ya desplegada.
 
 ## Pendientes reales de validación

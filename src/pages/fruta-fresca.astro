@@ -36,6 +36,9 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
           <p class="eyebrow">La fruta de Malabar</p>
           <h2 id="range-title">Trece frutas, trece maneras de jugar</h2>
           <p>Las frutas que aparecen nombradas en la marca, ordenadas para recorrerlas con calma.</p>
+          <p class="range-disclaimer">
+            La agrupación por tipo y las descripciones son un recurso de esta propuesta: no proceden de la comunicación de la marca.
+          </p>
         </header>
 
         <div class="filters js-only">
@@ -76,10 +79,6 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
         }
       </ul>
 
-      <p class="range-note">
-        La agrupación por tipo y las descripciones son un recurso de esta propuesta para ordenar la cuadrícula: no proceden de la
-        comunicación de la marca.
-      </p>
     </div>
   </section>
 
@@ -340,11 +339,6 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   }
 
   @media (min-width: 64rem) {
-    /* Las dos últimas ocupan el ancho que dejaría la fila huérfana */
-    .fruit-card:nth-last-child(-n + 2) {
-      grid-column: span 2;
-    }
-
     .fruit-card:first-child {
       grid-column: span 2;
       background: var(--paper-100);
@@ -361,6 +355,16 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
     .fruit-card:first-child h3 {
       font-size: 3.25rem;
     }
+  }
+
+  .range-disclaimer {
+    max-width: 44rem;
+    padding: 0.7rem 1rem;
+    border-left: 3px solid var(--lemon-300);
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+    background: rgb(248 216 91 / 0.22);
+    font-size: 0.9375rem;
+    color: var(--cocoa-900);
   }
 
   .range-note {

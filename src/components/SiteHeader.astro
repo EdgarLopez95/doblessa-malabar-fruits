@@ -152,7 +152,10 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
   }
 
   .brand {
+    display: flex;
+    align-items: center;
     flex: none;
+    min-height: 2.75rem;
     border-radius: 6px;
   }
 

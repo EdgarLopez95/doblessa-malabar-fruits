@@ -97,7 +97,7 @@ const quality = [
     </div>
 
     <div class="hero-strip" aria-hidden="true">
-      <Picture src="inicio/hero-fruta-malabar.jpg" alt="" width={1920} height={249} priority />
+      <Picture src="inicio/hero-fruta-malabar.jpg" alt="" width={1920} height={249} />
     </div>
   </section>
 
@@ -127,7 +127,7 @@ const quality = [
   </section>
 
   <!-- 3. La gama -->
-  <section id="gama" class="section gama tone-paper" aria-labelledby="gama-title">
+  <section id="gama" class="section section--wide gama tone-paper" aria-labelledby="gama-title">
     <div class="container">
       <header class="section-head">
         <p class="eyebrow">La gama</p>
@@ -500,7 +500,8 @@ const quality = [
     z-index: 1;
     grid-row: 2;
     align-self: end;
-    max-width: 26rem;
+    max-width: 32rem;
+    margin-top: 1.75rem;
   }
 
   .gama-panel__kicker {
@@ -533,13 +534,27 @@ const quality = [
     transform: translateX(4px);
   }
 
+  .gama-panel:has(.stretched-link:focus-visible) .gama-panel__cta {
+    text-decoration-thickness: 4px;
+  }
+
   /* Fila propia del adorno, recortada a su caja */
   .gama-panel__art {
     position: relative;
     grid-row: 1;
+    min-height: 9rem;
     margin: calc(-1 * var(--panel-pad)) calc(-1 * var(--panel-pad)) 0;
     overflow: hidden;
     pointer-events: none;
+  }
+
+  /* Se dimensionan por la ALTURA de la fila: así ninguna queda partida
+     por el recorte. Las grandes salen por el borde a propósito. */
+  .orb,
+  .orbit {
+    height: var(--orb-h);
+    width: auto;
+    aspect-ratio: 1;
   }
 
   .orb {
@@ -549,60 +564,53 @@ const quality = [
   }
 
   .gama-panel--fruit .orb--a {
-    top: -22%;
-    right: -14%;
-    width: 78%;
-    aspect-ratio: 1;
+    --orb-h: 210%;
+    top: -64%;
+    right: -12%;
     background: var(--malabar-600);
   }
 
   .gama-panel--fruit .orb--b {
-    top: 38%;
-    right: 46%;
-    width: 22%;
-    aspect-ratio: 1;
+    --orb-h: 50%;
+    top: 24%;
+    right: 34%;
     background: var(--lemon-300);
   }
 
   .gama-panel--fruit .orb--c {
-    top: 12%;
-    right: 66%;
-    width: 10%;
-    aspect-ratio: 1;
+    --orb-h: 24%;
+    top: 16%;
+    right: 58%;
     background: var(--leaf-600);
   }
 
   .gama-panel--fruit .orbit {
+    --orb-h: 260%;
     position: absolute;
-    top: -34%;
-    right: -24%;
-    width: 96%;
-    aspect-ratio: 1;
+    top: -92%;
+    right: -20%;
     border: 2px dashed rgb(53 39 39 / 0.35);
     border-radius: 50%;
   }
 
   .gama-panel--veg .orb--a {
-    top: -20%;
-    right: -18%;
-    width: 84%;
-    aspect-ratio: 1;
+    --orb-h: 230%;
+    top: -70%;
+    right: -16%;
     background: #2c5c49;
   }
 
   .gama-panel--veg .orb--b {
-    top: 16%;
-    right: 16%;
-    width: 26%;
-    aspect-ratio: 1;
+    --orb-h: 58%;
+    top: 20%;
+    right: 18%;
     background: var(--lemon-300);
   }
 
   .gama-panel--veg .orb--c {
-    top: 52%;
-    right: 52%;
-    width: 13%;
-    aspect-ratio: 1;
+    --orb-h: 30%;
+    top: 34%;
+    right: 44%;
     background: var(--apricot-400);
   }
 
@@ -730,6 +738,11 @@ const quality = [
       position: sticky;
       top: calc(var(--header-h) + 2rem);
     }
+
+    .quality-copy {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
   }
 
   .quality-copy .lead {
@@ -753,8 +766,7 @@ const quality = [
     font-family: var(--font-display);
     font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
     line-height: 1;
-    color: var(--apricot-400);
-    -webkit-text-stroke: 1px var(--malabar-700);
+    color: var(--malabar-700);
   }
 
   .quality-list h3 {
