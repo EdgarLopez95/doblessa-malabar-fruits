@@ -2,12 +2,14 @@
 import JuggleBalls from '../components/JuggleBalls.astro';
 import Picture from '../components/Picture.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { GENERAL_CONTACT, PAGES, PRO_CONTACT, SITE } from '../data/site';
+import { LIMOSIN_NOTE, PAGES, SITE } from '../data/site';
 import { absoluteUrl, asset, url } from '../lib/paths';
 
 const page = PAGES.home;
 const home = absoluteUrl('/');
 
+// Solo datos conocidos: nombre, URL del mockup y logotipo. Sin teléfono,
+// dirección, servicios, precios ni valoraciones.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -26,22 +28,16 @@ const jsonLd = {
       logo: absoluteUrl('/images/marca/logo-malabar-fruits.png'),
       description: 'Marca de fruta y verdura fresca.',
     },
-    {
-      '@type': 'Organization',
-      '@id': `${home}#limosin-fruits`,
-      name: 'Limosin Fruits',
-      brand: { '@id': `${home}#brand` },
-    },
   ],
 };
 
-const principles = ['Producto antes que decoración', 'La temporada como relato', 'Cabe en la cocina y en el lineal'];
+const principles = ['Producto antes que decoración', 'El juego como lenguaje', 'Color en la mesa de cada día'];
 
 const plays = [
   {
     image: 'gama/fruta-energia-diaria.png',
     title: 'Una vuelta más a lo fresco.',
-    text: 'Cambiar la merienda de siempre por una pieza de fruta ya es darle otra vuelta al día.',
+    text: 'La fruta también entra por el juego: mirarla, elegirla y compartirla.',
   },
   {
     image: 'gama/fruta-dieta-equilibrada.png',
@@ -51,22 +47,15 @@ const plays = [
   {
     image: 'gama/fruta-energia-natural.png',
     title: 'Sabor que hace equipo.',
-    text: 'La fruta sabe mejor cuando se reparte y pasa de mano en mano.',
+    text: 'Una pieza de fruta sabe mejor cuando pasa de mano en mano.',
   },
 ];
 
 const quality = [
-  { title: 'Selección', text: 'Elegir bien es el primer gesto de la marca.' },
-  { title: 'Frescura', text: 'Respetar el ritmo de cada producto.' },
-  { title: 'Presentación', text: 'Que la marca acompañe al producto, sin taparlo.' },
-  { title: 'Relación profesional', text: 'Hablar claro antes de prometer.' },
-];
-
-const sectors = [
-  { title: 'Retail', text: 'Una marca con color para la sección de fresco.' },
-  { title: 'Restauración', text: 'Producto con buena presencia en la mesa.' },
-  { title: 'Distribución', text: 'Una conversación directa sobre la gama.' },
-  { title: 'Colaboraciones', text: 'Proyectos que quieran sumar el tono Malabar.' },
+  { title: 'Selección', text: 'Elegir bien lo que lleva el nombre de la marca.' },
+  { title: 'Sabor y aspecto', text: 'Las dos primeras razones para repetir.' },
+  { title: 'Frescura', text: 'El valor que la marca pone por delante.' },
+  { title: 'Higiene y controles', text: 'Parte de su forma de hablar del producto.' },
 ];
 ---
 
@@ -83,16 +72,12 @@ const sectors = [
         <img class="hero-logo" src={asset('marca/logo-malabar-fruits.png')} alt="Malabar Fruits" width="300" height="108" />
         <h1 id="hero-title">Fruta y verdura <em>fresca</em> para disfrutar cada día</h1>
         <p class="lead">
-          Comer bien también es jugar. Malabar Fruits pone color, ritmo y buen humor a la fruta y la verdura de todos los días, para
-          descubrirlas, compartirlas y volver a por más.
+          Comer bien también es jugar. Malabar Fruits pone color, ritmo y buen humor a la fruta y la verdura de todos los días.
         </p>
         <div class="btn-row">
-          <a class="btn btn--primary" href={url(PAGES.fruta.path)}>Descubre la gama de fruta <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--outline" href={url(PAGES.profesionales.path)}>Soy profesional</a>
+          <a class="btn btn--primary" href={url(PAGES.fruta.path)}>Descubre la fruta <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href={url(PAGES.verduras.path)}>Ver las verduras</a>
         </div>
-        <p class="hero-sublink">
-          <a class="link-arrow" href={url(PAGES.verduras.path)}>Ver también las verduras <span class="arrow" aria-hidden="true">→</span></a>
-        </p>
       </div>
 
       <div class="hero-media">
@@ -129,10 +114,10 @@ const sectors = [
         <h2 id="intro-title" class="intro-title">Todos hemos hecho un malabar. Con la fruta, es más divertido.</h2>
         <div class="prose intro-text">
           <p>
-            Con las prisas, con la compra, con lo que apetece a cada uno en casa. Malabar Fruits parte de esa idea tan cotidiana para
-            reunir fruta y verdura fresca bajo un mismo gesto: elegir lo que tiene color, sabor y ganas de compartirse.
+            Malabar Fruits es una marca de fruta y verdura fresca que se toma el producto en serio y el tono con humor: color, juego y
+            ganas de compartir lo que hay en la mesa.
           </p>
-          <p>Sin fórmulas ni sermones. Con producto real en el centro y un guiño que se entiende a la primera.</p>
+          <p>Fruta y verdura como parte de una alimentación equilibrada, sin fórmulas ni sermones.</p>
         </div>
         <ul class="reset-list principles">
           {principles.map((item) => <li>{item}</li>)}
@@ -141,23 +126,23 @@ const sectors = [
     </div>
   </section>
 
-  <!-- 3. Categorías -->
+  <!-- 3. La gama -->
   <section id="gama" class="section gama tone-paper" aria-labelledby="gama-title">
     <div class="container">
       <header class="section-head">
         <p class="eyebrow">La gama</p>
         <h2 id="gama-title">Elige por dónde empezar</h2>
-        <p>Fruta y verdura fresca contadas con calma y sin carrito: aquí se viene a descubrir.</p>
+        <p>Fruta y verdura fresca, contadas con calma.</p>
       </header>
 
       <div class="gama-grid">
         <article class="gama-panel gama-panel--fruit">
           <div class="gama-panel__body">
-            <p class="gama-panel__kicker">De hueso, de pepita y para descubrir</p>
+            <p class="gama-panel__kicker">Trece frutas nombradas por la marca</p>
             <h3 class="gama-panel__title">
               <a class="stretched-link" href={url(PAGES.fruta.path)}>Fruta fresca</a>
             </h3>
-            <p class="gama-panel__text">Melocotón, nectarina, paraguayo, cereza, kiwi y muchas más formas de poner color a la mesa.</p>
+            <p class="gama-panel__text">Melocotón, nectarina, paraguayo, cereza, kiwi y unas cuantas más.</p>
             <span class="gama-panel__cta" aria-hidden="true">Explorar la fruta <span class="arrow">→</span></span>
           </div>
           <div class="gama-panel__art" aria-hidden="true">
@@ -167,11 +152,11 @@ const sectors = [
 
         <article class="gama-panel gama-panel--veg on-dark">
           <div class="gama-panel__body">
-            <p class="gama-panel__kicker">La huerta, por colores</p>
+            <p class="gama-panel__kicker">La otra mitad de la gama</p>
             <h3 class="gama-panel__title">
               <a class="stretched-link" href={url(PAGES.verduras.path)}>Verduras frescas</a>
             </h3>
-            <p class="gama-panel__text">Verdes, rojas, amarillas y moradas: la otra mitad del juego.</p>
+            <p class="gama-panel__text">Malabar Fruits es también verdura fresca.</p>
             <span class="gama-panel__cta" aria-hidden="true">Explorar las verduras <span class="arrow">→</span></span>
           </div>
           <div class="gama-panel__art" aria-hidden="true">
@@ -211,12 +196,12 @@ const sectors = [
     <div class="container quality-grid">
       <div class="quality-copy">
         <p class="eyebrow">Calidad</p>
-        <h2 id="quality-title">Calidad que se explica, no que se presume</h2>
+        <h2 id="quality-title">Sabor, aspecto y frescura</h2>
         <p class="lead">
-          Para Malabar Fruits, la calidad es una suma de detalles: elegir con criterio, cuidar lo fresco, presentar bien el producto y
-          hablar claro con quien trabaja con él.
+          Son las palabras con las que Malabar Fruits habla de su producto. Aquí se recogen como valores de marca, sin adornos ni sellos
+          que todavía no están confirmados.
         </p>
-        <a class="link-arrow" href={url(PAGES.calidad.path)}>Cómo entendemos la calidad <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="link-arrow" href={url(PAGES.calidad.path)}>Ver los valores de la marca <span class="arrow" aria-hidden="true">→</span></a>
       </div>
       <ol class="reset-list quality-list">
         {
@@ -236,60 +221,18 @@ const sectors = [
     </div>
   </section>
 
-  <!-- 6. Profesionales -->
-  <section class="section pro tone-cocoa on-dark" aria-labelledby="pro-title">
-    <div class="container pro-grid">
-      <div class="pro-copy">
-        <p class="eyebrow">Para profesionales</p>
-        <h2 id="pro-title">¿Trabajas con fruta y verdura?</h2>
-        <p class="lead">
-          Si Malabar Fruits puede encajar en tu comercio, tu cocina, tu catálogo o tu próxima campaña, el primer paso es sencillo: una
-          conversación con el equipo.
-        </p>
-        <div class="btn-row">
-          <a class="btn btn--lemon" href={url(PRO_CONTACT)}>Hablar con el equipo <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--outline" href={url(PAGES.profesionales.path)}>Ver la propuesta</a>
-        </div>
-      </div>
-      <ul class="reset-list pro-list">
-        {
-          sectors.map((item) => (
-            <li>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Aviso no-tienda y dónde encontrar Malabar -->
-  <section class="section--tight no-store" id="donde-encontrar" aria-labelledby="no-store-title">
-    <div class="container">
-      <div class="no-store-card">
-        <div class="no-store-copy">
-          <p class="no-store-kicker">Aviso de compra y distribución</p>
-          <h2 id="no-store-title">Esta web no es una tienda</h2>
-          <p class="lead">
-            Malabar Fruits es una marca de fruta y verdura fresca. Desde aquí no se compra ni se envía a domicilio. Si quieres encontrar la marca o trabajar con ella, escríbenos.
-          </p>
-          <div class="no-store-finder">
-            <h3 class="no-store-finder__title">Dónde encontrar Malabar</h3>
-            <p>
-              Aún no publicamos un listado de fruterías ni un localizador. Cuando el equipo confirme puntos de venta, irán aquí. Esta web no es una tienda y no envía a domicilio.
-            </p>
-          </div>
-        </div>
-        <div class="no-store-actions">
-          <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Escríbenos para hablar de la marca <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--outline" href={url(PRO_CONTACT)}>Contacto profesional</a>
-        </div>
+  <!-- 6. Limosin Fruits -->
+  <section class="section--tight limosin" aria-labelledby="limosin-title">
+    <div class="container limosin-band">
+      <img class="limosin-logo" src={asset('marca/limosin-fruits.png')} alt="Limosin Fruits" width="458" height="144" loading="lazy" decoding="async" />
+      <div>
+        <h2 id="limosin-title">Malabar y Limosin Fruits</h2>
+        <p>{LIMOSIN_NOTE}</p>
       </div>
     </div>
   </section>
 
-  <!-- 8. Contacto -->
+  <!-- 7. Contacto -->
   <section class="section contact-cta" aria-labelledby="contact-title">
     <div class="container contact-grid">
       <div class="contact-copy">
@@ -303,22 +246,11 @@ const sectors = [
           decoding="async"
         />
         <h2 id="contact-title">¿Hablamos?</h2>
-        <p class="lead">Elige el camino que mejor encaja contigo y te llevamos al formulario adecuado.</p>
+        <p class="lead">Escríbenos si quieres saber más sobre Malabar Fruits.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Ir a contacto <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
-      <ul class="reset-list contact-options">
-        <li class="contact-option">
-          <span class="contact-option__dot" aria-hidden="true"></span>
-          <h3><a class="stretched-link" href={url(GENERAL_CONTACT)}>Tengo una consulta</a></h3>
-          <p>Para personas y familias que quieren saber más de la marca.</p>
-          <span class="arrow contact-option__arrow" aria-hidden="true">→</span>
-        </li>
-        <li class="contact-option contact-option--pro">
-          <span class="contact-option__dot" aria-hidden="true"></span>
-          <h3><a class="stretched-link" href={url(PRO_CONTACT)}>Soy profesional</a></h3>
-          <p>Para comercio, restauración, distribución o colaboraciones.</p>
-          <span class="arrow contact-option__arrow" aria-hidden="true">→</span>
-        </li>
-      </ul>
     </div>
   </section>
 </BaseLayout>
@@ -827,49 +759,6 @@ const sectors = [
     color: var(--cocoa-600);
   }
 
-  /* Profesionales --------------------------------------------------------- */
-  .pro-grid {
-    display: grid;
-    gap: 3rem;
-  }
-
-  @media (min-width: 56rem) {
-    .pro-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 5rem;
-      align-items: center;
-    }
-  }
-
-  .pro-copy .lead {
-    margin-top: 1.25rem;
-  }
-
-  .pro-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-    border-top: 1px solid var(--line-light);
-    border-left: 1px solid var(--line-light);
-  }
-
-  .pro-list li {
-    padding: 1.75rem 1.5rem;
-    border-right: 1px solid var(--line-light);
-    border-bottom: 1px solid var(--line-light);
-  }
-
-  .pro-list h3 {
-    font-family: var(--font-body);
-    font-size: 1.0625rem;
-    font-weight: 800;
-    color: var(--lemon-300);
-  }
-
-  .pro-list p {
-    margin-top: 0.4rem;
-    color: rgb(255 249 241 / 0.84);
-  }
-
   /* Contacto -------------------------------------------------------------- */
   .contact-grid {
     display: grid;
@@ -897,132 +786,37 @@ const sectors = [
   .contact-copy .lead {
     margin-top: 1rem;
   }
-
-  .contact-options {
+  /* Limosin */
+  .limosin-band {
     display: grid;
-    gap: 1rem;
-  }
-
-  .contact-option {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 0.25rem 1.25rem;
+    gap: 1.5rem 2.5rem;
     align-items: center;
-    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-panel);
-    background: var(--cream-50);
-    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), transform 0.2s var(--ease);
-  }
-
-  .contact-option:hover {
-    border-color: var(--malabar-700);
-    transform: translateY(-2px);
-  }
-
-  .contact-option--pro {
-    background: var(--paper-100);
-  }
-
-  .contact-option__dot {
-    grid-row: span 2;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background: var(--apricot-400);
-    box-shadow: inset -8px -8px 0 rgb(53 39 39 / 0.1);
-  }
-
-  .contact-option--pro .contact-option__dot {
-    background: var(--malabar-700);
-  }
-
-  .contact-option h3 a {
-    color: inherit;
-  }
-
-  .contact-option p {
-    grid-column: 2;
-    color: var(--cocoa-600);
-  }
-
-  .contact-option__arrow {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    font-size: 1.5rem;
-    color: var(--malabar-700);
-  }
-
-  .contact-option:hover .contact-option__arrow {
-    transform: translateX(4px);
-  }
-
-  /* Subenlace del hero */
-  .hero-sublink {
-    margin-top: 1.25rem;
-  }
-
-  /* Aviso no tienda */
-  .no-store-card {
-    display: grid;
-    gap: 2rem;
-    padding: clamp(2rem, 1.5rem + 3vw, 3.5rem);
-    border: 2px dashed var(--line-strong);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1.5px solid var(--line);
     border-radius: var(--radius-panel);
     background: var(--paper-100);
   }
 
-  @media (min-width: 56rem) {
-    .no-store-card {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-      align-items: center;
-      gap: 3.5rem;
+  @media (min-width: 48rem) {
+    .limosin-band {
+      grid-template-columns: auto minmax(0, 1fr);
     }
   }
 
-  .no-store-kicker {
-    margin-bottom: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--malabar-700);
+  .limosin-logo {
+    width: clamp(8rem, 6rem + 6vw, 11rem);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-card);
+    background: #fff;
   }
 
-  .no-store-card h2 {
-    font-size: clamp(2rem, 1.5rem + 1.8vw, 2.75rem);
+  .limosin-band h2 {
+    font-size: 1.75rem;
   }
 
-  .no-store-card .lead {
-    margin-top: 0.75rem;
-    color: var(--cocoa-900);
-  }
-
-  .no-store-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    align-items: flex-start;
-  }
-
-  .no-store-finder {
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line-light);
-  }
-
-  .no-store-finder__title {
-    font-family: var(--font-body);
-    font-size: 1.125rem;
-    font-weight: 800;
-    color: var(--cocoa-900);
-  }
-
-  .no-store-finder p {
-    margin-top: 0.35rem;
-    font-size: 0.9375rem;
-    line-height: 1.6;
+  .limosin-band p {
+    max-width: 44rem;
+    margin-top: 0.5rem;
     color: var(--cocoa-600);
   }
 </style>

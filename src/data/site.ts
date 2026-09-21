@@ -15,45 +15,30 @@ export interface PageMeta {
 export const PAGES = {
   home: {
     path: '/',
-    title: 'Malabar Fruits | Fruta y verdura fresca de temporada',
+    title: 'Malabar Fruits | Fruta y verdura fresca',
     description:
-      'Malabar Fruits es una marca de fruta y verdura fresca que invita a descubrir, compartir y disfrutar el color de cada día. Conoce la gama.',
+      'Malabar Fruits es una marca de fruta y verdura fresca. Color, juego y producto de todos los días, contados con el tono de la marca.',
   },
   fruta: {
     path: '/fruta-fresca/',
-    title: 'Fruta fresca de temporada | Malabar Fruits',
+    title: 'Fruta fresca | Malabar Fruits',
     description:
-      'Recorre la gama de fruta fresca de Malabar Fruits: melocotón, nectarina, paraguayo, pera, manzana, cereza, kiwi y más, contada con color y sin prisas.',
+      'Las frutas presentes en la marca Malabar Fruits: melocotón, nectarina, paraguayo, platerina, pera, manzana, albaricoque, cereza, granada, níspero, higo, caqui y kiwi.',
   },
   verduras: {
     path: '/verduras-frescas/',
     title: 'Verduras frescas | Malabar Fruits',
-    description:
-      'Verduras frescas con el tono de Malabar Fruits: la huerta por colores e ideas sencillas para la mesa de cada día. Descubre la gama y habla con el equipo.',
+    description: 'Malabar Fruits es una marca de fruta y verdura fresca. Presentación visual de la verdura, sin listados que aún no están confirmados.',
   },
   calidad: {
-    path: '/calidad-y-trazabilidad/',
-    title: 'Calidad y selección de fruta fresca | Malabar Fruits',
-    description:
-      'Cómo entiende Malabar Fruits la calidad: selección, frescura, cuidado de la presentación y una relación profesional clara y directa.',
-  },
-  profesionales: {
-    path: '/para-profesionales/',
-    title: 'Fruta y verdura fresca para profesionales | Malabar Fruits',
-    description:
-      '¿Trabajas en retail, restauración o distribución? Conoce Malabar Fruits, marca de fruta y verdura fresca, y habla con el equipo comercial.',
-  },
-  limosin: {
-    path: '/limosin-fruits/',
-    title: 'Malabar Fruits y Limosin Fruits',
-    description:
-      'Malabar Fruits es una marca de fruta y verdura fresca vinculada a Limosin Fruits. Descubre cómo se relacionan ambos nombres.',
+    path: '/calidad/',
+    title: 'Calidad | Malabar Fruits',
+    description: 'Selección, sabor, aspecto, frescura, higiene y controles: los valores de calidad presentes en la comunicación de Malabar Fruits.',
   },
   contacto: {
     path: '/contacto/',
     title: 'Contacto | Malabar Fruits',
-    description:
-      'Contacta con Malabar Fruits para una consulta general o para iniciar una conversación profesional sobre fruta y verdura fresca.',
+    description: 'Contacto de Malabar Fruits. Propuesta de formulario pendiente de activación: el canal definitivo está por validar.',
   },
   avisoLegal: {
     path: '/aviso-legal/',
@@ -85,19 +70,18 @@ export interface NavGroup {
 export type NavItem = NavLink | NavGroup;
 
 export const NAV: NavItem[] = [
+  { label: 'Inicio', href: PAGES.home.path },
   {
     label: 'Gama',
     id: 'gama',
     children: [
-      { label: 'Fruta fresca', href: PAGES.fruta.path, note: 'De hueso, de pepita y para descubrir', color: '#F29B62' },
-      { label: 'Verduras frescas', href: PAGES.verduras.path, note: 'La huerta, contada por colores', color: '#38735B' },
+      { label: 'Fruta fresca', href: PAGES.fruta.path, note: 'Las frutas presentes en la marca', color: '#F29B62' },
+      { label: 'Verduras frescas', href: PAGES.verduras.path, note: 'La otra mitad de la gama', color: '#38735B' },
     ],
   },
-  { label: 'Temporada', href: '/fruta-fresca/#temporada' },
   { label: 'Calidad', href: PAGES.calidad.path },
-  { label: 'Para profesionales', href: PAGES.profesionales.path },
   { label: 'Contacto', href: PAGES.contacto.path },
 ];
 
-export const PRO_CONTACT = '/contacto/?tipo=profesional';
-export const GENERAL_CONTACT = '/contacto/?tipo=general';
+/** Nota de relación con Limosin Fruits. Nivel de evidencia B: fuente secundaria. */
+export const LIMOSIN_NOTE = 'Malabar Fruits está vinculada a Limosin Fruits según la información pública disponible.';

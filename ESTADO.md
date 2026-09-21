@@ -2,70 +2,106 @@
 
 ## Estado actual
 
-Mockup estático cerrado al 100 % en todos sus huecos técnicamente subsanables y preparado para presentación y entrega a cliente. Cuenta con dos rutas claras (marca familiar vs. profesional), producto reconocible sin invención de fotos ni sellos de calidad, copy rigurosamente honesto sobre temporada, compras y puntos de venta pendientes, fuentes autoalojadas localmente sin peticiones a terceros, formularios unificados con aviso demostrativo, y brechas documentadas en `GAPS.md` y `BUGS.md`.
+Mockup estático alineado con la evidencia de marca. El 21 de septiembre de 2026 se
+aplicó una **corrección de fidelidad** siguiendo
+`../Recursos/auditoria-fidelidad-propuesta-vs-sitio-original.md`: se retiró toda la
+oferta comercial que la propuesta había inventado y que no aparece en la web
+original de Malabar Fruits.
+
+### Qué se retiró y por qué
+
+| Contenido retirado | Motivo |
+| --- | --- |
+| Sección y ruta "Para profesionales", botón "Soy profesional" | La marca no declara públicos profesionales ni oferta B2B |
+| Retail, restauración, distribución, colaboraciones, equipo comercial | Servicios y audiencias no documentados |
+| "Qué pasa después", "te respondemos", "el equipo revisa" | No hay evidencia de un canal de atención propio |
+| Bloque "Esta web no es una tienda" y "Dónde encontrar Malabar" | Afirmaba una ausencia de venta y un localizador no demostrados |
+| Trazabilidad, origen, partidas, homologaciones, requisitos técnicos | Procesos internos no documentados |
+| Temporada: página, rueda y calendario | La estacionalidad de la gama Malabar no está comunicada |
+| "La huerta por colores" e ideas de cocina en verduras | Taxonomía y contenido culinario inventados |
+| Segmentación del formulario (profesional/consumidor/prensa) | Categorías sin respaldo |
+| Página corporativa de Limosin Fruits | Interpretaba estructura societaria; queda como mención breve |
 
 ## Base técnica
 
-- **Framework**: Astro 7 + TypeScript + CSS nativo. Cero dependencias externas añadidas.
-- **Tipografías**: Autoalojadas localmente en `public/fonts/` (*DM Serif Display* y *Manrope* en WOFF2 variable, latin y latin-ext). Cero peticiones externas a `fonts.googleapis.com` o `fonts.gstatic.com`. Preload configurado en `BaseLayout.astro`.
-- **Ruta base**: `/doblessa-malabar-fruits` (rutas y recursos gestionados con `src/lib/paths.ts`).
-- **Control de indexación**: `<meta name="robots" content="noindex, follow" />` global e incondicional en los 10 archivos HTML de `dist/` para proteger el dominio definitivo de indexación anticipada.
-- **Rama de publicación**: `main` (workflow `.github/workflows/deploy.yml` a GitHub Pages).
-- **URL pública**: `https://edgarlopez95.github.io/doblessa-malabar-fruits/`.
-- **Validación automatizada**: `npm run build` limpio y `node scripts/verify-build.mjs` (todas las comprobaciones superadas: 1 H1 por página, 0 href="#", 0 fugas de fuentes externas, 0 rutas sin base).
+- Framework: Astro 7 + TypeScript + CSS nativo. Sin dependencias añadidas.
+- `base`: `/doblessa-malabar-fruits` (todas las rutas pasan por `src/lib/paths.ts`).
+- Fuentes autoalojadas (DM Serif Display y Manrope, woff2) en `public/fonts`.
+- Rama de publicación: `main` (workflow `.github/workflows/deploy.yml`).
+- GitHub Pages: `https://edgarlopez95.github.io/doblessa-malabar-fruits/`.
+- Validación: `npm run build` + `node scripts/verify-build.mjs`.
 
-## Páginas implementadas
+## Rutas vigentes
 
 | Ruta | Contenido |
 | --- | --- |
-| `/` | Hero con CTA directo a `/fruta-fresca/` ("Descubre la gama de fruta") y subenlace a verduras; avance de categorías; "el juego de lo fresco"; pilares de calidad; propuesta para profesionales; bloque honesto con H2 «Esta web no es una tienda» y «Dónde encontrar Malabar» (`#donde-encontrar`) con CTA «Escríbenos para hablar de la marca» y contacto. |
-| `/fruta-fresca/` | H1 "Fruta fresca de temporada"; 13 frutas con jerarquía tipográfica dominante, acento de color propio (`var(--fruit)`) e índice 01–13; enlace de fin de parrilla al equipo comercial y enlace sutil a «Dónde encontrar Malabar»; sección `#temporada` con aviso honesto sin fechas ficticias. |
-| `/verduras-frescas/` | Huerta por colores, ideas de uso y consulta comercial de gama (sin variedades inventadas). |
-| `/calidad-y-trazabilidad/` | H1 "Selección y calidad de principio a fin"; 4 pilares en recorrido editorial secuencial; H2 de trazabilidad honesto ("Cuando el equipo aporte origen y controles, irán aquí") sin sellos ni certificados ficticios. |
-| `/para-profesionales/` | Propuesta B2B sobria en 2 columnas (propuesta editorial + sectores con filetes divisores); paleta leaf/malabar; sin promesas de MOQ/catálogo cerrado; formulario profesional demostrativo con preselección. |
-| `/limosin-fruits/` | Relación de marca prudente; aviso de datos societarios y NAP pendientes; enlace seguro HTTPS a `limosinfruits.com` marcado como dominio distinto; contacto propio en Malabar. |
-| `/contacto/` | Formulario unificado con campos: *Nombre*, *Correo electrónico*, *Tipo de consulta* (selector: *Profesional* / *Consumidor* / *Prensa* / *Otro*) y *Mensaje*; nota «Formulario demostrativo para el mockup. No envía datos a ningún servidor.»; bloques en lateral: «Esta web no es una tienda», «Dónde encontrar Malabar» y línea visible de estado del NAP comercial. |
-| `/aviso-legal/`, `/politica-de-privacidad/` | Estructura legal propuesta con marcadores pendientes de revisión jurídica; excluidas del sitemap (`excludeFromSitemap: true`). |
-| `/404` | Página de error 404 personalizada con ilustración de marca. |
+| `/` | Hero, concepto de marca, acceso a la gama, el juego de lo fresco, valores de calidad, mención de Limosin y contacto |
+| `/fruta-fresca/` | Las 13 frutas nombradas por la marca, con filtro editorial por tipo |
+| `/verduras-frescas/` | Presencia de la verdura, color como recurso gráfico y aviso de selección pendiente |
+| `/calidad/` | Los seis valores declarados: selección, sabor, aspecto, frescura, higiene y controles |
+| `/contacto/` | Bloque único y neutro con formulario marcado como propuesta pendiente de activación |
+| `/aviso-legal/`, `/politica-de-privacidad/` | Estructura legal con marcadores pendientes; fuera del sitemap |
+| `/404` | Página de error de marca |
 
-## Componentes y Arquitectura
+Navegación pública: **Inicio · Gama (Fruta fresca, Verduras frescas) · Calidad · Contacto**.
 
-- `layouts/BaseLayout.astro`: `<meta name="robots" content="noindex, follow" />` global; preloads locales de fuentes WOFF2; Open Graph; JSON-LD (`WebSite`, `Brand` y `Organization` Limosin sin dirección inventada).
-- `layouts/LegalLayout.astro`: plantilla para documentos legales con índice lateral.
-- `components/SiteHeader.astro`: cabecera sticky, menú móvil accesible (Escape, `inert`, foco) y marcado activo de sección por visibilidad.
-- `components/SiteFooter.astro`: pie institucional con navegación completa, mención de relación societaria y línea visible: `«Teléfono, correo y domicilio comercial: pendientes de validación.»`.
-- `components/JuggleBalls.astro`: motivo gráfico SVG con soporte explícito de `@media (prefers-reduced-motion: reduce)` para anular movimiento.
-- `components/ContactForm.astro`: formulario demostrativo unificado (Nombre, Correo, Tipo de consulta [Profesional / Consumidor / Prensa / Otro], Mensaje, Consentimiento) con validación nativa en cliente, feedback accesible, `preventDefault` y nota bajo botón.
-- `components/Picture.astro`: elemento `<picture>` optimizado con WebP, dimensiones explícitas y carga diferida.
-- `components/PageIntro.astro` y `components/ProCta.astro`.
+## Rutas retiradas
 
-## SEO y Auditoría
+`/para-profesionales/`, `/limosin-fruits/` y `/calidad-y-trazabilidad/` ya no forman
+parte del sitio. Como estuvieron publicadas, se conservan como páginas de aviso
+("Página retirada") que dirigen a una ruta vigente: son `noindex` y están fuera del
+sitemap. Pueden borrarse cuando el cliente lo indique.
 
-- Exactamente un H1 por página, títulos únicos alineados con el plan SEO.
-- `<meta name="robots" content="noindex, follow" />` presente en los 10 archivos HTML de `dist/`.
-- Cero peticiones a CDN externas de Google Fonts (`fonts.googleapis.com` / `fonts.gstatic.com`).
-- Sin enlaces vacíos `href="#"`; todas las anclas internas corresponden a IDs reales.
-- Todos los enlaces y recursos estáticos usan el prefijo `/doblessa-malabar-fruits/`.
-- Sin schema `Product`, precios, ofertas ni claims nutricionales no contrastados.
+## Componentes
+
+- `layouts/BaseLayout.astro`: SEO (title, description, canonical, Open Graph, JSON-LD opcional), `noindex` global de mockup, fuentes y skip link.
+- `layouts/LegalLayout.astro` y `layouts/RetiredPage.astro`.
+- `components/SiteHeader.astro`: navegación sticky, desplegable "Gama" y menú móvil accesible (Escape, `inert`, foco).
+- `components/SiteFooter.astro`, `PageIntro.astro`, `JuggleBalls.astro`, `Picture.astro`.
+- `components/ContactForm.astro`: formulario único, validación en cliente y respuesta local de demostración.
+- Datos: `src/data/site.ts` (SEO, navegación y nota de Limosin) y `src/data/fruits.ts`.
+
+## SEO
+
+- Un H1 por página; títulos y metadescripciones sin temporada, profesionales ni trazabilidad.
+- Canonical absoluto; Open Graph e imagen `images/og/malabar-fruits-og.jpg`.
+- JSON-LD en inicio: `WebSite` y `Brand` con nombre, URL y logotipo. Sin `Organization` de Limosin, `Product`, `LocalBusiness`, `Offer`, reseñas, teléfonos ni direcciones.
+- `sitemap.xml` con las cinco rutas públicas; `robots.txt` generado como endpoint.
+- Todo el sitio va con `noindex, follow` por ser una propuesta en revisión.
 
 ## Recursos de imagen en `public/images`
 
-- `marca/`: `logo-malabar-fruits`, `limosin-fruits`, `franja-estrellas-malabar`, `textura-pie-malabar`
-- `inicio/`: `hero-campana-malabar`, `hero-campana-malabar-movil`, `hero-fruta-malabar`, `detalle-campana-malabar` (recorte CSS del grabado para no mostrar claims incrustados)
-- `calidad/`: `compromiso-calidad-malabar` (rotulado "CALIDAD ★★★★★" decorativo sin claims de salud)
-- `contacto/`: `ilustracion-contacto-malabar`
-- `gama/`: `fruta-divertida`, `fruta-energia-diaria`, `fruta-dieta-equilibrada`, `fruta-energia-natural` (recortadas por CSS para ocultar texto incrustado)
-- `og/`: `malabar-fruits-og.jpg`
-- No utilizados: `certificaciones-malabar`, `logotipos-certificaciones-malabar`, `fruta-saludablemente-divertida`, `detalle-cta-contacto-malabar`.
+Generados con `node scripts/prepare-images.mjs` (copia el original y crea `.webp`; no
+modifica `../Recursos`): `marca/`, `inicio/`, `calidad/compromiso-calidad-malabar`,
+`contacto/ilustracion-contacto-malabar`, `gama/` y `og/`.
+
+No se usan: certificaciones y logotipos de certificaciones (sin validar),
+`fruta-saludablemente-divertida` y `detalle-cta-contacto-malabar` (texto dentro de la
+imagen) y `sello-malabar-fruits` (duplica el logotipo).
 
 ## Documentación complementaria
 
-- `GAPS.md`: Tabla de 16 entregables del cliente clasificados por estado y cerrabilidad en mockup, complementada con el cuestionario de 5 preguntas estratégicas para la reunión con Limosin Fruits / Malabar Fruits.
-- `BUGS.md`: Registro exhaustivo de 10 incidencias técnicas y editoriales resueltas con detalle de ubicación, causa, solución y método de verificación.
+- `design/brief.md` y `design/direction.md`: brief y dirección visual de esta corrección.
+- `GAPS.md` y `BUGS.md`: entregables pendientes del cliente e incidencias.
 
 ## Verificación realizada
 
-- Compilación limpia con `npm run build` en Astro 7 (10 páginas + sitemap + robots generados sin advertencias).
-- Ejecución satisfactoria de `node scripts/verify-build.mjs` con verificación de fuentes locales.
-- Comprobación de contrastes de color según WCAG 2.2 AA / AAA.
-- Navegación responsive libre de overflow horizontal entre 360 px y 1440 px.
+- `npm run build`: correcto, 11 páginas + `sitemap.xml` + `robots.txt`.
+- `node scripts/verify-build.mjs`: todas las comprobaciones en verde.
+- 160 enlaces internos comprobados en `dist/`: ninguno roto.
+- Búsqueda de términos prohibidos en `src/` y en el HTML generado: sin coincidencias.
+- Chrome real a 375 px y 1280 px: un solo H1 por página y sin desplazamiento horizontal.
+
+## Pendientes reales de validación
+
+- **Contacto:** el canal definitivo (correo, teléfono o formulario operativo). Hoy el formulario es una propuesta no conectada.
+- **Certificados y origen:** vigencia y alcance antes de publicar cualquier sello.
+- **Datos corporativos y legales:** razón social, CIF, domicilio y textos legales.
+- **Limosin Fruits:** naturaleza exacta de la relación y disponibilidad del dominio. A 21 de septiembre de 2026 `limosinfruits.com` no resuelve por DNS, así que la mención va sin enlace.
+- **Verduras:** selección concreta, si el cliente quiere publicarla.
+- **Reintroducir contenido B2B** solo si el cliente confirma público, gama, cobertura y canal.
+
+## Límites y bloqueos
+
+- No hay bloqueos técnicos.
+- Las decisiones de marca, alcance o contenido nuevo vuelven al orquestador.

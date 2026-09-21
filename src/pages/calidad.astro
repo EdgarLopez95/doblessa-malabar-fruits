@@ -1,0 +1,218 @@
+---
+import JuggleBalls from '../components/JuggleBalls.astro';
+import PageIntro from '../components/PageIntro.astro';
+import Picture from '../components/Picture.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+
+const page = PAGES.calidad;
+
+// Valores presentes en la comunicación original de la marca. Sin procesos,
+// responsables, certificaciones ni datos de origen: nada de eso está documentado.
+const values = [
+  { title: 'Selección', text: 'Elegir la fruta y la verdura que llevan el nombre de la marca.', color: 'var(--apricot-400)' },
+  { title: 'Sabor', text: 'El primer motivo para repetir con una pieza de fruta.', color: 'var(--malabar-600)' },
+  { title: 'Aspecto', text: 'Producto que entra por los ojos antes de llegar a la mesa.', color: 'var(--lemon-300)' },
+  { title: 'Frescura', text: 'Lo fresco se nota, y es lo que la marca pone por delante.', color: 'var(--leaf-600)' },
+  { title: 'Higiene', text: 'Un cuidado que la marca menciona como parte de su forma de trabajar.', color: 'var(--apricot-400)' },
+  { title: 'Controles', text: 'La marca habla de controles de calidad, sin detallar procedimientos.', color: 'var(--malabar-600)' },
+];
+---
+
+<BaseLayout {...page}>
+  <PageIntro
+    crumb="Calidad"
+    eyebrow="Calidad"
+    title="Calidad"
+    lead="Sabor, aspecto, frescura, higiene y selección son los valores que Malabar Fruits pone por delante cuando habla de su producto.">
+    <div slot="visual" class="quality-visual" aria-hidden="true">
+      <div class="quality-visual__seal">
+        <Picture src="calidad/compromiso-calidad-malabar.png" alt="" width={576} height={185} priority />
+      </div>
+      <JuggleBalls class="quality-visual__balls" palette="fresh" />
+    </div>
+  </PageIntro>
+
+  <section class="section tone-paper" aria-labelledby="values-title">
+    <div class="container values-grid">
+      <div class="values-copy">
+        <p class="eyebrow">Seis palabras</p>
+        <h2 id="values-title">Lo que la marca pone por delante</h2>
+        <p class="lead">
+          Son los términos con los que Malabar Fruits habla de su fruta y su verdura. Aquí se recogen tal cual: como valores de marca, no como
+          la descripción de un procedimiento interno.
+        </p>
+      </div>
+
+      <ol class="reset-list values-list">
+        {
+          values.map((value, index) => (
+            <li class="value-row" style={`--value: ${value.color}`}>
+              <span class="value-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span class="value-dot" aria-hidden="true" />
+              <div>
+                <h3>{value.title}</h3>
+                <p>{value.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-labelledby="pending-title">
+    <div class="container">
+      <div class="pending-card">
+        <span class="pending-card__badge">Pendiente de validación</span>
+        <div class="pending-card__body">
+          <h2 id="pending-title">Certificados y datos de origen</h2>
+          <p>
+            Esta propuesta no publica certificados, sellos ni información de origen. Se incorporarán únicamente cuando el cliente aporte
+            documentación vigente y confirme su alcance.
+          </p>
+          <a class="link-arrow" href={url(PAGES.contacto.path)}>Contactar con Malabar Fruits <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .quality-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(100%, 24rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+  }
+
+  .quality-visual::before {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: var(--paper-100);
+  }
+
+  .quality-visual::after {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border: 2px dashed var(--line-strong);
+    border-radius: 50%;
+  }
+
+  .quality-visual__seal {
+    position: relative;
+    width: 72%;
+    mix-blend-mode: multiply;
+  }
+
+  .quality-visual :global(.quality-visual__balls) {
+    position: absolute;
+    top: -6%;
+    right: -4%;
+    width: 42%;
+    color: var(--cocoa-600);
+  }
+
+  .values-grid {
+    display: grid;
+    gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  }
+
+  @media (min-width: 56rem) {
+    .values-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: start;
+    }
+
+    .values-copy {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .values-copy .lead {
+    margin-top: 1.25rem;
+  }
+
+  .values-list {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .value-row {
+    display: grid;
+    grid-template-columns: 3.25rem 1.25rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    align-items: baseline;
+    padding-block: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .value-num {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    line-height: 1;
+    color: var(--cocoa-600);
+  }
+
+  .value-dot {
+    width: 1.1rem;
+    height: 1.1rem;
+    align-self: center;
+    border-radius: 50%;
+    background: var(--value);
+  }
+
+  .value-row h3 {
+    font-size: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
+  }
+
+  .value-row p {
+    margin-top: 0.3rem;
+    color: var(--cocoa-600);
+  }
+
+  .pending-card {
+    display: grid;
+    gap: 1rem 2.5rem;
+    align-items: start;
+    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-panel);
+  }
+
+  @media (min-width: 48rem) {
+    .pending-card {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+  }
+
+  .pending-card__badge {
+    justify-self: start;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: var(--lemon-300);
+    font-size: 0.8125rem;
+    font-weight: 800;
+  }
+
+  .pending-card__body {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+  }
+
+  .pending-card h2 {
+    font-size: 1.75rem;
+  }
+
+  .pending-card p {
+    max-width: 44rem;
+    color: var(--cocoa-600);
+  }
+</style>

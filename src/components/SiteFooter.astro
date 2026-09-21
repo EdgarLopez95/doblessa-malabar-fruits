@@ -1,5 +1,5 @@
 ---
-import { PAGES, PRO_CONTACT } from '../data/site';
+import { LIMOSIN_NOTE, PAGES } from '../data/site';
 import { asset, url } from '../lib/paths';
 
 const year = new Date().getFullYear();
@@ -10,22 +10,13 @@ const columns = [
     links: [
       { label: 'Fruta fresca', href: PAGES.fruta.path },
       { label: 'Verduras frescas', href: PAGES.verduras.path },
-      { label: 'Temporada', href: '/fruta-fresca/#temporada' },
     ],
   },
   {
     title: 'Malabar',
     links: [
-      { label: 'Calidad y trazabilidad', href: PAGES.calidad.path },
-      { label: 'Para profesionales', href: PAGES.profesionales.path },
-      { label: 'Malabar Fruits y Limosin Fruits', href: PAGES.limosin.path },
-    ],
-  },
-  {
-    title: 'Hablemos',
-    links: [
+      { label: 'Calidad', href: PAGES.calidad.path },
       { label: 'Contacto', href: PAGES.contacto.path },
-      { label: 'Soy profesional', href: PRO_CONTACT },
     ],
   },
 ];
@@ -40,9 +31,7 @@ const columns = [
         <img src={asset('marca/logo-malabar-fruits.png')} alt="Malabar Fruits, ir al inicio" width="300" height="108" loading="lazy" />
       </a>
       <p class="footer-claim">Comer bien también es jugar.</p>
-      <p class="footer-text">
-        Una marca de fruta y verdura fresca vinculada a <a href={url(PAGES.limosin.path)}>Limosin Fruits</a> (relación societaria y datos de contacto pendientes de validación).
-      </p>
+      <p class="footer-text">{LIMOSIN_NOTE}</p>
     </div>
 
     <nav class="footer-nav" aria-label="Pie de página">
@@ -64,10 +53,7 @@ const columns = [
   </div>
 
   <div class="container footer-bottom">
-    <div class="footer-bottom__info">
-      <p>© {year} Malabar Fruits. Propuesta de rediseño estático.</p>
-      <p class="footer-nap">Teléfono, correo y domicilio comercial: pendientes de validación.</p>
-    </div>
+    <p>© {year} Malabar Fruits. Propuesta de rediseño estático, pendiente de validación con el cliente.</p>
     <ul class="reset-list footer-legal">
       <li><a href={url(PAGES.avisoLegal.path)}>Aviso legal</a></li>
       <li><a href={url(PAGES.privacidad.path)}>Política de privacidad</a></li>
@@ -200,13 +186,5 @@ const columns = [
     gap: 0.25rem 1.5rem;
   }
 
-  .footer-bottom__info {
-    display: grid;
-    gap: 0.25rem;
-  }
 
-  .footer-nap {
-    font-size: 0.8125rem;
-    color: rgb(255 249 241 / 0.6);
-  }
 </style>

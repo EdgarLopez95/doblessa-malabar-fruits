@@ -1,0 +1,47 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { PAGES } from '../data/site';
+import { url } from '../lib/paths';
+
+interface Props {
+  path: string;
+  goTo: { label: string; href: string };
+}
+
+const { path, goTo } = Astro.props;
+---
+
+<BaseLayout
+  path={path}
+  title="Página retirada | Malabar Fruits"
+  description="Esta dirección ya no forma parte de la propuesta de Malabar Fruits.">
+  <section class="section retired" aria-labelledby="page-title">
+    <div class="container retired__inner">
+      <p class="eyebrow">Página retirada</p>
+      <h1 id="page-title">Esta página ya no forma parte del sitio</h1>
+      <p class="lead">La propuesta se ha simplificado. Puedes seguir por aquí:</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={url(goTo.href)}>{goTo.label}</a>
+        <a class="btn btn--outline" href={url(PAGES.home.path)}>Ir al inicio</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .retired__inner {
+    display: grid;
+    justify-items: center;
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .retired__inner .lead {
+    margin-top: 1rem;
+  }
+
+  .retired__inner .btn-row {
+    justify-content: center;
+  }
+</style>

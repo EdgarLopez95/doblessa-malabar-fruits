@@ -3,8 +3,7 @@ import ContactForm from '../components/ContactForm.astro';
 import PageIntro from '../components/PageIntro.astro';
 import Picture from '../components/Picture.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { PAGES } from '../data/site';
-import { url } from '../lib/paths';
+import { LIMOSIN_NOTE, PAGES } from '../data/site';
 
 const page = PAGES.contacto;
 ---
@@ -14,7 +13,7 @@ const page = PAGES.contacto;
     crumb="Contacto"
     eyebrow="Hablemos"
     title="Contacto Malabar Fruits"
-    lead="Cuéntanos qué necesitas y te orientamos. Elige el tipo de consulta para ver el formulario adecuado.">
+    lead="Escríbenos para saber más de la marca. Este formulario es una propuesta de diseño: el canal de contacto definitivo está pendiente de validación.">
     <div slot="visual" class="contact-visual" aria-hidden="true">
       <span class="contact-visual__disc"></span>
       <div class="contact-visual__ticket">
@@ -25,7 +24,7 @@ const page = PAGES.contacto;
     </div>
   </PageIntro>
 
-  <section class="section tone-paper contact-section" aria-labelledby="contact-form-title">
+  <section class="section tone-paper" aria-labelledby="contact-form-title">
     <div class="container contact-layout">
       <div class="contact-main">
         <h2 id="contact-form-title" class="visually-hidden">Formulario de contacto</h2>
@@ -35,50 +34,20 @@ const page = PAGES.contacto;
       </div>
 
       <aside class="contact-aside" aria-labelledby="aside-title">
-        <div class="aside-block no-store-box">
-          <h2>Esta web no es una tienda</h2>
-          <p>
-            Malabar Fruits es una marca de fruta y verdura fresca. Desde aquí no se compra ni se envía a domicilio. Si quieres encontrar la marca o trabajar con ella, escríbenos.
-          </p>
-        </div>
-
-        <div class="aside-block donde-encontrar-box">
-          <h3>Dónde encontrar Malabar</h3>
-          <p>
-            Aún no publicamos un listado de fruterías ni un localizador. Cuando el equipo confirme puntos de venta, irán aquí. Esta web no es una tienda y no envía a domicilio.
-          </p>
-        </div>
-
-        <h2 id="aside-title">Qué pasa después</h2>
-        <ol class="reset-list after-steps">
-          <li><span aria-hidden="true">1</span> Envías tu consulta con el contexto que necesites.</li>
-          <li><span aria-hidden="true">2</span> El equipo la revisa y la dirige a quien corresponde.</li>
-          <li><span aria-hidden="true">3</span> Te respondemos por el medio que nos indiques.</li>
-        </ol>
-
-        <p class="contact-aside__nap">
-          Teléfono, correo y domicilio comercial: pendientes de validación.
+        <h2 id="aside-title">Sobre este contacto</h2>
+        <p>
+          Malabar Fruits es una marca de fruta y verdura fresca. Esta web forma parte de una propuesta de rediseño y sus formularios no están
+          conectados a ningún servicio.
         </p>
-        <p class="contact-aside__note">
-          Esta web es una demostración: los formularios no envían datos. Los canales de contacto reales se publicarán cuando estén confirmados.
+        <p class="contact-aside__pending">
+          <span class="contact-aside__badge">Pendiente de validación</span>
+          El canal de contacto definitivo se publicará cuando el cliente lo confirme.
         </p>
-        <a class="link-arrow" href={url(PAGES.profesionales.path)}>Ver la propuesta profesional <span class="arrow" aria-hidden="true">→</span></a>
+        <p class="contact-aside__note">{LIMOSIN_NOTE}</p>
       </aside>
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  const select = document.querySelector<HTMLSelectElement>('#form-contacto-tipo');
-  if (select) {
-    const param = new URLSearchParams(window.location.search).get('tipo');
-    if (param === 'profesional') {
-      select.value = 'Profesional';
-    } else if (param === 'general' || param === 'consumidor') {
-      select.value = 'Consumidor';
-    }
-  }
-</script>
 
 <style>
   .contact-visual {
@@ -148,104 +117,15 @@ const page = PAGES.contacto;
     gap: 2rem;
   }
 
-  /* Selector */
-  .choice {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    min-width: 0;
-  }
-
-  .choice__legend {
-    margin-bottom: 1rem;
-    padding: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.625rem, 1.3rem + 1vw, 2rem);
-    line-height: 1.2;
-  }
-
-  .choice__options {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  @media (min-width: 40rem) {
-    .choice__options {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  .choice-card {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 1rem;
-    padding: 1.4rem 1.5rem;
-    border: 2px solid var(--line-strong);
-    border-radius: var(--radius-panel);
-    background: var(--cream-50);
-    cursor: pointer;
-    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
-  }
-
-  .choice-card:hover {
-    border-color: var(--malabar-600);
-  }
-
-  .choice-card input {
-    width: 1.35rem;
-    height: 1.35rem;
-    margin: 0.2rem 0 0;
-    accent-color: var(--malabar-700);
-  }
-
-  .choice-card:has(input:checked) {
-    border-color: var(--malabar-700);
-    box-shadow: inset 0 0 0 1px var(--malabar-700);
-  }
-
-  .choice-card:has(input:focus-visible) {
-    outline: 3px solid var(--malabar-600);
-    outline-offset: 3px;
-  }
-
-  .choice-card input:focus-visible {
-    outline: none;
-  }
-
-  .choice-card__body {
-    display: grid;
-    gap: 0.25rem;
-  }
-
-  .choice-card__title {
-    font-weight: 800;
-    font-size: 1.0625rem;
-  }
-
-  .choice-card__text {
-    font-size: 0.9375rem;
-    color: var(--cocoa-600);
-  }
-
   .contact-panel {
     padding: clamp(1.5rem, 1rem + 3vw, 3rem);
     border-radius: var(--radius-panel);
     background: var(--cream-50);
-    animation: fade-up 0.25s var(--ease) both;
   }
 
-  .contact-panel + .contact-panel {
-    margin-top: 0;
-  }
-
-  .contact-panel__title {
-    margin-bottom: 1rem;
-    font-size: 1.75rem;
-  }
-
-  /* Lateral */
   .contact-aside {
+    display: grid;
+    gap: 1rem;
     padding: 1.75rem;
     border-radius: var(--radius-panel);
     background: var(--cocoa-900);
@@ -256,92 +136,32 @@ const page = PAGES.contacto;
     font-size: 1.75rem;
   }
 
-  .no-store-box {
-    margin-bottom: 2rem;
-    padding-bottom: 1.75rem;
-    border-bottom: 1px solid var(--line-light);
-  }
-
-  .no-store-box h2 {
-    font-size: 1.5rem;
-    color: var(--lemon-300);
-  }
-
-  .no-store-box p {
-    margin-top: 0.6rem;
+  .contact-aside p {
     font-size: 0.9375rem;
-    line-height: 1.55;
-    color: rgb(255 249 241 / 0.88);
+    line-height: 1.6;
+    color: rgb(255 249 241 / 0.86);
   }
 
-  .donde-encontrar-box {
-    margin-bottom: 2rem;
-    padding-bottom: 1.75rem;
-    border-bottom: 1px solid var(--line-light);
-  }
-
-  .donde-encontrar-box h3 {
-    font-size: 1.35rem;
-    color: var(--lemon-300);
-  }
-
-  .donde-encontrar-box p {
-    margin-top: 0.6rem;
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    color: rgb(255 249 241 / 0.88);
-  }
-
-  .contact-aside__nap {
-    margin-block: 1.25rem 0.5rem;
-    padding: 0.85rem 1rem;
-    border-radius: var(--radius-card);
-    background: rgb(255 249 241 / 0.08);
-    border: 1px dashed var(--line-light);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--lemon-300);
-  }
-
-  .after-steps {
+  .contact-aside__pending {
     display: grid;
-    gap: 0.9rem;
-    margin-block: 1.25rem 1.5rem;
+    gap: 0.6rem;
+    justify-items: start;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-light);
   }
 
-  .after-steps li {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.75rem;
-    align-items: start;
-    color: rgb(255 249 241 / 0.88);
-  }
-
-  .after-steps span {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
+  .contact-aside__badge {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
     background: var(--lemon-300);
     color: var(--cocoa-900);
+    font-size: 0.75rem;
     font-weight: 800;
-    font-size: 0.875rem;
   }
 
   .contact-aside__note {
-    margin-bottom: 1.25rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--line-light);
-    font-size: 0.875rem;
-    color: rgb(255 249 241 / 0.76);
-  }
-
-  .contact-aside .link-arrow {
-    color: var(--lemon-300);
-  }
-
-  .contact-aside :focus-visible {
-    outline-color: var(--lemon-300);
+    color: rgb(255 249 241 / 0.72) !important;
   }
 </style>

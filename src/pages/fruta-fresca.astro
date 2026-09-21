@@ -2,10 +2,9 @@
 import JuggleBalls from '../components/JuggleBalls.astro';
 import PageIntro from '../components/PageIntro.astro';
 import Picture from '../components/Picture.astro';
-import ProCta from '../components/ProCta.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { FRUIT_GROUPS, FRUITS, type FruitGroup } from '../data/fruits';
-import { GENERAL_CONTACT, PAGES, PRO_CONTACT } from '../data/site';
+import { PAGES } from '../data/site';
 import { url } from '../lib/paths';
 
 const page = PAGES.fruta;
@@ -16,11 +15,10 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   <PageIntro
     crumb="Fruta fresca"
     eyebrow="La gama · Fruta"
-    title="Fruta fresca de temporada"
-    lead="De hueso, de pepita o para descubrir: una forma sencilla de recorrer la fruta que forma parte del universo Malabar. Sin prisas, sin carrito y con mucho color.">
+    title="Fruta fresca"
+    lead="Las trece frutas que nombra la marca, reunidas en una cuadrícula para recorrerlas con calma.">
     <div slot="actions" class="btn-row">
-      <a class="btn btn--primary" href="#recorrido">Recorrer la fruta <span class="arrow" aria-hidden="true">↓</span></a>
-      <a class="link-arrow intro-link" href="#temporada">¿Y la temporada?</a>
+      <a class="btn btn--primary" href="#recorrido">Ver las frutas <span class="arrow" aria-hidden="true">↓</span></a>
     </div>
     <div slot="visual" class="fruit-visual" aria-hidden="true">
       <span class="fruit-visual__disc"></span>
@@ -35,9 +33,9 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
     <div class="container">
       <div class="range-head">
         <header class="section-head">
-          <p class="eyebrow">Recorrido por la gama</p>
+          <p class="eyebrow">La fruta de Malabar</p>
           <h2 id="range-title">Trece frutas, trece maneras de jugar</h2>
-          <p>Un vistazo editorial a la fruta que puede formar parte de la gama Malabar. No es un catálogo de compra: es una invitación a conocerla.</p>
+          <p>Las frutas que aparecen nombradas en la marca, ordenadas para recorrerlas con calma.</p>
         </header>
 
         <div class="filters js-only">
@@ -78,51 +76,23 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
         }
       </ul>
 
-      <div class="range-footer">
-        <div>
-          <p class="range-footer__text">¿Quieres consultar disponibilidad o formatos para tu negocio?</p>
-          <a class="range-footer__sublink" href={url('/#donde-encontrar')}>¿Buscas dónde encontrar Malabar?</a>
-        </div>
-        <a class="btn btn--lemon" href={url(PRO_CONTACT)}>Hablar con el equipo sobre la gama <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
+      <p class="range-note">
+        La agrupación por tipo y las descripciones son un recurso de esta propuesta para ordenar la cuadrícula: no proceden de la
+        comunicación de la marca.
+      </p>
     </div>
   </section>
 
-  <section id="temporada" class="section season" aria-labelledby="season-title">
-    <div class="container season-grid">
-      <div class="season-wheel" aria-hidden="true">
-        <span class="season-wheel__ring"></span>
-        <span class="season-wheel__ball season-wheel__ball--1"></span>
-        <span class="season-wheel__ball season-wheel__ball--2"></span>
-        <span class="season-wheel__ball season-wheel__ball--3"></span>
-        <span class="season-wheel__ball season-wheel__ball--4"></span>
-        <span class="season-wheel__center">Cada fruta,<br />a su tiempo</span>
-      </div>
-      <div class="season-copy">
-        <p class="eyebrow">Temporada</p>
-        <h2 id="season-title">La gama gira con el calendario</h2>
-        <div class="prose season-text">
-          <p>
-            Cada fruta tiene su momento, y la selección cambia con él. Por eso aquí no fijamos fechas ni prometemos disponibilidad: preferimos
-            contarlo bien, con información actualizada.
-          </p>
-          <p class="season-notice">
-            No publicamos un calendario mes a mes hasta que Limosin Fruits / Malabar lo confirme. Lo que ves es la gama, no la disponibilidad de esta semana.
-          </p>
-          <p>Si trabajas con fruta, el equipo puede hablarte de la gama del momento. Si eres curioso, también puedes escribirnos.</p>
-        </div>
-        <div class="btn-row">
-          <a class="btn btn--primary" href={url(PRO_CONTACT)}>Consultar como profesional</a>
-          <a class="btn btn--outline" href={url(GENERAL_CONTACT)}>Hacer una consulta</a>
-        </div>
+  <section class="section fruit-cta" aria-labelledby="fruit-cta-title">
+    <div class="container fruit-cta__inner">
+      <h2 id="fruit-cta-title">¿Quieres saber más de la marca?</h2>
+      <p class="lead">Escríbenos y lo vemos.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Contactar <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--outline" href={url(PAGES.verduras.path)}>Ver las verduras</a>
       </div>
     </div>
   </section>
-
-  <ProCta
-    title="¿Buscas fruta fresca para tu negocio?"
-    text="Retail, restauración o distribución: cuéntanos qué necesitas y conversemos sobre cómo encaja la gama Malabar en tu propuesta."
-  />
 </BaseLayout>
 
 <script>
@@ -155,9 +125,6 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
 </script>
 
 <style>
-  .intro-link {
-    align-self: center;
-  }
 
   /* Visual de cabecera */
   .fruit-visual {
@@ -389,105 +356,24 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
     }
   }
 
-  /* Pie de gama */
-  .range-footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-panel);
-    background: var(--cream-50);
+  .range-note {
+    max-width: 46rem;
+    margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+    font-size: 0.9375rem;
+    color: var(--cocoa-600);
   }
 
-  .range-footer__text {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: var(--cocoa-900);
-  }
-
-  .range-footer__sublink {
-    display: inline-block;
-    margin-top: 0.35rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--malabar-700);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .range-footer__sublink:hover {
-    color: var(--cocoa-900);
-  }
-
-  .season-notice {
-    padding: 1rem 1.25rem;
-    border-left: 4px solid var(--malabar-700);
-    border-radius: var(--radius-card);
-    background: var(--paper-100);
-    font-weight: 600;
-    color: var(--cocoa-900);
-  }
-
-  /* Temporada */
-  .season-grid {
+  .fruit-cta__inner {
     display: grid;
-    gap: clamp(2.5rem, 1.5rem + 4vw, 5rem);
-    align-items: center;
-  }
-
-  @media (min-width: 56rem) {
-    .season-grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    }
-  }
-
-  .season-wheel {
-    position: relative;
-    width: min(100%, 24rem);
-    aspect-ratio: 1;
-    margin-inline: auto;
-  }
-
-  .season-wheel__ring {
-    position: absolute;
-    inset: 8%;
-    border: 2px dashed var(--line-strong);
-    border-radius: 50%;
-  }
-
-  .season-wheel__ball {
-    position: absolute;
-    width: 16%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-  }
-
-  .season-wheel__ball--1 { top: 0; left: 42%; background: var(--lemon-300); }
-  .season-wheel__ball--2 { top: 42%; right: 0; background: var(--apricot-400); width: 20%; }
-  .season-wheel__ball--3 { bottom: 0; left: 42%; background: var(--malabar-600); }
-  .season-wheel__ball--4 { top: 42%; left: 0; background: var(--leaf-600); width: 12%; }
-
-  .season-wheel__center {
-    position: absolute;
-    inset: 24%;
-    display: grid;
-    place-content: center;
-    border-radius: 50%;
-    background: var(--paper-100);
-    font-family: var(--font-display);
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
-    line-height: 1.15;
+    justify-items: center;
     text-align: center;
   }
 
-  .season-text {
-    max-width: 38rem;
-    margin-top: 1.25rem;
-    font-size: 1.125rem;
-    color: var(--cocoa-600);
+  .fruit-cta__inner .lead {
+    margin-top: 1rem;
+  }
+
+  .fruit-cta__inner .btn-row {
+    justify-content: center;
   }
 </style>

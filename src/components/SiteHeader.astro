@@ -1,5 +1,5 @@
 ---
-import { NAV, PRO_CONTACT, type NavGroup, type NavItem } from '../data/site';
+import { NAV, type NavGroup, type NavItem } from '../data/site';
 import { asset, isCurrent, url } from '../lib/paths';
 
 interface Props {
@@ -62,7 +62,6 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
           )
         }
       </ul>
-      <a class="btn btn--outline btn--small header-cta" href={url(PRO_CONTACT)}>Soy profesional</a>
     </nav>
   </div>
 </header>
@@ -129,31 +128,6 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
 
     nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
     mobile.addEventListener('change', () => setMenu(false));
-
-    // Enlaces a una sección (por ejemplo «Temporada»): marcan su ubicación
-    // mientras esa sección está en pantalla.
-    const sections = Array.from(header.querySelectorAll<HTMLAnchorElement>('.nav-link[href*="#"]'))
-      .map((link) => {
-        const id = link.href.split('#')[1] ?? '';
-        const target = id ? document.getElementById(id) : null;
-        return target ? { link, target } : null;
-      })
-      .filter((item): item is { link: HTMLAnchorElement; target: HTMLElement } => item !== null);
-
-    if (sections.length > 0 && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const item = sections.find((section) => section.target === entry.target);
-            if (!item) return;
-            if (entry.isIntersecting) item.link.setAttribute('aria-current', 'location');
-            else item.link.removeAttribute('aria-current');
-          });
-        },
-        { rootMargin: '-30% 0px -50% 0px' },
-      );
-      sections.forEach((section) => observer.observe(section.target));
-    }
   }
 </script>
 
@@ -434,11 +408,5 @@ const isGroup = (item: NavItem): item is NavGroup => 'children' in item;
       box-shadow: none;
     }
 
-    .header-cta {
-      align-self: flex-start;
-      min-height: 3rem;
-      padding-inline: 1.5rem;
-      font-size: 1rem;
-    }
   }
 </style>
