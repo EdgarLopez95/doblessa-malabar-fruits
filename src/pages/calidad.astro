@@ -1,7 +1,6 @@
 ---
 import JuggleBalls from '../components/JuggleBalls.astro';
 import PageIntro from '../components/PageIntro.astro';
-import Picture from '../components/Picture.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { PAGES } from '../data/site';
 import { url } from '../lib/paths';
@@ -27,9 +26,6 @@ const values = [
     title="Calidad"
     lead="Sabor, aspecto, frescura, higiene y selección son los valores que Malabar Fruits pone por delante cuando habla de su producto.">
     <div slot="visual" class="quality-visual" aria-hidden="true">
-      <div class="quality-visual__seal">
-        <Picture src="calidad/compromiso-calidad-malabar.png" alt="" width={576} height={185} priority />
-      </div>
       <JuggleBalls class="quality-visual__balls" palette="fresh" />
     </div>
   </PageIntro>
@@ -43,6 +39,7 @@ const values = [
           Son los términos con los que Malabar Fruits habla de su fruta y su verdura. Aquí se recogen tal cual: como valores de marca, no como
           la descripción de un procedimiento interno.
         </p>
+        <JuggleBalls class="values-balls" />
       </div>
 
       <ol class="reset-list values-list">
@@ -92,30 +89,14 @@ const values = [
   .quality-visual::before {
     content: '';
     position: absolute;
-    inset: 6%;
+    inset: 10%;
     border-radius: 50%;
     background: var(--paper-100);
   }
 
-  .quality-visual::after {
-    content: '';
-    position: absolute;
-    inset: 12%;
-    border: 2px dashed var(--line-strong);
-    border-radius: 50%;
-  }
-
-  .quality-visual__seal {
-    position: relative;
-    width: 72%;
-    mix-blend-mode: multiply;
-  }
-
   .quality-visual :global(.quality-visual__balls) {
-    position: absolute;
-    top: -6%;
-    right: -4%;
-    width: 42%;
+    position: relative;
+    width: 84%;
     color: var(--cocoa-600);
   }
 
@@ -138,6 +119,19 @@ const values = [
 
   .values-copy .lead {
     margin-top: 1.25rem;
+  }
+
+  .values-copy :global(.values-balls) {
+    display: none;
+  }
+
+  @media (min-width: 56rem) {
+    .values-copy :global(.values-balls) {
+      display: block;
+      width: 68%;
+      margin-top: 3rem;
+      color: var(--cocoa-600);
+    }
   }
 
   .values-list {

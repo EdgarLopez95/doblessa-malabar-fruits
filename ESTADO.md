@@ -91,6 +91,10 @@ imagen) y `sello-malabar-fruits` (duplica el logotipo).
 - 160 enlaces internos comprobados en `dist/`: ninguno roto.
 - Búsqueda de términos prohibidos en `src/` y en el HTML generado: sin coincidencias.
 - Chrome real a 375 px y 1280 px: un solo H1 por página y sin desplazamiento horizontal.
+- Crítica de diseño independiente (ronda 1, 70/100). Correcciones aplicadas:
+  - **Bloqueante:** los adornos de los paneles de gama solapaban el texto (kicker crema sobre orbe albaricoque, 2.08:1). Los paneles pasan a una rejilla de dos filas —adorno arriba, texto abajo— y el solape es imposible por construcción. Verificado a 360, 390, 768, 1024 y 1440 px.
+  - **Fidelidad:** se retiró "Escríbenos y lo vemos" de fruta y verduras (era la promesa de revisión que bloquea la auditoría) y el sello circular "CALIDAD" con estrellas, que se leía como acreditación en la página que declara no publicar sellos.
+  - **Oficio:** cierre de contacto sin columna vacía, aviso de canal pendiente en la home, composición de malabar en verduras, línea base y fila huérfana de la cuadrícula de fruta, áreas táctiles de 44 px y menú móvil con "Gama" ya desplegada.
 
 ## Pendientes reales de validación
 

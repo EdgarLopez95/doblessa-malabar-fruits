@@ -247,6 +247,7 @@ const quality = [
         />
         <h2 id="contact-title">¿Hablamos?</h2>
         <p class="lead">Escríbenos si quieres saber más sobre Malabar Fruits.</p>
+        <p class="contact-pending"><span class="contact-pending__badge">Propuesta</span> El canal de contacto definitivo está pendiente de validación.</p>
         <div class="btn-row">
           <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Ir a contacto <span class="arrow" aria-hidden="true">→</span></a>
         </div>
@@ -468,13 +469,14 @@ const quality = [
   }
 
   .gama-panel {
+    --panel-pad: clamp(1.75rem, 1rem + 3vw, 3rem);
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    /* Dos filas: el adorno arriba y el texto abajo. Nunca pueden solaparse. */
+    display: grid;
+    grid-template-rows: minmax(6rem, 1fr) auto;
     min-height: clamp(24rem, 18rem + 16vw, 34rem);
     overflow: hidden;
-    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    padding: var(--panel-pad);
     border-radius: var(--radius-panel);
     transition: transform 0.3s var(--ease);
   }
@@ -496,6 +498,8 @@ const quality = [
   .gama-panel__body {
     position: relative;
     z-index: 1;
+    grid-row: 2;
+    align-self: end;
     max-width: 26rem;
   }
 
@@ -529,9 +533,12 @@ const quality = [
     transform: translateX(4px);
   }
 
+  /* Fila propia del adorno, recortada a su caja */
   .gama-panel__art {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    grid-row: 1;
+    margin: calc(-1 * var(--panel-pad)) calc(-1 * var(--panel-pad)) 0;
+    overflow: hidden;
     pointer-events: none;
   }
 
@@ -542,59 +549,59 @@ const quality = [
   }
 
   .gama-panel--fruit .orb--a {
-    top: -12%;
-    right: -10%;
-    width: 58%;
+    top: -22%;
+    right: -14%;
+    width: 78%;
     aspect-ratio: 1;
     background: var(--malabar-600);
   }
 
   .gama-panel--fruit .orb--b {
-    top: 24%;
-    right: 34%;
-    width: 17%;
+    top: 38%;
+    right: 46%;
+    width: 22%;
     aspect-ratio: 1;
     background: var(--lemon-300);
   }
 
   .gama-panel--fruit .orb--c {
-    top: 8%;
-    right: 50%;
-    width: 7%;
+    top: 12%;
+    right: 66%;
+    width: 10%;
     aspect-ratio: 1;
     background: var(--leaf-600);
   }
 
   .gama-panel--fruit .orbit {
     position: absolute;
-    top: -20%;
-    right: -18%;
-    width: 74%;
+    top: -34%;
+    right: -24%;
+    width: 96%;
     aspect-ratio: 1;
     border: 2px dashed rgb(53 39 39 / 0.35);
     border-radius: 50%;
   }
 
   .gama-panel--veg .orb--a {
-    top: -8%;
-    right: -14%;
-    width: 62%;
+    top: -20%;
+    right: -18%;
+    width: 84%;
     aspect-ratio: 1;
     background: #2c5c49;
   }
 
   .gama-panel--veg .orb--b {
-    top: 10%;
-    right: 12%;
-    width: 22%;
+    top: 16%;
+    right: 16%;
+    width: 26%;
     aspect-ratio: 1;
     background: var(--lemon-300);
   }
 
   .gama-panel--veg .orb--c {
-    top: 32%;
-    right: 38%;
-    width: 10%;
+    top: 52%;
+    right: 52%;
+    width: 13%;
     aspect-ratio: 1;
     background: var(--apricot-400);
   }
@@ -768,8 +775,12 @@ const quality = [
 
   @media (min-width: 56rem) {
     .contact-grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-      gap: 5rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .contact-copy .btn-row {
+      justify-content: center;
     }
   }
 
@@ -786,6 +797,29 @@ const quality = [
   .contact-copy .lead {
     margin-top: 1rem;
   }
+  .contact-pending {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    max-width: 34rem;
+    margin-top: 1.25rem;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-card);
+    background: rgb(248 216 91 / 0.3);
+    font-size: 0.9375rem;
+  }
+
+  .contact-pending__badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--cocoa-900);
+    color: var(--cream-50);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
   /* Limosin */
   .limosin-band {
     display: grid;

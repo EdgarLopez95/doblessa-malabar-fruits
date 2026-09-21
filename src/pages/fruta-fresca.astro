@@ -86,7 +86,7 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   <section class="section fruit-cta" aria-labelledby="fruit-cta-title">
     <div class="container fruit-cta__inner">
       <h2 id="fruit-cta-title">¿Quieres saber más de la marca?</h2>
-      <p class="lead">Escríbenos y lo vemos.</p>
+      <p class="lead">El canal de contacto definitivo está pendiente de validación.</p>
       <div class="btn-row">
         <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Contactar <span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn btn--outline" href={url(PAGES.verduras.path)}>Ver las verduras</a>
@@ -318,6 +318,7 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   }
 
   .fruit-card__body {
+    margin-top: auto;
     position: relative;
     z-index: 2;
     margin-top: auto;
@@ -331,6 +332,7 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   }
 
   .fruit-card__line {
+    min-height: 3.2em;
     margin-top: 0.6rem;
     font-size: 1rem;
     line-height: 1.45;
@@ -338,6 +340,11 @@ const groups = Object.entries(FRUIT_GROUPS) as [FruitGroup, string][];
   }
 
   @media (min-width: 64rem) {
+    /* Las dos últimas ocupan el ancho que dejaría la fila huérfana */
+    .fruit-card:nth-last-child(-n + 2) {
+      grid-column: span 2;
+    }
+
     .fruit-card:first-child {
       grid-column: span 2;
       background: var(--paper-100);

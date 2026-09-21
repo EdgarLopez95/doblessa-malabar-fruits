@@ -63,7 +63,7 @@ const page = PAGES.verduras;
   <section class="section veg-cta" aria-labelledby="veg-cta-title">
     <div class="container veg-cta__inner">
       <h2 id="veg-cta-title">¿Quieres saber más de la marca?</h2>
-      <p class="lead">Escríbenos y lo vemos.</p>
+      <p class="lead">El canal de contacto definitivo está pendiente de validación.</p>
       <a class="btn btn--primary" href={url(PAGES.contacto.path)}>Contactar <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
@@ -193,26 +193,39 @@ const page = PAGES.verduras;
   }
 
   /* Campo de color: recurso gráfico, sin significado de producto */
+  /* Composición de malabar en reposo: escalas y alturas distintas sobre un arco */
   .statement-field {
+    position: relative;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: clamp(0.4rem, 0.2rem + 0.6vw, 0.75rem);
+    justify-content: space-between;
+    min-height: 9rem;
+    padding-inline: 0.5rem;
+  }
+
+  .statement-field::before {
+    content: '';
+    position: absolute;
+    inset: 12% 4% auto;
+    height: 60%;
+    border-top: 2px dashed var(--line-strong);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
 
   .statement-field span {
-    flex: 1 1 0;
-    max-width: 3.75rem;
+    position: relative;
     aspect-ratio: 1;
     border-radius: 50%;
+    box-shadow: inset -0.4rem -0.45rem 0 rgb(53 39 39 / 0.12);
   }
 
-  .statement-field span:nth-child(1) { background: var(--leaf-600); }
-  .statement-field span:nth-child(2) { background: var(--lemon-300); transform: translateY(-0.75rem); }
-  .statement-field span:nth-child(3) { background: var(--malabar-600); }
-  .statement-field span:nth-child(4) { background: #b9c35c; transform: translateY(0.5rem); }
-  .statement-field span:nth-child(5) { background: var(--apricot-400); }
-  .statement-field span:nth-child(6) { background: #5a3a55; transform: translateY(-0.5rem); }
+  .statement-field span:nth-child(1) { width: 18%; background: var(--leaf-600); transform: translateY(2.2rem); }
+  .statement-field span:nth-child(2) { width: 12%; background: var(--lemon-300); transform: translateY(0.4rem); }
+  .statement-field span:nth-child(3) { width: 22%; background: var(--malabar-600); transform: translateY(-1.6rem); }
+  .statement-field span:nth-child(4) { width: 9%; background: #b9c35c; transform: translateY(-2.4rem); }
+  .statement-field span:nth-child(5) { width: 16%; background: var(--apricot-400); transform: translateY(-0.6rem); }
+  .statement-field span:nth-child(6) { width: 11%; background: #5a3a55; transform: translateY(1.8rem); }
 
   /* Aviso pendiente */
   .pending-card {
