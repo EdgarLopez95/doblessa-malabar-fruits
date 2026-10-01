@@ -5,5 +5,5 @@
   "type": "module",
   "engines": { "node": ">=22.0.0" },
   "scripts": { "dev": "astro dev", "build": "astro build", "preview": "astro preview" },
-  "dependencies": { "astro": "^7.3.2" }
+  "dependencies": { "astro": "^7.3.5" }
 }
